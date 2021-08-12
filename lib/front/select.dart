@@ -5,6 +5,7 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/front/game.dart';
 import 'package:move/front/training.dart';
 import 'package:move/reabilitation/pushed_pageY.dart';
+import 'package:move/reabilitation/armPress.dart';
 import 'dance.dart';
 
 class Select extends StatefulWidget {
@@ -97,14 +98,21 @@ class _SelectState extends State<Select> {
                 Flexible(
                   child: TextButton(
                     onPressed: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => Game(bluetoothServices: widget.bluetoothServices)));
+                      //Navigator.push(context, MaterialPageRoute(builder: (context) => Game(bluetoothServices: widget.bluetoothServices)));
                       // Navigator.push(context, MaterialPageRoute(
                       //   builder: (context) => PushedPageY(
                       //     cameras: widget.cameras!,
                       //     title: 'posenet',
                       //   ),
                       // ),
-                      //);
+                      // );
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => ArmPress(
+                          cameras: widget.cameras!,
+                          title: 'MOVE! - Arm Press',
+                        ),
+                      ),
+                      );
                     },
                     child: Image.asset('reabButton.png', width: MediaQuery.of(context).size.width*0.7,)
                   ),
