@@ -45,5 +45,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-/android/app/key.jks
+key.jks
 /android/key.properties
