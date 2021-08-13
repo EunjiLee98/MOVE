@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:move/front/armPress.dart';
 
 import 'package:move/front/crossJack.dart';
 import 'package:move/front/jumpingJack.dart';
@@ -91,10 +92,10 @@ class _TrainingState extends State<Training> {
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
-                        // if(widget.bluetoothServices != null)
-                        //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                            ArmPress(cameras: widget.cameras!, title: 'MOVE! - Arm Press',)));
                       },
-                      child: Image.asset('crunch.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset('dumbbell.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
                     // SizedBox(height: 5,),
                     TextButton(
@@ -102,7 +103,7 @@ class _TrainingState extends State<Training> {
                         // if(widget.bluetoothServices != null)
                         //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
                       },
-                      child: Image.asset('dumbbell.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset('crunch.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
                     // SizedBox(height: 5,),
                     TextButton(
