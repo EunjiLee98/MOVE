@@ -47,7 +47,7 @@ In this pandemic situation where people can't go out freely due to the COVID-19,
 > https://github.com/Yeonhee77/MOVE
 
 ### For any comments or questions
-> Please feel free to contact us through our email. 😊
+> Please feel free to contact us through our email. 😊.  
 > 21600122@handong.edu -> Yongjae.    
 > 21700339@handong.edu -> Jonghyun.    
 > 21700557@handong.edu -> Eunji.    
