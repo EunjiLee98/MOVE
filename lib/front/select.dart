@@ -6,6 +6,8 @@ import 'package:move/front/game.dart';
 import 'package:move/front/training.dart';
 import 'package:move/reabilitation/pushed_pageY.dart';
 import 'package:move/reabilitation/armPress.dart';
+import 'package:move/front/squat.dart';
+import 'package:move/tutorial/tutorial1.dart';
 import 'dance.dart';
 
 class Select extends StatefulWidget {
@@ -65,7 +67,7 @@ class _SelectState extends State<Select> {
                 Flexible(
                   child: TextButton(
                     onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Training(bluetoothServices: widget.bluetoothServices)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Training(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)));
                     },
                     child: Image.asset('hwButton.png', width: MediaQuery.of(context).size.width*0.7,),
                   ),
@@ -106,13 +108,22 @@ class _SelectState extends State<Select> {
                       //   ),
                       // ),
                       // );
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => ArmPress(
-                          cameras: widget.cameras!,
-                          title: 'MOVE! - Arm Press',
-                        ),
-                      ),
-                      );
+                      // Navigator.push(context, MaterialPageRoute(
+                      //   builder: (context) => ArmPress(
+                      //     cameras: widget.cameras!,
+                      //     title: 'MOVE! - Arm Press',
+                      //   ),
+                      // ),
+                      // );
+                      // Navigator.push(context, MaterialPageRoute(
+                      //   builder: (context) => Squat(
+                      //     cameras: widget.cameras!,
+                      //     title: 'MOVE! - Squat',
+                      //     model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
+                      //     //customModel: 'MOVE! - Squat',
+                      //   ),
+                      // ),
+                      // );
                     },
                     child: Image.asset('reabButton.png', width: MediaQuery.of(context).size.width*0.7,)
                   ),

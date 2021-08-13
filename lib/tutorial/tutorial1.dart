@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/front/squat_page.dart';
+import 'package:move/front/squat.dart';
+import 'package:camera/camera.dart';
+
 //Squat tutorial
 class Tutorial1 extends StatefulWidget {
-  final List<BluetoothService>? bluetoothServices;
-  Tutorial1({this.bluetoothServices});
+  final List<CameraDescription> ? cameras;
+  Tutorial1({this.cameras});
 
   @override
   _Tutorial1State createState() => _Tutorial1State();
@@ -35,32 +37,6 @@ class _Tutorial1State extends State<Tutorial1> {
   }
 
   ListView _buildConnectDeviceView() {
-    // ignore: deprecated_member_use
-    List<Container> containers = [];
-    for (BluetoothService service in widget.bluetoothServices!) {
-      // ignore: deprecated_member_use
-      List<Widget> characteristicsWidget = [];
-
-      for (BluetoothCharacteristic characteristic in service.characteristics) {
-        if (characteristic.properties.notify) {
-          characteristic.value.listen((value) {
-            readValues[characteristic.uuid] = value;
-          });
-          characteristic.setNotifyValue(true);
-        }
-        if (characteristic.properties.read && characteristic.properties.notify) {
-          setnum(characteristic);
-        }
-      }
-      containers.add(
-        Container(
-          child: ExpansionTile(
-              title: Center(child:Text("블루투스 연결설정")),
-              children: characteristicsWidget),
-        ),
-      );
-    }
-
     return ListView(
       padding: const EdgeInsets.all(8),
       children: <Widget>[
@@ -113,7 +89,15 @@ class _Tutorial1State extends State<Tutorial1> {
                                             // foreground
                                           ),
                                           onPressed: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => Squatstart(bluetoothServices: widget.bluetoothServices)));
+                                            Navigator.push(context, MaterialPageRoute(
+                                              builder: (context) => Squat(
+                                                cameras: widget.cameras!,
+                                                title: 'MOVE! - Squat',
+                                                model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
+                                                //customModel: 'MOVE! - Squat',
+                                              ),
+                                            ),
+                                            );
                                           },
                                           child: Image.asset('skip.png',height: 30,),
                                         ),
@@ -142,7 +126,15 @@ class _Tutorial1State extends State<Tutorial1> {
                                             // foreground
                                           ),
                                           onPressed: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => Squatstart(bluetoothServices: widget.bluetoothServices)));
+                                            Navigator.push(context, MaterialPageRoute(
+                                              builder: (context) => Squat(
+                                                cameras: widget.cameras!,
+                                                title: 'MOVE! - Squat',
+                                                model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
+                                                //customModel: 'MOVE! - Squat',
+                                              ),
+                                            ),
+                                            );
                                           },
                                           child: Image.asset('skip.png',height: 30,),
                                         ),
@@ -171,7 +163,15 @@ class _Tutorial1State extends State<Tutorial1> {
                                             primary: Colors.black,
                                           ),
                                           onPressed: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => Squatstart(bluetoothServices: widget.bluetoothServices)));
+                                            Navigator.push(context, MaterialPageRoute(
+                                              builder: (context) => Squat(
+                                                cameras: widget.cameras!,
+                                                title: 'MOVE! - Squat',
+                                                model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
+                                                //customModel: 'MOVE! - Squat',
+                                              ),
+                                            ),
+                                            );
                                           },
                                           child: Image.asset('skip.png',height: 30,),
                                         ),
@@ -200,7 +200,15 @@ class _Tutorial1State extends State<Tutorial1> {
                                             // foreground
                                           ),
                                           onPressed: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => Squatstart(bluetoothServices: widget.bluetoothServices)));
+                                            Navigator.push(context, MaterialPageRoute(
+                                              builder: (context) => Squat(
+                                                cameras: widget.cameras!,
+                                                title: 'MOVE! - Squat',
+                                                model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
+                                                //customModel: 'MOVE! - Squat',
+                                              ),
+                                            ),
+                                            );
                                           },
                                           child: Image.asset('skip.png',height: 30,),
                                         ),
@@ -227,7 +235,15 @@ class _Tutorial1State extends State<Tutorial1> {
                                         // foreground
                                       ),
                                       onPressed: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Squatstart(bluetoothServices: widget.bluetoothServices)));
+                                        Navigator.push(context, MaterialPageRoute(
+                                          builder: (context) => Squat(
+                                            cameras: widget.cameras!,
+                                            title: 'MOVE! - Squat',
+                                            model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
+                                            //customModel: 'MOVE! - Squat',
+                                          ),
+                                        ),
+                                        );
                                       },
                                       child: Image.asset('start.png',height: 60),
                                     ),
@@ -253,18 +269,6 @@ class _Tutorial1State extends State<Tutorial1> {
     );
   }
 
-  Future<void> setnum(characteristic) async {
-    var sub = characteristic.value.listen((value) {
-      setState(() {
-        readValues[characteristic.uuid] = value;
-        gesture = value.toString();
-        gesture_num = int.parse(gesture[1]);
-      });
-    });
-
-    await characteristic.read();
-    sub.cancel();
-  }
 
   @override
   Widget build(BuildContext context) {

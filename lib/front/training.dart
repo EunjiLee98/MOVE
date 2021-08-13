@@ -7,10 +7,13 @@ import 'package:move/front/crossJack.dart';
 import 'package:move/front/jumpingJack.dart';
 import 'package:move/front/squat.dart';
 import 'package:move/home_page.dart';
+import 'package:camera/camera.dart';
+import 'package:move/tutorial/tutorial1.dart';
 
 class Training extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
-  Training({this.bluetoothServices});
+  final List<CameraDescription>? cameras;
+  Training({this.bluetoothServices, this.cameras});
 
   @override
   _TrainingState createState() => _TrainingState();
@@ -75,14 +78,13 @@ class _TrainingState extends State<Training> {
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
-                        if(widget.bluetoothServices != null)
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
-                        if (widget.bluetoothServices == null)
-                          SchedulerBinding.instance!.addPostFrameCallback((_) {
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
-                          });
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Tutorial1(cameras: widget.cameras!)));
+                        // if (widget.bluetoothServices == null)
+                        //   SchedulerBinding.instance!.addPostFrameCallback((_) {
+                        //     Navigator.pop(context);
+                        //     Navigator.pop(context);
+                        //     Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+                        //   });
                       },
                       child: Image.asset('squatButton.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),

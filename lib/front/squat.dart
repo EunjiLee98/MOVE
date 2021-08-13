@@ -1,124 +1,73 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/tutorial/tutorial1.dart';
+import 'package:camera/camera.dart';
+import 'package:move/front/squat_page.dart';
+import 'package:tflite/tflite.dart';
+import 'dart:math';
+import 'package:move/reabilitation/camera.dart';
 
 class Squat extends StatefulWidget {
-  final List<BluetoothService>? bluetoothServices;
-  Squat({this.bluetoothServices});
+  final List<CameraDescription> cameras;
+  final String title;
+  final String model;
+  const Squat({required this.cameras, required this.title, required this.model});
 
   @override
   _SquatState createState() => _SquatState();
 }
 
 class _SquatState extends State<Squat> {
-  final Map<Guid, List<int>> readValues = new Map<Guid, List<int>>();
-  String gesture = "";
-  // ignore: non_constant_identifier_names
-  int gesture_num = 0;
+  List<dynamic> ? _data;
+  int _imageHeight = 0;
+  int _imageWidth = 0;
+  int x = 1;
 
   @override
-  void dispose(){
-    // _streamController.close();
-    super.dispose();
+  void initState() {
+    super.initState();
+    var res = loadModel();
+    print('Model Response: ' + res.toString());
   }
 
-  ListView _buildConnectDeviceView() {
-    // ignore: deprecated_member_use
-    List<Container> containers = [];
-    for (BluetoothService service in widget.bluetoothServices!) {
-      // ignore: deprecated_member_use
-      List<Widget> characteristicsWidget = [];
-
-      for (BluetoothCharacteristic characteristic in service.characteristics) {
-        if (characteristic.properties.notify) {
-          characteristic.value.listen((value) {
-            readValues[characteristic.uuid] = value;
-          });
-          characteristic.setNotifyValue(true);
-        }
-        if (characteristic.properties.read && characteristic.properties.notify) {
-          setnum(characteristic);
-        }
-      }
-      containers.add(
-        Container(
-          child: ExpansionTile(
-              title: Center(child:Text("블루투스 연결설정")),
-              children: characteristicsWidget),
-        ),
-      );
+  _setRecognitions(data, imageHeight, imageWidth) {
+    if (!mounted) {
+      return;
     }
-
-    return ListView(
-      padding: const EdgeInsets.all(8),
-      children: <Widget>[
-        Container(
-            child:Column(
-              children: [
-                SizedBox(height: 30,),
-                Center(
-                    child:Column(
-                      children: [
-                        Row(children: [
-                          IconButton(onPressed:(){Navigator.pop(context);}, icon: Icon(Icons.arrow_back,color: Colors.white,))
-                        ],),
-                        SizedBox(height: 60,),
-                        Image.asset('shoulder.png',height: 200,),
-                        //Text("값:" + gesture_num.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                        SizedBox(height: 30,),
-                        Text("Please attach the chip",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.white),),
-                        Text("to your Shoulder",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.white),),
-                        Row(
-                          children: [
-                            SizedBox(width: 70,),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                primary: Colors.black,
-                                // foreground
-                              ),
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Tutorial1(bluetoothServices: widget.bluetoothServices)));
-                              },
-                                child: Image.asset('ok.png'),
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                ),
-              ],
-            )
-        ),
-      ],
-    );
+    setState(() {
+      _data = data;
+      _imageHeight = imageHeight;
+      _imageWidth = imageWidth;
+    });
   }
 
-  Future<void> setnum(characteristic) async {
-    var sub = characteristic.value.listen((value) {
-      setState(() {
-        readValues[characteristic.uuid] = value;
-        gesture = value.toString();
-        gesture_num = int.parse(gesture[1]);
-      });
-    });
-
-    await characteristic.read();
-    sub.cancel();
+  loadModel() async {
+    return await Tflite.loadModel(
+        model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
   }
 
   @override
   Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('tutorial1_background.png'),
-                  fit: BoxFit.fill
-              )
+      appBar: AppBar(
+        title: Text('MOVE! - Squat'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Stack(
+        children: <Widget>[
+          Camera(
+            cameras: widget.cameras,
+            setRecognitions: _setRecognitions,
           ),
-          child: _buildConnectDeviceView()
+          SquatPage(
+            data: _data == null ? [] : _data,
+            previewH: max(_imageHeight, _imageWidth),
+            previewW: min(_imageHeight, _imageWidth),
+            screenH: screen.height,
+            screenW: screen.width,
+            //customModel: widget.customModel,
+          ),
+        ],
       ),
     );
   }
