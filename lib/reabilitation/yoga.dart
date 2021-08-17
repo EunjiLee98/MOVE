@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+import 'package:flutter_tts/flutter_tts.dart';
+>>>>>>> ab52972bd381082a00c5d2c8c68007060310689c
 
 class Yoga extends StatefulWidget {
   final List<dynamic>? data;
@@ -20,6 +24,10 @@ class _YogaState extends State<Yoga> {
   Color? correctColor;
   Color? armColor, shoulderColor, legColor;
   String memo = 'Warrior position not aligned.';
+<<<<<<< HEAD
+=======
+  FlutterTts ? flutterTts;
+>>>>>>> ab52972bd381082a00c5d2c8c68007060310689c
 
   double? leftShoulderY,
       rightShoulderY,
@@ -60,6 +68,10 @@ class _YogaState extends State<Yoga> {
     armColor = Colors.red;
     shoulderColor = Colors.red;
     legColor = Colors.red;
+<<<<<<< HEAD
+=======
+    flutterTts = new FlutterTts();
+>>>>>>> ab52972bd381082a00c5d2c8c68007060310689c
     super.initState();
   }
 
@@ -120,12 +132,20 @@ class _YogaState extends State<Yoga> {
     if (wristAlignment! && ankleAlignment! && kneeAndHipAlignment!) {
       setState(() {
         correctColor = Colors.green;
+<<<<<<< HEAD
         memo = 'Warrior position aligned!';
+=======
+        flutterTts!.speak("위치가 정렬되었습니다!");
+>>>>>>> ab52972bd381082a00c5d2c8c68007060310689c
       });
     } else {
       setState(() {
         correctColor = Colors.red;
+<<<<<<< HEAD
         memo = 'Warrior position not aligned.';
+=======
+        flutterTts!.speak("위치가 정렬되지 않았습니다!");
+>>>>>>> ab52972bd381082a00c5d2c8c68007060310689c
       });
     }
   }
