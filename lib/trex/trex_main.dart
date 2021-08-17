@@ -226,9 +226,7 @@ class _TRexGameWrapperState extends State<TRexGameWrapper> {
       );
     }
     else
-      return Row(
-        children: [
-          Container(
+      return Container(
             constraints: const BoxConstraints.expand(),
             child: GameWidget(
               game: game!,
@@ -239,8 +237,6 @@ class _TRexGameWrapperState extends State<TRexGameWrapper> {
               },
               initialActiveOverlays: ['Score', 'Exit', 'Restart'],
             ),
-          ),
-        ],
-      );
+          );
   }
 }
