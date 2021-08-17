@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-<<<<<<< HEAD
-=======
 import 'package:just_audio/just_audio.dart';
->>>>>>> ab52972bd381082a00c5d2c8c68007060310689c
 import 'package:move/front/squat.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math';
@@ -76,8 +73,6 @@ class _SquatPageState extends State<SquatPage> {
   double ? lowerRange, upperRange;
   bool ? midCount,isCorrectPosture;
 
-<<<<<<< HEAD
-=======
   late AudioPlayer player = AudioPlayer();
 
   Future<void> bgmPlay() async {
@@ -86,7 +81,6 @@ class _SquatPageState extends State<SquatPage> {
     player.play();
   }
 
->>>>>>> ab52972bd381082a00c5d2c8c68007060310689c
   void setRangeBasedOnModel(){
     upperRange=300;
     lowerRange=500;
@@ -187,7 +181,6 @@ class _SquatPageState extends State<SquatPage> {
   }
 
   Future<void> _countingLogic(Map<String, List<double>> poses) async {
-<<<<<<< HEAD
     if (isCorrectPosture! && poses['leftShoulder']![1] > upperRange! && poses['rightShoulder']![1] > upperRange!) {
       setMidCount(true);
     }
@@ -199,22 +192,6 @@ class _SquatPageState extends State<SquatPage> {
     //check the posture when not in midcount
     if(!midCount!) {
       _checkCorrectPosture(poses);
-=======
-    if (poses != null) {
-      //check posture before beginning count
-      if (isCorrectPosture! && poses['leftShoulder']![1] > upperRange! && poses['rightShoulder']![1] > upperRange!) {
-        setMidCount(true);
-      }
-
-      if (midCount! && poses['leftShoulder']![1] < upperRange! && poses['rightShoulder']![1] < upperRange!) {
-        incrementCounter();
-        setMidCount(false);
-      }
-      //check the posture when not in midcount
-      if(!midCount!) {
-        _checkCorrectPosture(poses);
-      }
->>>>>>> ab52972bd381082a00c5d2c8c68007060310689c
     }
   }
   //endregion
