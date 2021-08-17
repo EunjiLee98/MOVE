@@ -64,6 +64,9 @@ class _YogaState extends State<Yoga> {
   }
 
   void _postureAccordingToExercise(Map<String, List<double>> poses) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+
     setState(() {
       leftShoulderY = poses['leftShoulder']![1];
       rightShoulderY = poses['rightShoulder']![1];
@@ -77,12 +80,12 @@ class _YogaState extends State<Yoga> {
       leftHipY = poses['leftHip']![1];
     });
 
-    if (leftWristY! > 120 &&
-        rightWristY! > 120 &&
-        leftWristX! < 255 &&
-        leftWristX! > 200 &&
-        rightWristX! < 255 &&
-        rightWristX! > 160) {
+    // leftWristY! < h/3 && rightWristY! < h/3 &&
+
+    if (rightWristX! < w/2 &&
+        rightWristX! > w/3 &&
+        leftWristX! < w/3*2 &&
+        leftWristX! > w/2) {
       wristAlignment = true;
       setState(() {
         armColor = Colors.green;
@@ -95,7 +98,7 @@ class _YogaState extends State<Yoga> {
         shoulderColor = Colors.red;
       });
     }
-    if (leftAnkleX! > 360 && rightAnkleX! < 60) {
+    if (leftAnkleX! > w/3*2 && rightAnkleX! < w/3) {
       ankleAlignment = true;
       setState(() {
         legColor = Colors.green;
@@ -106,7 +109,7 @@ class _YogaState extends State<Yoga> {
         legColor = Colors.red;
       });
     }
-    if (leftKneeY! > 580 && leftHipY! > 505) {
+    if (leftKneeY! > w/3*2 && leftHipY! > w/2) {
       kneeAndHipAlignment = true;
       setState(() {
         //legColor = Colors.green;
@@ -239,14 +242,14 @@ class _YogaState extends State<Yoga> {
             width: 100,
             height: 15,
             child: Container(
-                // child: Text(
-                //   "● ${k["part"]}",
-                //   style: TextStyle(
-                //     color: Color.fromRGBO(37, 213, 253, 1.0),
-                //     fontSize: 12.0,
-                //   ),
-                // ),
-                ),
+              // child: Text(
+              //   "● ${k["part"]}",
+              //   style: TextStyle(
+              //     color: Color.fromRGBO(37, 213, 253, 1.0),
+              //     fontSize: 12.0,
+              //   ),
+              // ),
+            ),
           );
         }).toList();
 
