@@ -226,17 +226,21 @@ class _TRexGameWrapperState extends State<TRexGameWrapper> {
       );
     }
     else
-      return Container(
-        constraints: const BoxConstraints.expand(),
-        child: GameWidget(
-          game: game!,
-          overlayBuilderMap: {
-            'Score' : scoreBox,
-            'Exit' : exitBox,
-            'Restart' : restartBox,
-          },
-          initialActiveOverlays: ['Score', 'Exit', 'Restart'],
-        ),
+      return Row(
+        children: [
+          Container(
+            constraints: const BoxConstraints.expand(),
+            child: GameWidget(
+              game: game!,
+              overlayBuilderMap: {
+                'Score' : scoreBox,
+                'Exit' : exitBox,
+                'Restart' : restartBox,
+              },
+              initialActiveOverlays: ['Score', 'Exit', 'Restart'],
+            ),
+          ),
+        ],
       );
   }
 }

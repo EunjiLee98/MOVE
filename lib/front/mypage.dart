@@ -26,13 +26,15 @@ class _MypageState extends State<Mypage> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((doc) {
-          setState(() {
-            dino = doc.get('dino');
-            boxing = doc.get('boxing');
-            jumpingJack = doc.get('jumpingJack');
-            crossJack = doc.get('crossJack');
-            total = doc.get('avg');
-          });
+          if (mounted) {
+            setState(() {
+              dino = doc.get('dino');
+              boxing = doc.get('boxing');
+              jumpingJack = doc.get('jumpingJack');
+              crossJack = doc.get('crossJack');
+              total = doc.get('avg');
+            });
+          }
     });
   }
 
