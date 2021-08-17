@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Yoga extends StatefulWidget {
+class Yoga2 extends StatefulWidget {
   final List<dynamic>? data;
   final int previewH;
   final int previewW;
   final double screenH;
   final double screenW;
 
-  Yoga(
+  Yoga2(
       {required this.data, required this.previewH, required this.previewW, required this.screenH, required this.screenW});
   @override
-  _YogaState createState() => _YogaState();
+  _Yoga2State createState() => _Yoga2State();
 }
 
-class _YogaState extends State<Yoga> {
+class _Yoga2State extends State<Yoga2> {
   Map<String, List<double>>? inputArr;
 
   String excercise = 'warrior';
@@ -29,6 +29,7 @@ class _YogaState extends State<Yoga> {
       rightWristY,
       leftAnkleX,
       rightAnkleX,
+      rightAnkleY,
       leftKneeY,
       leftHipY;
 
@@ -76,6 +77,7 @@ class _YogaState extends State<Yoga> {
       rightWristY = poses['leftWrist']![1];
       leftAnkleX = poses['leftAnkle']![0];
       rightAnkleX = poses['rightAnkle']![0];
+      rightAnkleY = poses['rightAnkle']![1];
       leftKneeY = poses['leftKnee']![1];
       leftHipY = poses['leftHip']![1];
     });
@@ -84,6 +86,8 @@ class _YogaState extends State<Yoga> {
 
     if (rightWristX! < w/2 &&
         rightWristX! > w/3 &&
+        rightWristY! < h/3 &&
+        leftWristY! < h/3 &&
         leftWristX! < w/3*2 &&
         leftWristX! > w/2) {
       wristAlignment = true;
@@ -98,7 +102,7 @@ class _YogaState extends State<Yoga> {
         shoulderColor = Colors.red;
       });
     }
-    if (leftAnkleX! > w/3*2 && rightAnkleX! < w/3) {
+    if (leftAnkleX! > w/3 && rightAnkleX! > w/3 && rightAnkleY! > h/5*2) {
       ankleAlignment = true;
       setState(() {
         legColor = Colors.green;

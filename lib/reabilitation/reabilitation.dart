@@ -32,6 +32,17 @@ class _ReabSelectState extends State<ReabSelect> {
                 ));
               },
               child: Text('Yoga')
+          ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => PushedPage(
+                    cameras: widget.cameras!,
+                    title: 'posenet',
+                  ),
+                ));
+              },
+              child: Text('Yoga2')
           )
         ],
       ),
