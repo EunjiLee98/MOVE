@@ -4,6 +4,7 @@ import 'package:move/reabilitation/yoga.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math';
 import 'package:move/reabilitation/camera.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class ArmPress extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -18,12 +19,15 @@ class _ArmPressState extends State<ArmPress> {
   int _imageHeight = 0;
   int _imageWidth = 0;
   int x = 1;
+  FlutterTts ? flutterTts;
 
   @override
   void initState() {
     super.initState();
     var res = loadModel();
     print('Model Response: ' + res.toString());
+    flutterTts = new FlutterTts();
+    flutterTts!.speak("팔 운동이 시작되었습니다");
   }
 
   _setRecognitions(data, imageHeight, imageWidth) {

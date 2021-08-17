@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:move/front/squat.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math';
@@ -71,6 +72,14 @@ class _SquatPageState extends State<SquatPage> {
   FlutterTts ? flutterTts;
   double ? lowerRange, upperRange;
   bool ? midCount,isCorrectPosture;
+
+  late AudioPlayer player = AudioPlayer();
+
+  Future<void> bgmPlay() async {
+    await player.setAsset('assets/audio/bgm_ex.mp3');
+    player.setLoopMode(LoopMode.one);
+    player.play();
+  }
 
   void setRangeBasedOnModel(){
     upperRange=300;

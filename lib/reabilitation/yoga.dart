@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class Yoga extends StatefulWidget {
   final List<dynamic>? data;
@@ -20,6 +21,7 @@ class _YogaState extends State<Yoga> {
   Color? correctColor;
   Color? armColor, shoulderColor, legColor;
   String memo = 'Warrior position not aligned.';
+  FlutterTts ? flutterTts;
 
   double? leftShoulderY,
       rightShoulderY,
@@ -60,6 +62,7 @@ class _YogaState extends State<Yoga> {
     armColor = Colors.red;
     shoulderColor = Colors.red;
     legColor = Colors.red;
+    flutterTts = new FlutterTts();
     super.initState();
   }
 
@@ -120,12 +123,12 @@ class _YogaState extends State<Yoga> {
     if (wristAlignment! && ankleAlignment! && kneeAndHipAlignment!) {
       setState(() {
         correctColor = Colors.green;
-        memo = 'Warrior position aligned!';
+        flutterTts!.speak("위치가 정렬되었습니다!");
       });
     } else {
       setState(() {
         correctColor = Colors.red;
-        memo = 'Warrior position not aligned.';
+        flutterTts!.speak("위치가 정렬되지 않았습니다!");
       });
     }
   }
