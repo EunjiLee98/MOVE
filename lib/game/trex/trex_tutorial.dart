@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/trex/trex_main.dart';
+import 'package:move/game/trex/trex_main.dart';
 
 class TrexTutorial extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
@@ -69,9 +69,15 @@ class _TrexTutorialState extends State<TrexTutorial> {
                                       // foreground
                                     ),
                                     onPressed: () {
-                                      Navigator.pop(context);
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => TRexGameWrapper(bluetoothServices: widget.bluetoothServices)));
-                                    },
+                                      if(widget.bluetoothServices != null)
+                                        Navigator.pop(context);
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TRexGameWrapper(
+                                                        bluetoothServices: widget
+                                                            .bluetoothServices)));
+                                      },
                                     child: Image.asset('ok.png'),
                                   ),
                                 ],

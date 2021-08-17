@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 
 class ArmPressData extends StatefulWidget {
@@ -16,6 +17,7 @@ class ArmPressData extends StatefulWidget {
 
 class _ArmPressDataState extends State<ArmPressData> {
   Map<String, List<double>>  ? inputArr;
+  FlutterTts ? flutterTts;
 
   String excercise = 'arm_press';
   double upperRange = 300;
@@ -49,6 +51,7 @@ class _ArmPressDataState extends State<ArmPressData> {
 
   @override
   void initState() {
+    super.initState();
     inputArr = new Map();
     midCount = false;
     isCorrectPosture = false;
@@ -59,7 +62,8 @@ class _ArmPressDataState extends State<ArmPressData> {
     kneeRY = 0;
     kneeLY = 0;
     squatUp = true;
-    super.initState();
+    flutterTts = new FlutterTts();
+    flutterTts!.speak("팔 운동이 시작되었습니다");
   }
 
   bool ? _postureAccordingToExercise(Map<String, List<double>> poses) {
@@ -117,7 +121,7 @@ class _ArmPressDataState extends State<ArmPressData> {
       if (isCorrectPosture! && squatUp! && midCount == false) {
         //in correct initial posture
         setState(() {
-          whatToDo = 'Lift';
+          flutterTts!.speak("lift");
           //correctColor = Colors.green;
         });
         squatUp = !squatUp!;
@@ -130,7 +134,7 @@ class _ArmPressDataState extends State<ArmPressData> {
         isCorrectPosture = false;
         squatUp = !squatUp!;
         setState(() {
-          whatToDo = 'Drop';
+          flutterTts!.speak("drop");
           //correctColor = Colors.green;
         });
       }
@@ -147,11 +151,37 @@ class _ArmPressDataState extends State<ArmPressData> {
     }
   }
 
+  void resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+    flutterTts!.speak("운동이 초기화되었습니다");
+  }
+
   void incrementCounter() {
     setState(() {
       if (_counter!=null)
         _counter = _counter! + 1;
     });
+    flutterTts!.speak(_counter.toString());
+  }
+
+  void setMidCount(bool f) {
+    //when midcount is activated
+    if(f && !midCount!) {
+      flutterTts!.speak("잘했습니다!");
+    }
+    setState(() {
+      midCount = f;
+    });
+  }
+
+  Color getCounterColor() {
+    if(isCorrectPosture!) {
+      return Colors.green;
+    } else {
+      return Colors.red;
+    }
   }
 
   @override
@@ -263,13 +293,13 @@ class _ArmPressDataState extends State<ArmPressData> {
             width: 100,
             height: 15,
             child: Container(
-              // child: Text(
-              //   "● ${k["part"]}",
-              //   style: TextStyle(
-              //     color: Color.fromRGBO(37, 213, 253, 1.0),
-              //     fontSize: 12.0,
-              //   ),
-              // ),
+              child: Text(
+                "● ${k["part"]}",
+                style: TextStyle(
+                  color: Color.fromRGBO(37, 213, 253, 1.0),
+                  fontSize: 12.0,
+                ),
+              ),
             ),
           );
         }).toList();
@@ -328,26 +358,41 @@ class _ArmPressDataState extends State<ArmPressData> {
           ],
         ),
         Stack(children: _renderKeypoints()),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 50,
-            width: widget.screenW,
-            decoration: BoxDecoration(
-              color: correctColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25.0),
-                  topRight: Radius.circular(25)),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  '$whatToDo\nArm Presses: ${_counter.toString()}',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget> [
+            Align(
+              alignment: Alignment.center,
+              // child: Container(
+              //   height: 50,
+              //   width: widget.screenW,
+              //   decoration: BoxDecoration(
+              //     color: correctColor,
+              //     borderRadius: BorderRadius.only(
+              //         topLeft: Radius.circular(25.0),
+              //         topRight: Radius.circular(25)),
+              //   ),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    child: FittedBox(
+                      child: FloatingActionButton(
+                        backgroundColor: getCounterColor(),
+                        onPressed: resetCounter,
+                        child: Text(
+                          '${_counter.toString()}',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ],
-            ),
-          ),
+              ),
+          ],
         ),
       ],
     );

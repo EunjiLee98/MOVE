@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:move/home_page.dart';
-import 'package:move/trex/game.dart';
+import 'package:move/front/bluetooth.dart';
+import 'package:move/game/trex/game.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,8 +27,9 @@ enum TRexGameStatus { playing, waiting, gameOver }
 class _TRexGameWrapperState extends State<TRexGameWrapper> {
   /*--------bluetooth-------*/
   final Map<Guid, List<int>> readValues = new Map<Guid, List<int>>();
+  TRexGame ? game;
+  final _focusNode = FocusNode();
   bool splashGone = false;
-  TRexGame? game;
   String gesture = "";
 
   num score = 0;
@@ -61,9 +62,20 @@ class _TRexGameWrapperState extends State<TRexGameWrapper> {
   @override
   void initState() {
     super.initState();
-    playBGM();
     startGame();
+    playBGM();
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]); //screen horizontally
+  }
+
+  void startGame() {
+    Flame.images.loadAll(["sprite.png"]).then(
+          (image) => {
+        setState(() {
+          game = TRexGame(spriteImage: image[0]);
+          _focusNode.requestFocus();
+        })
+      },
+    );
   }
 
   @override
@@ -76,16 +88,6 @@ class _TRexGameWrapperState extends State<TRexGameWrapper> {
     ]);
     bgm.dispose();
     super.dispose();
-  }
-
-  void startGame() {
-    Flame.images.loadAll(["sprite.png"]).then(
-          (image) => {
-        setState(() {
-          game = TRexGame(spriteImage: image[0]);
-        })
-      },
-    );
   }
 
   void _gesture() {
@@ -171,11 +173,8 @@ class _TRexGameWrapperState extends State<TRexGameWrapper> {
   }
 
   Widget exitBox(BuildContext buildContext, TRexGame game) {
-    return Container(
-      width: 100,
-      height: 90,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Flexible(
             child: TextButton(
@@ -188,29 +187,25 @@ class _TRexGameWrapperState extends State<TRexGameWrapper> {
             ),
           ),
         ],
-      ),);
+      );
   }
 
   Widget restartBox(BuildContext buildContext, TRexGame game) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          height: 90,
-          child: Flexible(
-            child: TextButton(
-              onPressed: () {
-                addScore();
-                //score = 0;
-                game.restart();
-              },
-              child: Image.asset('dino_Restart.png', height: 30,),
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Flexible(
+              child: TextButton(
+                onPressed: () {
+                  addScore();
+                  game.restart();
+                },
+                child: Image.asset('dino_Restart.png', height: 30,),
+              ),
             ),
-          ),
-        ),
-      ],
-    );
+        ],
+      );
   }
 
   @override
@@ -226,21 +221,17 @@ class _TRexGameWrapperState extends State<TRexGameWrapper> {
       );
     }
     else
-      return Row(
-        children: [
-          Container(
-            constraints: const BoxConstraints.expand(),
-            child: GameWidget(
-              game: game!,
-              overlayBuilderMap: {
-                'Score' : scoreBox,
-                'Exit' : exitBox,
-                'Restart' : restartBox,
-              },
-              initialActiveOverlays: ['Score', 'Exit', 'Restart'],
-            ),
-          ),
-        ],
+      return Container(
+        constraints: const BoxConstraints.expand(),
+        child: GameWidget(
+          game: game!,
+          overlayBuilderMap: {
+            'Score' : scoreBox,
+            'Exit' : exitBox,
+            'Restart' : restartBox,
+          },
+          initialActiveOverlays: ['Score', 'Exit', 'Restart'],
+        ),
       );
   }
 }
