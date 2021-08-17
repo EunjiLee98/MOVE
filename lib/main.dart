@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import '/front/login.dart';
+import 'package:flutter/services.dart';
 
 List<CameraDescription>? cameras;
 
@@ -23,13 +24,17 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    debugShowCheckedModeBanner : false,
-    theme: ThemeData(
-      primarySwatch: Colors.deepPurple,
-    ),
-    home: SplashScreen(),
-  );
+  Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
+      home: SplashScreen(),
+    );
+  }
 }
 
 class SplashScreen extends StatefulWidget {
