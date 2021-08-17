@@ -1,38 +1,36 @@
 import 'package:flutter/material.dart';
 
-class Yoga extends StatefulWidget {
-  final List<dynamic>? data;
+
+class ArmPressData extends StatefulWidget {
+  final List<dynamic> ? data;
   final int previewH;
   final int previewW;
   final double screenH;
   final double screenW;
 
-  Yoga(
+  ArmPressData(
       {required this.data, required this.previewH, required this.previewW, required this.screenH, required this.screenW});
   @override
-  _YogaState createState() => _YogaState();
+  _ArmPressDataState createState() => _ArmPressDataState();
 }
 
-class _YogaState extends State<Yoga> {
-  Map<String, List<double>>? inputArr;
+class _ArmPressDataState extends State<ArmPressData> {
+  Map<String, List<double>>  ? inputArr;
 
-  String excercise = 'warrior';
-  Color? correctColor;
-  Color? armColor, shoulderColor, legColor;
-  String memo = 'Warrior position not aligned.';
+  String excercise = 'arm_press';
+  double upperRange = 300;
+  double lowerRange = 500;
+  bool ? midCount, isCorrectPosture;
+  int ? _counter;
+  Color ? correctColor;
+  double ? shoulderLY;
+  double ? shoulderRY;
 
-  double? leftShoulderY,
-      rightShoulderY,
-      leftWristX,
-      leftWristY,
-      rightWristX,
-      rightWristY,
-      leftAnkleX,
-      rightAnkleX,
-      leftKneeY,
-      leftHipY;
-
-  bool? wristAlignment, shoulderAlignment, ankleAlignment, kneeAndHipAlignment;
+  double ? wristLX, wristLY, wristRX, wristRY, elbowLX, elbowRX;
+  double ? kneeRY;
+  double ? kneeLY;
+  bool ? squatUp;
+  String whatToDo = 'Finding Posture';
 
   var leftEyePos = Vector(0, 0);
   var rightEyePos = Vector(0, 0);
@@ -52,142 +50,167 @@ class _YogaState extends State<Yoga> {
   @override
   void initState() {
     inputArr = new Map();
+    midCount = false;
+    isCorrectPosture = false;
+    _counter = 0;
     correctColor = Colors.red;
-    wristAlignment = false;
-    shoulderAlignment = false;
-    ankleAlignment = false;
-    kneeAndHipAlignment = false;
-    armColor = Colors.red;
-    shoulderColor = Colors.red;
-    legColor = Colors.red;
-
+    shoulderLY = 0;
+    shoulderRY = 0;
+    kneeRY = 0;
+    kneeLY = 0;
+    squatUp = true;
     super.initState();
   }
 
-  void _postureAccordingToExercise(Map<String, List<double>> poses) {
+  bool ? _postureAccordingToExercise(Map<String, List<double>> poses) {
     setState(() {
-      leftShoulderY = poses['leftShoulder']![1];
-      rightShoulderY = poses['rightShoulder']![1];
-      leftWristX = poses['leftWrist']![0];
-      leftWristY = poses['leftWrist']![1];
-      rightWristX = poses['rightWrist']![0];
-      rightWristY = poses['leftWrist']![1];
-      leftAnkleX = poses['leftAnkle']![0];
-      rightAnkleX = poses['rightAnkle']![0];
-      leftKneeY = poses['leftKnee']![1];
-      leftHipY = poses['leftHip']![1];
-    });
+      wristLX = poses['leftWrist']![0];
+      wristLY = poses['leftWrist']![1];
+      wristRX = poses['rightWrist']![0];
+      wristRY = poses['rightWrist']![1];
+      elbowLX = poses['leftElbow']![0];
+      elbowRX = poses['rightElbow']![0];
 
-    if (leftWristY! > 120 &&
-        rightWristY! > 120 &&
-        leftWristX! < 255 &&
-        leftWristX! > 200 &&
-        rightWristX! < 255 &&
-        rightWristX! > 160) {
-      wristAlignment = true;
-      setState(() {
-        armColor = Colors.green;
-        shoulderColor = Colors.green;
-      });
-    } else {
-      wristAlignment = false;
-      setState(() {
-        armColor = Colors.red;
-        shoulderColor = Colors.red;
-      });
+      shoulderLY = poses['leftShoulder']![1];
+      shoulderRY = poses['rightShoulder']![1];
+      kneeLY = poses['leftKnee']![1];
+      kneeRY = poses['rightKnee']![1];
+    });
+    if (excercise == 'arm_press') {
+      if (squatUp!) {
+        return wristLX! > 280 &&
+            elbowLX! > 280 &&
+            wristRX! < 95 &&
+            elbowRX! < 95 &&
+            wristLY! < 240 &&
+            wristLY! > 200 &&
+            wristRY! < 240 &&
+            wristRY! > 200;
+      } else {
+        return wristLY! < 125 && wristRY! < 125;
+      }
     }
-    if (leftAnkleX! > 360 && rightAnkleX! < 60) {
-      ankleAlignment = true;
-      setState(() {
-        legColor = Colors.green;
-      });
+  }
+
+  _checkCorrectPosture(Map<String, List<double>> poses) {
+    if (_postureAccordingToExercise(poses)!) {
+      if (!isCorrectPosture!) {
+        setState(() {
+          isCorrectPosture = true;
+          correctColor = Colors.green;
+        });
+      }
     } else {
-      ankleAlignment = false;
-      setState(() {
-        legColor = Colors.red;
-      });
+      if (isCorrectPosture!) {
+        setState(() {
+          isCorrectPosture = false;
+          correctColor = Colors.red;
+        });
+      }
     }
-    if (leftKneeY! > 580 && leftHipY! > 505) {
-      kneeAndHipAlignment = true;
-      setState(() {
-        //legColor = Colors.green;
-      });
-    } else {
-      kneeAndHipAlignment = false;
-      setState(() {
-        legColor = Colors.red;
-      });
+  }
+
+  Future<void> _countingLogic(Map<String, List<double>> poses) async {
+    if (poses != null) {
+      _checkCorrectPosture(poses);
+
+      if (isCorrectPosture! && squatUp! && midCount == false) {
+        //in correct initial posture
+        setState(() {
+          whatToDo = 'Lift';
+          //correctColor = Colors.green;
+        });
+        squatUp = !squatUp!;
+        isCorrectPosture = false;
+      }
+
+      //lowered all the way
+      if (isCorrectPosture! && !squatUp! && midCount == false) {
+        midCount = true;
+        isCorrectPosture = false;
+        squatUp = !squatUp!;
+        setState(() {
+          whatToDo = 'Drop';
+          //correctColor = Colors.green;
+        });
+      }
+
+      //back up
+      if (midCount! && isCorrectPosture!) {
+        incrementCounter();
+        midCount = false;
+        squatUp = !squatUp!;
+        setState(() {
+          whatToDo = 'Lift';
+        });
+      }
     }
-    if (wristAlignment! && ankleAlignment! && kneeAndHipAlignment!) {
-      setState(() {
-        correctColor = Colors.green;
-        memo = 'Warrior position aligned!';
-      });
-    } else {
-      setState(() {
-        correctColor = Colors.red;
-        memo = 'Warrior position not aligned.';
-      });
-    }
+  }
+
+  void incrementCounter() {
+    setState(() {
+      if (_counter!=null)
+        _counter = _counter! + 1;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     void _getKeyPoints(k, x, y) {
       if (k["part"] == 'leftEye') {
-        leftEyePos.x = x - 300;
+        leftEyePos.x = x - 230;
         leftEyePos.y = y - 45;
       }
       if (k["part"] == 'rightEye') {
-        rightEyePos.x = x - 300;
+        rightEyePos.x = x - 230;
         rightEyePos.y = y - 45;
       }
       if (k["part"] == 'leftShoulder') {
-        leftShoulderPos.x = x - 300;
+        leftShoulderPos.x = x - 230;
         leftShoulderPos.y = y - 45;
       }
       if (k["part"] == 'rightShoulder') {
-        rightShoulderPos.x = x - 300;
+        rightShoulderPos.x = x - 230;
         rightShoulderPos.y = y - 45;
       }
       if (k["part"] == 'leftElbow') {
-        leftElbowPos.x = x - 300;
+        leftElbowPos.x = x - 230;
         leftElbowPos.y = y - 45;
       }
       if (k["part"] == 'rightElbow') {
-        rightElbowPos.x = x - 300;
+        rightElbowPos.x = x - 230;
         rightElbowPos.y = y - 45;
       }
       if (k["part"] == 'leftWrist') {
-        leftWristPos.x = x - 300;
+        leftWristPos.x = x - 230;
         leftWristPos.y = y - 45;
       }
       if (k["part"] == 'rightWrist') {
-        rightWristPos.x = x - 300;
+        rightWristPos.x = x - 230;
         rightWristPos.y = y - 45;
       }
       if (k["part"] == 'leftHip') {
-        leftHipPos.x = x - 300;
+        leftHipPos.x = x - 230;
         leftHipPos.y = y - 45;
       }
       if (k["part"] == 'rightHip') {
-        rightHipPos.x = x - 300;
+        rightHipPos.x = x - 230;
         rightHipPos.y = y - 45;
       }
       if (k["part"] == 'leftKnee') {
-        leftKneePos.x = x - 300;
+        leftKneePos.x = x - 230;
         leftKneePos.y = y - 45;
       }
       if (k["part"] == 'rightKnee') {
-        rightKneePos.x = x - 300;
+        rightKneePos.x = x - 230;
         rightKneePos.y = y - 45;
       }
       if (k["part"] == 'leftAnkle') {
-        leftAnklePos.x = x - 300;
+        leftAnklePos.x = x - 230;
         leftAnklePos.y = y - 45;
       }
       if (k["part"] == 'rightAnkle') {
-        rightAnklePos.x = x - 300;
+        rightAnklePos.x = x - 230;
         rightAnklePos.y = y - 45;
       }
     }
@@ -251,7 +274,7 @@ class _YogaState extends State<Yoga> {
           );
         }).toList();
 
-        _postureAccordingToExercise(inputArr!);
+        _countingLogic(inputArr!);
         inputArr!.clear();
 
         lists..addAll(list);
@@ -266,60 +289,41 @@ class _YogaState extends State<Yoga> {
         Stack(
           children: [
             CustomPaint(
-              painter: MyPainter(
-                  left: leftShoulderPos,
-                  right: rightShoulderPos,
-                  color: shoulderColor),
+              painter:
+              MyPainter(left: leftShoulderPos, right: rightShoulderPos),
             ),
             CustomPaint(
-              painter: MyPainter(
-                  left: leftElbowPos, right: leftShoulderPos, color: armColor),
+              painter: MyPainter(left: leftElbowPos, right: leftShoulderPos),
             ),
             CustomPaint(
-              painter: MyPainter(
-                  left: leftWristPos, right: leftElbowPos, color: armColor),
+              painter: MyPainter(left: leftWristPos, right: leftElbowPos),
             ),
             CustomPaint(
-              painter: MyPainter(
-                  left: rightElbowPos,
-                  right: rightShoulderPos,
-                  color: armColor),
+              painter: MyPainter(left: rightElbowPos, right: rightShoulderPos),
             ),
             CustomPaint(
-              painter: MyPainter(
-                  left: rightWristPos, right: rightElbowPos, color: armColor),
+              painter: MyPainter(left: rightWristPos, right: rightElbowPos),
             ),
             CustomPaint(
-              painter: MyPainter(
-                  left: leftShoulderPos,
-                  right: leftHipPos,
-                  color: shoulderColor),
+              painter: MyPainter(left: leftShoulderPos, right: leftHipPos),
             ),
             CustomPaint(
-              painter: MyPainter(
-                  left: leftHipPos, right: leftKneePos, color: legColor),
+              painter: MyPainter(left: leftHipPos, right: leftKneePos),
             ),
             CustomPaint(
-              painter: MyPainter(
-                  left: leftKneePos, right: leftAnklePos, color: legColor),
+              painter: MyPainter(left: leftKneePos, right: leftAnklePos),
             ),
             CustomPaint(
-              painter: MyPainter(
-                  left: rightShoulderPos,
-                  right: rightHipPos,
-                  color: shoulderColor),
+              painter: MyPainter(left: rightShoulderPos, right: rightHipPos),
             ),
             CustomPaint(
-              painter: MyPainter(
-                  left: rightHipPos, right: rightKneePos, color: legColor),
+              painter: MyPainter(left: rightHipPos, right: rightKneePos),
             ),
             CustomPaint(
-              painter: MyPainter(
-                  left: rightKneePos, right: rightAnklePos, color: legColor),
+              painter: MyPainter(left: rightKneePos, right: rightAnklePos),
             ),
             CustomPaint(
-              painter: MyPainter(
-                  left: leftHipPos, right: rightHipPos, color: shoulderColor),
+              painter: MyPainter(left: leftHipPos, right: rightHipPos),
             ),
           ],
         ),
@@ -338,8 +342,7 @@ class _YogaState extends State<Yoga> {
             child: Column(
               children: [
                 Text(
-                  //'$whatToDo\nArm Presses: ${_counter.toString()}',
-                  '$memo',
+                  '$whatToDo\nArm Presses: ${_counter.toString()}',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -357,16 +360,15 @@ class Vector {
 }
 
 class MyPainter extends CustomPainter {
-  Vector? left;
-  Vector? right;
-  Color? color;
-  MyPainter({this.left, this.right, this.color});
+  Vector left;
+  Vector right;
+  MyPainter({required this.left, required this.right});
   @override
   void paint(Canvas canvas, Size size) {
-    final p1 = Offset(left!.x, left!.y);
-    final p2 = Offset(right!.x, right!.y);
+    final p1 = Offset(left.x, left.y);
+    final p2 = Offset(right.x, right.y);
     final paint = Paint()
-      ..color = color! //Colors.blue
+      ..color = Colors.blue
       ..strokeWidth = 4;
     canvas.drawLine(p1, p2, paint);
   }
@@ -376,4 +378,3 @@ class MyPainter extends CustomPainter {
     return false;
   }
 }
-

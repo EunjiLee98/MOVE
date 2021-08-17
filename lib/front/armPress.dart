@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:move/reabilitation/yoga.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math';
 import 'package:move/reabilitation/camera.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:move/front/armPress_data.dart';
 
 class ArmPress extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -62,7 +62,7 @@ class _ArmPressState extends State<ArmPress> {
             cameras: widget.cameras,
             setRecognitions: _setRecognitions,
           ),
-          Yoga(
+          ArmPressData(
             data: _data == null ? [] : _data,
             previewH: max(_imageHeight, _imageWidth),
             previewW: min(_imageHeight, _imageWidth),

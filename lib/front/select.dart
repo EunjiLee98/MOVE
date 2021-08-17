@@ -8,6 +8,7 @@ import 'package:move/reabilitation/pushed_pageY.dart';
 import 'package:move/front/armPress.dart';
 import 'package:move/front/squat.dart';
 import 'package:move/tutorial/tutorial1.dart';
+import '../reabilitation.dart';
 import 'dance.dart';
 
 class Select extends StatefulWidget {
@@ -100,7 +101,8 @@ class _SelectState extends State<Select> {
                 Flexible(
                   child: TextButton(
                     onPressed: () {
-                      //Navigator.push(context, MaterialPageRoute(builder: (context) => Game(bluetoothServices: widget.bluetoothServices)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                          ReabSelect(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras,)));
                       // Navigator.push(context, MaterialPageRoute(
                       //   builder: (context) => PushedPageY(
                       //     cameras: widget.cameras!,
