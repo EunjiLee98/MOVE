@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 
 class Yoga extends StatefulWidget {
   final List<dynamic>? data;
@@ -21,7 +20,6 @@ class _YogaState extends State<Yoga> {
   Color? correctColor;
   Color? armColor, shoulderColor, legColor;
   String memo = 'Warrior position not aligned.';
-  FlutterTts ? flutterTts;
 
   double? leftShoulderY,
       rightShoulderY,
@@ -62,7 +60,6 @@ class _YogaState extends State<Yoga> {
     armColor = Colors.red;
     shoulderColor = Colors.red;
     legColor = Colors.red;
-    flutterTts = new FlutterTts();
     super.initState();
   }
 
@@ -123,12 +120,12 @@ class _YogaState extends State<Yoga> {
     if (wristAlignment! && ankleAlignment! && kneeAndHipAlignment!) {
       setState(() {
         correctColor = Colors.green;
-        flutterTts!.speak("위치가 정렬되었습니다!");
+        memo = 'Warrior position aligned!';
       });
     } else {
       setState(() {
         correctColor = Colors.red;
-        flutterTts!.speak("위치가 정렬되지 않았습니다!");
+        memo = 'Warrior position not aligned.';
       });
     }
   }
@@ -242,14 +239,14 @@ class _YogaState extends State<Yoga> {
             width: 100,
             height: 15,
             child: Container(
-                // child: Text(
-                //   "● ${k["part"]}",
-                //   style: TextStyle(
-                //     color: Color.fromRGBO(37, 213, 253, 1.0),
-                //     fontSize: 12.0,
-                //   ),
-                // ),
-                ),
+              // child: Text(
+              //   "● ${k["part"]}",
+              //   style: TextStyle(
+              //     color: Color.fromRGBO(37, 213, 253, 1.0),
+              //     fontSize: 12.0,
+              //   ),
+              // ),
+            ),
           );
         }).toList();
 
@@ -378,3 +375,4 @@ class MyPainter extends CustomPainter {
     return false;
   }
 }
+
