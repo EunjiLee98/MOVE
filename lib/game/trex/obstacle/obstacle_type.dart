@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
-import 'package:move/trex/collision/collision_box.dart';
+import 'package:move/game/trex/collision/collision_box.dart';
 
 class ObstacleType {
   const ObstacleType._internal(

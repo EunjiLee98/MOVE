@@ -7,7 +7,7 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/front/mypage.dart';
 import 'package:move/front/select.dart';
 
-import '../home_page.dart';
+import 'bluetooth.dart';
 
 class Homepage extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
@@ -76,7 +76,7 @@ class _HomeState extends State<Homepage> {
             child: TextButton(
               onPressed: () {
                 SchedulerBinding.instance!.addPostFrameCallback((_) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
                 });
               },
               child: Image.asset('bluetooth.png'),

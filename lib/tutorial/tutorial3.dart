@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/front/crossjack_page.dart';
+import 'package:move/exercise/crossjack_page.dart';
 //Crossjack tutorial
 class Tutorial3 extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;

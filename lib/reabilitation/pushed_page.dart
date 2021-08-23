@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:move/reabilitation/yoga.dart';
-import 'package:move/reabilitation/yoga2.dart';
-import 'package:move/reabilitation/yoga3.dart';
+import 'package:move/reabilitation/warrior.dart';
+import 'package:move/reabilitation/tree.dart';
+import 'package:move/reabilitation/bow.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math';
 import 'package:move/reabilitation/camera.dart';
@@ -50,19 +51,23 @@ class _PushedPageState extends State<PushedPage> {
     Size screen = MediaQuery.of(context).size;
     String name = widget.name;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('$name Pose'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
       body: Stack(
         children: <Widget>[
           Camera(
             cameras: widget.cameras,
             setRecognitions: _setRecognitions,
           ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Row(
+              children: [
+                IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back, color: Colors.white,)),
+                Text('$name Pose', style: TextStyle(color: Colors.white, fontSize: 20),),
+              ],
+            ),
+          ),
           if(widget.name == 'Warrior') ...[
-            Yoga(
+            Warrior(
               data: _data == null ? [] : _data,
               previewH: max(_imageHeight, _imageWidth),
               previewW: min(_imageHeight, _imageWidth),
@@ -70,15 +75,22 @@ class _PushedPageState extends State<PushedPage> {
               screenW: screen.width,
             ),
           ]else if(widget.name == 'Tree') ...[
-            Yoga2(
+            Tree(
               data: _data == null ? [] : _data,
               previewH: max(_imageHeight, _imageWidth),
               previewW: min(_imageHeight, _imageWidth),
               screenH: screen.height,
               screenW: screen.width,
             ),
+            Center(
+              child: Container(
+                // width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height*0.8,
+                child: Image.asset('tree.png'),
+              ),
+            )
           ]else if(widget.name == 'Bow') ...[
-            Yoga3(
+            Bow(
               data: _data == null ? [] : _data,
               previewH: max(_imageHeight, _imageWidth),
               previewW: min(_imageHeight, _imageWidth),

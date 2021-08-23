@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:move/front/squat_page.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:move/exercise/squat_page.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math';
 import 'package:move/reabilitation/camera.dart';
@@ -49,8 +50,11 @@ class _SquatState extends State<Squat> {
     Size screen = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('MOVE! - Squat'),
-        backgroundColor: Colors.transparent,
+        title: Text('MOVE! - Squat',style: GoogleFonts.russoOne(
+          fontSize: 25,
+          color: Colors.deepPurple,
+          fontWeight: FontWeight.bold,),),
+        backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: Stack(

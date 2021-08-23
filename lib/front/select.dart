@@ -2,14 +2,14 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/front/game.dart';
+import 'package:move/front/gameSelect.dart';
 import 'package:move/front/training.dart';
 import 'package:move/reabilitation/pushed_page.dart';
-import 'package:move/front/armPress.dart';
-import 'package:move/front/squat.dart';
+import 'package:move/exercise/armPress.dart';
+import 'package:move/exercise/squat.dart';
 import 'package:move/tutorial/tutorial1.dart';
-import '../reabilitation.dart';
-import 'dance.dart';
+import '../reabilitation/reabilitation.dart';
+import '../dance/dance.dart';
 
 class Select extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
@@ -79,7 +79,7 @@ class _SelectState extends State<Select> {
                 Flexible(
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Game(bluetoothServices: widget.bluetoothServices)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => GameSelect(bluetoothServices: widget.bluetoothServices)));
                     },
                     child: Image.asset('gameButton.png', width: MediaQuery.of(context).size.width*0.7,),
                   ),
@@ -103,29 +103,6 @@ class _SelectState extends State<Select> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) =>
                           ReabSelect(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras,)));
-                      // Navigator.push(context, MaterialPageRoute(
-                      //   builder: (context) => PushedPageY(
-                      //     cameras: widget.cameras!,
-                      //     title: 'posenet',
-                      //   ),
-                      // ),
-                      // );
-                      // Navigator.push(context, MaterialPageRoute(
-                      //   builder: (context) => ArmPress(
-                      //     cameras: widget.cameras!,
-                      //     title: 'MOVE! - Arm Press',
-                      //   ),
-                      // ),
-                      // );
-                      // Navigator.push(context, MaterialPageRoute(
-                      //   builder: (context) => Squat(
-                      //     cameras: widget.cameras!,
-                      //     title: 'MOVE! - Squat',
-                      //     model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
-                      //     //customModel: 'MOVE! - Squat',
-                      //   ),
-                      // ),
-                      // );
                     },
                     child: Image.asset('reabButton.png', width: MediaQuery.of(context).size.width*0.7,)
                   ),

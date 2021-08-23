@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:move/reabilitation/yoga.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math';
 import 'package:move/reabilitation/camera.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+import 'package:move/exercise/armPress_data.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ArmPress extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -19,15 +19,12 @@ class _ArmPressState extends State<ArmPress> {
   int _imageHeight = 0;
   int _imageWidth = 0;
   int x = 1;
-  FlutterTts ? flutterTts;
 
   @override
   void initState() {
     super.initState();
     var res = loadModel();
     print('Model Response: ' + res.toString());
-    flutterTts = new FlutterTts();
-    flutterTts!.speak("팔 운동이 시작되었습니다");
   }
 
   _setRecognitions(data, imageHeight, imageWidth) {
@@ -51,8 +48,11 @@ class _ArmPressState extends State<ArmPress> {
     Size screen = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('MOVE! - Arm Press'),
-        backgroundColor: Colors.transparent,
+        title: Text('MOVE! - Arm Press', style: GoogleFonts.russoOne(
+          fontSize: 25,
+          color: Colors.deepPurple,
+          fontWeight: FontWeight.bold,),),
+        backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: Stack(
@@ -61,7 +61,7 @@ class _ArmPressState extends State<ArmPress> {
             cameras: widget.cameras,
             setRecognitions: _setRecognitions,
           ),
-          Yoga(
+          ArmPressData(
             data: _data == null ? [] : _data,
             previewH: max(_imageHeight, _imageWidth),
             previewW: min(_imageHeight, _imageWidth),

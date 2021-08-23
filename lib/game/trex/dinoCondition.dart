@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/trex/trex_main.dart';
+import 'package:move/game/trex/trex_main.dart';
 
 class DinoCondition extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;

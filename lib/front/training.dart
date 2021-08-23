@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/front/armPress.dart';
+import 'package:move/exercise/armPress.dart';
 
-import 'package:move/front/crossJack.dart';
-import 'package:move/front/jumpingJack.dart';
-import 'package:move/front/squat.dart';
-import 'package:move/home_page.dart';
+import 'package:move/exercise/crossJack.dart';
+import 'package:move/exercise/jumpingJack.dart';
+import 'package:move/exercise/squat.dart';
+import 'package:move/front/bluetooth.dart';
 import 'package:camera/camera.dart';
 import 'package:move/tutorial/tutorial1.dart';
 
@@ -57,7 +57,7 @@ class _TrainingState extends State<Training> {
                           SchedulerBinding.instance!.addPostFrameCallback((_) {
                             Navigator.pop(context);
                             Navigator.pop(context);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
                           });
                       },
                       child: Image.asset('jumpingButton.png', width: MediaQuery.of(context).size.width*0.9,),
@@ -71,7 +71,7 @@ class _TrainingState extends State<Training> {
                           SchedulerBinding.instance!.addPostFrameCallback((_) {
                             Navigator.pop(context);
                             Navigator.pop(context);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
                           });
                       },
                       child: Image.asset('crossButton.png', width: MediaQuery.of(context).size.width*0.9,),

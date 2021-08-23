@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 
-class Yoga3 extends StatefulWidget {
+class Tree extends StatefulWidget {
   final List<dynamic>? data;
   final int previewH;
   final int previewW;
   final double screenH;
   final double screenW;
 
-  Yoga3(
+  Tree(
       {required this.data, required this.previewH, required this.previewW, required this.screenH, required this.screenW});
   @override
-  _Yoga3State createState() => _Yoga3State();
+  _TreeState createState() => _TreeState();
 }
 
-class _Yoga3State extends State<Yoga3> {
+class _TreeState extends State<Tree> {
   Map<String, List<double>>? inputArr;
 
-  String excercise = 'Bow';
+  String excercise = 'Tree';
   Color? correctColor;
   Color? armColor, shoulderColor, legColor;
   String memo = 'Warrior position not aligned.';
 
   double? leftShoulderY,
       rightShoulderY,
+      leftShoulderX,
+      rightShoulderX,
       leftWristX,
       leftWristY,
       rightWristX,
@@ -31,7 +33,10 @@ class _Yoga3State extends State<Yoga3> {
       rightAnkleX,
       rightAnkleY,
       leftKneeY,
-      leftHipY;
+      rightKneeX,
+      rightHipX,
+      leftHipY,
+      rightHipY;
 
   bool? wristAlignment, shoulderAlignment, ankleAlignment, kneeAndHipAlignment;
 
@@ -71,6 +76,8 @@ class _Yoga3State extends State<Yoga3> {
     setState(() {
       leftShoulderY = poses['leftShoulder']![1];
       rightShoulderY = poses['rightShoulder']![1];
+      leftShoulderX = poses['leftShoulder']![0];
+      rightShoulderX = poses['rightShoulder']![0];
       leftWristX = poses['leftWrist']![0];
       leftWristY = poses['leftWrist']![1];
       rightWristX = poses['rightWrist']![0];
@@ -79,13 +86,15 @@ class _Yoga3State extends State<Yoga3> {
       rightAnkleX = poses['rightAnkle']![0];
       rightAnkleY = poses['rightAnkle']![1];
       leftKneeY = poses['leftKnee']![1];
+      rightKneeX = poses['rightKnee']![0];
       leftHipY = poses['leftHip']![1];
+      rightHipY = poses['rightHip']![1];
+      rightHipX = poses['rightHip']![0];
     });
 
-    // leftWristY! < h/3 && rightWristY! < h/3 &&
-
-    if (rightWristY! > h/4*3 &&
-        leftWristY! > h/4*3) {
+    if (leftWristX! - rightWristX! < leftShoulderX! - rightShoulderX! &&
+        leftWristY! < h/3 &&
+        rightWristY! < h/3) {
       wristAlignment = true;
       setState(() {
         armColor = Colors.green;
@@ -98,7 +107,8 @@ class _Yoga3State extends State<Yoga3> {
         shoulderColor = Colors.red;
       });
     }
-    if (leftAnkleX! < w && rightAnkleX! < w && rightAnkleY! < h) {
+    if(rightKneeX! < rightHipX!) {
+    // if (rightAnkleY! < leftKneeY! && rightAnkleY! - rightHipY! < leftKneeY! - leftHipY!) {
       ankleAlignment = true;
       setState(() {
         legColor = Colors.green;
@@ -109,18 +119,19 @@ class _Yoga3State extends State<Yoga3> {
         legColor = Colors.red;
       });
     }
-    if (leftKneeY! < h && leftHipY! < h) {
-      kneeAndHipAlignment = true;
-      setState(() {
-        //legColor = Colors.green;
-      });
-    } else {
-      kneeAndHipAlignment = false;
-      setState(() {
-        legColor = Colors.red;
-      });
-    }
-    if (wristAlignment! && ankleAlignment! && kneeAndHipAlignment!) {
+    // if (leftKneeY! > w/3*2 && leftHipY! > w/2) {
+    //   kneeAndHipAlignment = true;
+    //   setState(() {
+    //     //legColor = Colors.green;
+    //   });
+    // } else {
+    //   kneeAndHipAlignment = false;
+    //   setState(() {
+    //     legColor = Colors.red;
+    //   });
+    // }
+    // && kneeAndHipAlignment!
+    if (wristAlignment! && ankleAlignment!) {
       setState(() {
         correctColor = Colors.green;
         memo = 'Warrior position aligned!';
@@ -326,28 +337,6 @@ class _Yoga3State extends State<Yoga3> {
           ],
         ),
         Stack(children: _renderKeypoints()),
-        // Align(
-        //   alignment: Alignment.bottomCenter,
-        //   child: Container(
-        //     height: 50,
-        //     width: widget.screenW,
-        //     decoration: BoxDecoration(
-        //       color: correctColor,
-        //       borderRadius: BorderRadius.only(
-        //           topLeft: Radius.circular(25.0),
-        //           topRight: Radius.circular(25)),
-        //     ),
-        //     child: Column(
-        //       children: [
-        //         Text(
-        //           //'$whatToDo\nArm Presses: ${_counter.toString()}',
-        //           '$memo',
-        //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }

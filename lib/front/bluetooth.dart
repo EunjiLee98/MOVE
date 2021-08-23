@@ -14,13 +14,13 @@ final StreamController<int> streamController = StreamController<int>();
 // ignore: non_constant_identifier_names
 String gesture_name = "";
 
-class MyHomePage extends StatefulWidget {
+class Bluetooth extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _BluetoothState createState() => _BluetoothState();
 }
 
 
-class _MyHomePageState extends State<MyHomePage> {
+class _BluetoothState extends State<Bluetooth> {
   final FlutterBlue flutterBlue = FlutterBlue.instance;
   // ignore: deprecated_member_use
 
