@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:move/trex/game.dart';
+import 'package:move/game/trex/game.dart';
 
-import 'config.dart';
+import 'package:move/game/trex/game_over/config.dart';
 
 class GameOverPanel extends BaseComponent with HasGameRef<TRexGame> {
   GameOverPanel(

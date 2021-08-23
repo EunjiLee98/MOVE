@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:move/trex/collision/collision_box.dart';
+import 'package:move/game/trex/collision/collision_box.dart';
 
 class TRexConfig {
   final double gravity = 1;

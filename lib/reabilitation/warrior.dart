@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Yoga extends StatefulWidget {
+class Warrior extends StatefulWidget {
   final List<dynamic>? data;
   final int previewH;
   final int previewW;
   final double screenH;
   final double screenW;
 
-  Yoga(
+  Warrior(
       {required this.data, required this.previewH, required this.previewW, required this.screenH, required this.screenW});
   @override
-  _YogaState createState() => _YogaState();
+  _WarriorState createState() => _WarriorState();
 }
 
-class _YogaState extends State<Yoga> {
+class _WarriorState extends State<Warrior> {
   Map<String, List<double>>? inputArr;
 
   String excercise = 'warrior';
@@ -23,6 +23,8 @@ class _YogaState extends State<Yoga> {
 
   double? leftShoulderY,
       rightShoulderY,
+      leftShoulderX,
+      rightShoulderX,
       leftWristX,
       leftWristY,
       rightWristX,
@@ -60,14 +62,18 @@ class _YogaState extends State<Yoga> {
     armColor = Colors.red;
     shoulderColor = Colors.red;
     legColor = Colors.red;
-
     super.initState();
   }
 
   void _postureAccordingToExercise(Map<String, List<double>> poses) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+
     setState(() {
       leftShoulderY = poses['leftShoulder']![1];
       rightShoulderY = poses['rightShoulder']![1];
+      leftShoulderX = poses['leftShoulder']![0];
+      rightShoulderX = poses['rightShoulder']![0];
       leftWristX = poses['leftWrist']![0];
       leftWristY = poses['leftWrist']![1];
       rightWristX = poses['rightWrist']![0];
@@ -78,12 +84,9 @@ class _YogaState extends State<Yoga> {
       leftHipY = poses['leftHip']![1];
     });
 
-    if (leftWristY! > 120 &&
-        rightWristY! > 120 &&
-        leftWristX! < 255 &&
-        leftWristX! > 200 &&
-        rightWristX! < 255 &&
-        rightWristX! > 160) {
+    if (leftWristX! - rightWristX! < leftShoulderX! - rightShoulderX! &&
+        leftWristY! < h/3 &&
+        rightWristY! < h/3) {
       wristAlignment = true;
       setState(() {
         armColor = Colors.green;
@@ -96,7 +99,7 @@ class _YogaState extends State<Yoga> {
         shoulderColor = Colors.red;
       });
     }
-    if (leftAnkleX! > 360 && rightAnkleX! < 60) {
+    if (leftAnkleX! - rightAnkleX! > leftShoulderX! - rightShoulderX!) {
       ankleAlignment = true;
       setState(() {
         legColor = Colors.green;
@@ -107,18 +110,19 @@ class _YogaState extends State<Yoga> {
         legColor = Colors.red;
       });
     }
-    if (leftKneeY! > 580 && leftHipY! > 505) {
-      kneeAndHipAlignment = true;
-      setState(() {
-        //legColor = Colors.green;
-      });
-    } else {
-      kneeAndHipAlignment = false;
-      setState(() {
-        legColor = Colors.red;
-      });
-    }
-    if (wristAlignment! && ankleAlignment! && kneeAndHipAlignment!) {
+    // if (leftKneeY! > w/3*2 && leftHipY! > w/2) {
+    //   kneeAndHipAlignment = true;
+    //   setState(() {
+    //     //legColor = Colors.green;
+    //   });
+    // } else {
+    //   kneeAndHipAlignment = false;
+    //   setState(() {
+    //     legColor = Colors.red;
+    //   });
+    // }
+    // && kneeAndHipAlignment!
+    if (wristAlignment! && ankleAlignment!) {
       setState(() {
         correctColor = Colors.green;
         memo = 'Warrior position aligned!';
@@ -324,28 +328,6 @@ class _YogaState extends State<Yoga> {
           ],
         ),
         Stack(children: _renderKeypoints()),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 50,
-            width: widget.screenW,
-            decoration: BoxDecoration(
-              color: correctColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25.0),
-                  topRight: Radius.circular(25)),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  //'$whatToDo\nArm Presses: ${_counter.toString()}',
-                  '$memo',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -376,4 +358,3 @@ class MyPainter extends CustomPainter {
     return false;
   }
 }
-

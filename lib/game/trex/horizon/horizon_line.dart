@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:move/trex/obstacle/obstacle.dart';
+import 'package:move/game/trex/obstacle/obstacle.dart';
 import '../game.dart';
 import 'config.dart';
 

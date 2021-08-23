@@ -2,11 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:move/front/squat.dart';
-import 'package:tflite/tflite.dart';
-import 'dart:math';
-import 'package:move/reabilitation/camera.dart';
-
 
 class SquatPage extends StatefulWidget {
   final List<dynamic> ? data;
@@ -94,7 +89,7 @@ class _SquatPageState extends State<SquatPage> {
     isCorrectPosture=false;
     setRangeBasedOnModel();
     flutterTts = new FlutterTts();
-    flutterTts!.speak("운동이 시작되었습니다");
+    flutterTts!.speak("스쿼트 운동이 시작되었습니다");
   }
 
   void resetCounter() {

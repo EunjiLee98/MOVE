@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/front/squat.dart';
+import 'package:move/exercise/squat.dart';
 import 'package:camera/camera.dart';
 
 //Squat tutorial

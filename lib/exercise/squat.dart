@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:move/reabilitation/yoga.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:move/exercise/squat_page.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math';
 import 'package:move/reabilitation/camera.dart';
 
-class PushedPageY extends StatefulWidget {
+class Squat extends StatefulWidget {
   final List<CameraDescription> cameras;
   final String title;
-  const PushedPageY({required this.cameras, required this.title});
+  final String model;
+  const Squat({required this.cameras, required this.title, required this.model});
+
   @override
-  _PushedPageYState createState() => _PushedPageYState();
+  _SquatState createState() => _SquatState();
 }
 
-class _PushedPageYState extends State<PushedPageY> {
-  List<dynamic>? _data;
+class _SquatState extends State<Squat> {
+  List<dynamic> ? _data;
   int _imageHeight = 0;
   int _imageWidth = 0;
   int x = 1;
@@ -47,8 +50,11 @@ class _PushedPageYState extends State<PushedPageY> {
     Size screen = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Warrior Pose'),
-        backgroundColor: Colors.transparent,
+        title: Text('MOVE! - Squat',style: GoogleFonts.russoOne(
+          fontSize: 25,
+          color: Colors.deepPurple,
+          fontWeight: FontWeight.bold,),),
+        backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: Stack(
@@ -57,12 +63,13 @@ class _PushedPageYState extends State<PushedPageY> {
             cameras: widget.cameras,
             setRecognitions: _setRecognitions,
           ),
-          Yoga(
+          SquatPage(
             data: _data == null ? [] : _data,
             previewH: max(_imageHeight, _imageWidth),
             previewW: min(_imageHeight, _imageWidth),
             screenH: screen.height,
             screenW: screen.width,
+            //customModel: widget.customModel,
           ),
         ],
       ),

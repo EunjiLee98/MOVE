@@ -1,8 +1,8 @@
 import 'package:flame/components.dart';
-import 'package:move/trex/collision/collision_box.dart';
-import 'package:move/trex/obstacle/obstacle.dart';
-import 'package:move/trex/t_rex/config.dart';
-import 'package:move/trex/t_rex/t_rex.dart';
+import 'package:move/game/trex/collision/collision_box.dart';
+import 'package:move/game/trex/obstacle/obstacle.dart';
+import 'package:move/game/trex/t_rex/config.dart';
+import 'package:move/game/trex/t_rex/t_rex.dart';
 
 bool checkForCollision(Obstacle obstacle, TRex tRex) {
   final tRexBox = CollisionBox(
