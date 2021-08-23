@@ -53,7 +53,7 @@ class _ArmPressState extends State<ArmPress> {
     return Scaffold(
       appBar: AppBar(
         title: Text('MOVE! - Arm Press'),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black,
         elevation: 0,
       ),
       body: Stack(
