@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/front/gameSelect.dart';
 import 'package:move/front/training.dart';
-import 'package:move/reabilitation/pushed_pageY.dart';
+import 'package:move/reabilitation/pushed_page.dart';
 import 'package:move/exercise/armPress.dart';
 import 'package:move/exercise/squat.dart';
 import 'package:move/tutorial/tutorial1.dart';
@@ -101,31 +101,8 @@ class _SelectState extends State<Select> {
                 Flexible(
                   child: TextButton(
                     onPressed: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                      //     ReabSelect(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras,)));
-                      // Navigator.push(context, MaterialPageRoute(
-                      //   builder: (context) => PushedPageY(
-                      //     cameras: widget.cameras!,
-                      //     title: 'posenet',
-                      //   ),
-                      // ),
-                      // );
-                      // Navigator.push(context, MaterialPageRoute(
-                      //   builder: (context) => ArmPress(
-                      //     cameras: widget.cameras!,
-                      //     title: 'MOVE! - Arm Press',
-                      //   ),
-                      // ),
-                      // );
-                      // Navigator.push(context, MaterialPageRoute(
-                      //   builder: (context) => Squat(
-                      //     cameras: widget.cameras!,
-                      //     title: 'MOVE! - Squat',
-                      //     model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
-                      //     //customModel: 'MOVE! - Squat',
-                      //   ),
-                      // ),
-                      // );
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                          ReabSelect(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras,)));
                     },
                     child: Image.asset('reabButton.png', width: MediaQuery.of(context).size.width*0.7,)
                   ),

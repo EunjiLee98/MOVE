@@ -170,6 +170,7 @@ flutter:
     - image1.png
     - image2.png
     - posenet_mv1_075_float_from_checkpoints.tflite
+    - tree.png
 
 
 

@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/reabilitation/pushed_pageY.dart';
+import 'package:move/reabilitation/pushed_page.dart';
 
 class ReabSelect extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
@@ -25,13 +25,14 @@ class _ReabSelectState extends State<ReabSelect> {
           ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => PushedPageY(
-                  cameras: widget.cameras!,
-                  title: 'posenet',
-                ),
+                    builder: (context) => PushedPage(
+                      cameras: widget.cameras!,
+                      title: 'posenet',
+                      name: 'Warrior',
+                    ),
                 ));
               },
-              child: Text('Yoga')
+              child: Text('Warrior')
           ),
           ElevatedButton(
               onPressed: () {
@@ -39,10 +40,23 @@ class _ReabSelectState extends State<ReabSelect> {
                   builder: (context) => PushedPage(
                     cameras: widget.cameras!,
                     title: 'posenet',
+                    name: 'Tree',
                   ),
                 ));
               },
-              child: Text('Yoga2')
+              child: Text('Tree')
+          ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => PushedPage(
+                    cameras: widget.cameras!,
+                    title: 'posenet',
+                    name: 'Bow',
+                  ),
+                ));
+              },
+              child: Text('Bow')
           )
         ],
       ),

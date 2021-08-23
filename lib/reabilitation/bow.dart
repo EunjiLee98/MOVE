@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-class Yoga2 extends StatefulWidget {
+class Bow extends StatefulWidget {
   final List<dynamic>? data;
   final int previewH;
   final int previewW;
   final double screenH;
   final double screenW;
 
-  Yoga2(
+  Bow(
       {required this.data, required this.previewH, required this.previewW, required this.screenH, required this.screenW});
   @override
-  _Yoga2State createState() => _Yoga2State();
+  _BowState createState() => _BowState();
 }
 
-class _Yoga2State extends State<Yoga2> {
+class _BowState extends State<Bow> {
   Map<String, List<double>>? inputArr;
 
-  String excercise = 'warrior';
+  String excercise = 'Bow';
   Color? correctColor;
   Color? armColor, shoulderColor, legColor;
   String memo = 'Warrior position not aligned.';
@@ -84,12 +84,8 @@ class _Yoga2State extends State<Yoga2> {
 
     // leftWristY! < h/3 && rightWristY! < h/3 &&
 
-    if (rightWristX! < w/2 &&
-        rightWristX! > w/3 &&
-        rightWristY! < h/3 &&
-        leftWristY! < h/3 &&
-        leftWristX! < w/3*2 &&
-        leftWristX! > w/2) {
+    if (rightWristY! > h/4*3 &&
+        leftWristY! > h/4*3) {
       wristAlignment = true;
       setState(() {
         armColor = Colors.green;
@@ -102,7 +98,7 @@ class _Yoga2State extends State<Yoga2> {
         shoulderColor = Colors.red;
       });
     }
-    if (leftAnkleX! > w/3 && rightAnkleX! > w/3 && rightAnkleY! > h/5*2) {
+    if (leftAnkleX! < w && rightAnkleX! < w && rightAnkleY! < h) {
       ankleAlignment = true;
       setState(() {
         legColor = Colors.green;
@@ -113,7 +109,7 @@ class _Yoga2State extends State<Yoga2> {
         legColor = Colors.red;
       });
     }
-    if (leftKneeY! > w/3*2 && leftHipY! > w/2) {
+    if (leftKneeY! < h && leftHipY! < h) {
       kneeAndHipAlignment = true;
       setState(() {
         //legColor = Colors.green;
@@ -330,28 +326,6 @@ class _Yoga2State extends State<Yoga2> {
           ],
         ),
         Stack(children: _renderKeypoints()),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 50,
-            width: widget.screenW,
-            decoration: BoxDecoration(
-              color: correctColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25.0),
-                  topRight: Radius.circular(25)),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  //'$whatToDo\nArm Presses: ${_counter.toString()}',
-                  '$memo',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-        ),
       ],
     );
   }
