@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/front/game.dart';
 import 'package:move/front/training.dart';
-import 'package:move/reabilitation/pushed_pageY.dart';
+import 'package:move/reabilitation/pushed_page.dart';
 import 'package:move/front/armPress.dart';
 import 'package:move/front/squat.dart';
 import 'package:move/tutorial/tutorial1.dart';

@@ -326,28 +326,28 @@ class _YogaState extends State<Yoga> {
           ],
         ),
         Stack(children: _renderKeypoints()),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 50,
-            width: widget.screenW,
-            decoration: BoxDecoration(
-              color: correctColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25.0),
-                  topRight: Radius.circular(25)),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  //'$whatToDo\nArm Presses: ${_counter.toString()}',
-                  '$memo',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-        ),
+        // Align(
+        //   alignment: Alignment.bottomCenter,
+        //   child: Container(
+        //     height: 50,
+        //     width: widget.screenW,
+        //     decoration: BoxDecoration(
+        //       color: correctColor,
+        //       borderRadius: BorderRadius.only(
+        //           topLeft: Radius.circular(25.0),
+        //           topRight: Radius.circular(25)),
+        //     ),
+        //     child: Column(
+        //       children: [
+        //         Text(
+        //           //'$whatToDo\nArm Presses: ${_counter.toString()}',
+        //           '$memo',
+        //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
