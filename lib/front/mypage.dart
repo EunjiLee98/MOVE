@@ -21,20 +21,23 @@ class _MypageState extends State<Mypage> {
   @override
   void initState() {
     super.initState();
+    getUser();
+  }
 
+  getUser() {
     FirebaseFirestore.instance.collection('user')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((doc) {
-          if (mounted) {
-            setState(() {
-              dino = doc.get('dino');
-              boxing = doc.get('boxing');
-              jumpingJack = doc.get('jumpingJack');
-              crossJack = doc.get('crossJack');
-              total = doc.get('avg');
-            });
-          }
+      if (mounted) {
+        setState(() {
+          dino = doc.get('dino');
+          boxing = doc.get('boxing');
+          jumpingJack = doc.get('jumpingJack');
+          crossJack = doc.get('crossJack');
+          total = doc.get('avg');
+        });
+      }
     });
   }
 
