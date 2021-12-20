@@ -62,6 +62,7 @@ class _BowState extends State<Bow> {
     armColor = Colors.red;
     shoulderColor = Colors.red;
     legColor = Colors.red;
+
     super.initState();
   }
 
