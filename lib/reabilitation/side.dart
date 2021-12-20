@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-class Bow extends StatefulWidget {
+class Side extends StatefulWidget {
   final List<dynamic>? data;
   final int previewH;
   final int previewW;
   final double screenH;
   final double screenW;
 
-  Bow(
+  Side(
       {required this.data, required this.previewH, required this.previewW, required this.screenH, required this.screenW});
   @override
-  _BowState createState() => _BowState();
+  _SideState createState() => _SideState();
 }
 
-class _BowState extends State<Bow> {
+class _SideState extends State<Side> {
   Map<String, List<double>>? inputArr;
 
-  String excercise = 'Bow';
+  String excercise = 'Side';
   Color? correctColor;
   Color? armColor, shoulderColor, legColor;
   String memo = 'Warrior position not aligned.';
@@ -32,7 +32,9 @@ class _BowState extends State<Bow> {
       rightAnkleY,
       leftKneeY,
       rightKneeY,
-      leftHipY;
+      leftHipY,
+      leftHipX,
+      rightHipX;
 
   bool? wristAlignment, shoulderAlignment, ankleAlignment, kneeAndHipAlignment;
 
@@ -82,11 +84,13 @@ class _BowState extends State<Bow> {
       leftKneeY = poses['leftKnee']![1];
       rightKneeY = poses['rightKnee']![1];
       leftHipY = poses['leftHip']![1];
+      leftHipX = poses['leftHip']![0];
+      rightHipX = poses['rightHip']![0];
     });
 
     // leftWristY! < h/3 && rightWristY! < h/3 &&
 
-    if (rightWristY! > rightKneeY! &&
+    if (rightWristY! > rightKneeY! ||
         leftWristY! > leftKneeY!) {
       wristAlignment = true;
       setState(() {
@@ -100,17 +104,16 @@ class _BowState extends State<Bow> {
         shoulderColor = Colors.red;
       });
     }
-    // if (leftAnkleX! < w && rightAnkleX! < w && rightAnkleY! < h) {
-      ankleAlignment = true;
-    //   setState(() {
-    //     legColor = Colors.green;
-    //   });
-    // } else {
-    //   ankleAlignment = false;
-    //   setState(() {
-    //     legColor = Colors.red;
-    //   });
-    // }
+    if (leftAnkleX! > leftHipX! && rightAnkleX! < rightHipX!) {
+      setState(() {
+        legColor = Colors.green;
+      });
+    } else {
+      ankleAlignment = false;
+      setState(() {
+        legColor = Colors.red;
+      });
+    }
     // if (leftKneeY! < h && leftHipY! < h) {
     //   kneeAndHipAlignment = true;
     //   setState(() {
