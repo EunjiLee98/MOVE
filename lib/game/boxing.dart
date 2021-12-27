@@ -8,6 +8,8 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:just_audio/just_audio.dart';
 import 'dart:math';
 
+import 'package:move/front/home.dart';
+
 
 class BoxingStart extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
@@ -395,12 +397,12 @@ class _BoxingClearState extends State<BoxingClear> {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.indigo,),
+          icon: Icon(Icons.arrow_back, color: Colors.white,),
           onPressed: () {
             SchedulerBinding.instance!.addPostFrameCallback((_) {
-              Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.pop(context);
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      Homepage(bluetoothServices: widget.bluetoothServices,)), (route) => false);
               // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
             });
           },
@@ -430,9 +432,9 @@ class _BoxingClearState extends State<BoxingClear> {
                       onPressed: () {
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           addScore();
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  Homepage(bluetoothServices: widget.bluetoothServices,)), (route) => false);
                           // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
                         });
                       },
@@ -442,9 +444,9 @@ class _BoxingClearState extends State<BoxingClear> {
                       onPressed: () {
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           addScore();
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => BoxingStart(bluetoothServices: widget.bluetoothServices)));
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  BoxingStart(bluetoothServices: widget.bluetoothServices,)), (route) => false);
                         });
                       },
                     ),

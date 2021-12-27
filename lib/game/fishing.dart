@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:move/front/home.dart';
 
 class FishingStart extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
@@ -62,8 +63,9 @@ class _FishingStartState extends State<FishingStart> {
                                 // foreground
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Fishing(bluetoothServices: widget.bluetoothServices)));
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        Fishing(bluetoothServices: widget.bluetoothServices,)), (route) => false);
                               },
                               child: Image.asset('ok.png'),
                             ),
@@ -361,12 +363,12 @@ class _FishingClearState extends State<FishingClear> {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.indigo,),
+          icon: Icon(Icons.arrow_back, color: Colors.white,),
           onPressed: () {
             SchedulerBinding.instance!.addPostFrameCallback((_) {
-              Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.pop(context);
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      Homepage(bluetoothServices: widget.bluetoothServices,)), (route) => false);
               // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
             });
           },
@@ -396,9 +398,9 @@ class _FishingClearState extends State<FishingClear> {
                       onPressed: () {
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           addScore();
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  Homepage(bluetoothServices: widget.bluetoothServices,)), (route) => false);
                           // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
                         });
                       },
@@ -408,9 +410,9 @@ class _FishingClearState extends State<FishingClear> {
                       onPressed: () {
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           addScore();
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => FishingStart(bluetoothServices: widget.bluetoothServices)));
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  FishingStart(bluetoothServices: widget.bluetoothServices,)), (route) => false);
                         });
                       },
                     ),

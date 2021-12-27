@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:move/front/bluetooth.dart';
+import 'package:move/front/select.dart';
 import 'package:move/game/trex/game.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -180,8 +181,9 @@ class _TRexGameWrapperState extends State<TRexGameWrapper> {
             child: TextButton(
               onPressed: () {
                 addScore();
-                Navigator.pop(context);
-                Navigator.pop(context);
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        Select(bluetoothServices: widget.bluetoothServices)), (route) => false);
               },
               child: Image.asset('dino_Exit.png', height: 30,),
             ),

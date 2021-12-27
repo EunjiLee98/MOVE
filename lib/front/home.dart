@@ -6,12 +6,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/front/mypage.dart';
 import 'package:move/front/select.dart';
+import 'package:move/front/temp.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'bluetooth.dart';
+
+const _url = 'http://www.naver.com/';
 
 class Homepage extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
   final List<CameraDescription>? cameras;
+
   Homepage({this.bluetoothServices, this.cameras});
 
   @override
@@ -24,10 +29,15 @@ class _HomeState extends State<Homepage> {
   List<String> name = [];
   List<String> photo = [];
 
+  void _launchURL() async {
+    if (!await launch(_url)) throw 'Could not launch $_url';
+  }
+
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); //screen vertically
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp]); //screen vertically
 
     FirebaseFirestore.instance
         .collection('user')
@@ -38,7 +48,7 @@ class _HomeState extends State<Homepage> {
         .listen((data) {
       setState(() {
         data.docs.forEach((element) {
-          if(!rankId.contains(element.get('id'))) {
+          if (!rankId.contains(element.get('id'))) {
             rankId.add(element.get('id'));
             total.add(element.get('avg').toString());
             name.add(element.get('name').toString());
@@ -50,7 +60,7 @@ class _HomeState extends State<Homepage> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -59,7 +69,6 @@ class _HomeState extends State<Homepage> {
     ]);
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +79,35 @@ class _HomeState extends State<Homepage> {
         elevation: 0.0,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
-        actions: <Widget> [
+        actions: <Widget>[
+          Container(
+            width: 60,
+            child: TextButton(
+              onPressed: () {
+                _launchURL();
+              },
+              child: Icon(Icons.network_wifi),
+            ),
+          ),
+          Container(
+            width: 60,
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PlayPauseAnimation()));
+              },
+              child: Icon(Icons.star),
+            ),
+          ),
           Container(
             width: 60,
             child: TextButton(
               onPressed: () {
                 SchedulerBinding.instance!.addPostFrameCallback((_) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Bluetooth()));
                 });
               },
               child: Image.asset('bluetooth.png'),
@@ -86,7 +117,9 @@ class _HomeState extends State<Homepage> {
             width: 60,
             child: TextButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Mypage()));},
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Mypage()));
+              },
               child: Image.asset('user.png'),
             ),
           ),
@@ -98,15 +131,14 @@ class _HomeState extends State<Homepage> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('background.png'),
-                    fit: BoxFit.fill
-                )
-            ),
+                    image: AssetImage('background.png'), fit: BoxFit.fill)),
             child: Container(
               margin: const EdgeInsets.all(30.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.baseline, //line alignment
-                textBaseline: TextBaseline.alphabetic, //line alignment
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                //line alignment
+                textBaseline: TextBaseline.alphabetic,
+                //line alignment
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
@@ -116,9 +148,12 @@ class _HomeState extends State<Homepage> {
                         fontSize: 32,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                      ),),
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Flexible(
                     child: FutureBuilder(
                       builder: (context, snapshot) {
@@ -132,11 +167,13 @@ class _HomeState extends State<Homepage> {
                               itemBuilder: (context, index) {
                                 var num = index + 1;
                                 return Padding(
-                                  padding: const EdgeInsets.fromLTRB(1, 1, 1, 5),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(1, 1, 1, 5),
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width*0.8,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.8,
                                     decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.8),
+                                        color: Colors.white.withOpacity(0.8),
                                         borderRadius: BorderRadius.circular(20),
                                         // gradient: LinearGradient(
                                         //   begin: Alignment.topCenter,
@@ -145,28 +182,44 @@ class _HomeState extends State<Homepage> {
                                         // ),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.indigo.withOpacity(0.15),
+                                            color:
+                                                Colors.indigo.withOpacity(0.15),
                                             spreadRadius: 5,
                                             blurRadius: 7,
                                             offset: Offset(0, 3),
                                           )
-                                        ]
-                                    ),
+                                        ]),
                                     child: ListTile(
-                                      title: Text(name[index], style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black54),),
-                                      subtitle: Text(total[index], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.indigo),),
+                                      title: Text(
+                                        name[index],
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black54),
+                                      ),
+                                      subtitle: Text(
+                                        total[index],
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.indigo),
+                                      ),
                                       leading: Container(
                                         width: 120,
                                         child: Row(
                                           children: [
                                             Image.asset('$num.png', width: 50),
-                                            SizedBox(width: 10,),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
                                             Container(
                                               width: 50,
                                               child: CircleAvatar(
                                                 radius: 30,
-                                                backgroundImage: NetworkImage(photo[index]),
-                                                backgroundColor: Colors.transparent,
+                                                backgroundImage:
+                                                    NetworkImage(photo[index]),
+                                                backgroundColor:
+                                                    Colors.transparent,
                                               ),
                                             ),
                                           ],
@@ -175,23 +228,28 @@ class _HomeState extends State<Homepage> {
                                     ),
                                   ),
                                 );
-                              }
-                          ),
+                              }),
                         );
                       },
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Center(
                     child: Container(
-                      width: MediaQuery.of(context).size.width*0.8,
+                      width: MediaQuery.of(context).size.width * 0.8,
                       child: TextButton(
                           onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => Select(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Select(
+                                        bluetoothServices:
+                                            widget.bluetoothServices,
+                                        cameras: widget.cameras)));
                           },
-                          child: Image.asset('moveButton.png')
-                      ),
+                          child: Image.asset('moveButton.png')),
                     ),
                   )
                 ],

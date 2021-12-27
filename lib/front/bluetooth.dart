@@ -193,10 +193,9 @@ class _BluetoothState extends State<Bluetooth> {
     if (connectedDevice != null) {
       _bleServices();
       SchedulerBinding.instance!.addPostFrameCallback((_) {
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: bluetoothServices)));
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+            builder: (BuildContext context) =>
+                Homepage(bluetoothServices: bluetoothServices)), (route) => false);
       });
     }
      return _buildListViewOfDevices();
@@ -209,9 +208,9 @@ class _BluetoothState extends State<Bluetooth> {
       elevation: 0,
       backgroundColor: Colors.transparent,
       centerTitle: true,
-      title: Text("Connect",textAlign: TextAlign.center,style: TextStyle(color: Colors.indigo),),
+      title: Text("Connect",textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),
       leading: IconButton(
-        icon: Icon(Icons.arrow_back,color: Colors.indigo,),
+        icon: Icon(Icons.arrow_back,color: Colors.white,),
         onPressed: () {
           Navigator.pop(context);
         },

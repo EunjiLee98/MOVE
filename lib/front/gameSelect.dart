@@ -81,9 +81,9 @@ class _GameSelectState extends State<GameSelect> {
                                     .bluetoothServices!)));
                       if (widget.bluetoothServices == null)
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  Bluetooth()), (route) => false);
                         });
                     },
                     child: Image.asset('dinoButton.png', width: MediaQuery
@@ -101,9 +101,9 @@ class _GameSelectState extends State<GameSelect> {
                                     .bluetoothServices)));
                       if (widget.bluetoothServices == null)
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  Bluetooth()), (route) => false);
                         });
                     },
                     child: Image.asset('boxButton.png', width: MediaQuery
