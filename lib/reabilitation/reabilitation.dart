@@ -81,9 +81,23 @@ class _ReabSelectState extends State<ReabSelect> {
                 ));
               },
               child: Text('Side')
-          )
+          ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => PushedPage(
+                    cameras: widget.cameras!,
+                    title: 'posenet',
+                    name: 'rive',
+                  ),
+                ));
+              },
+              child: Text('Rive Text')
+          ),
         ],
       ),
     );
   }
 }
+
+
