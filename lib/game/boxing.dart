@@ -10,7 +10,6 @@ import 'dart:math';
 
 import 'package:move/front/home.dart';
 
-
 class BoxingStart extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
   BoxingStart({this.bluetoothServices});
@@ -239,7 +238,7 @@ class _BoxingState extends State<Boxing> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.arrow_back))
+                    icon: Icon(Icons.arrow_back), color: Colors.white,)
               ],),
               Container(
                   height: 1,

@@ -54,6 +54,9 @@ In this pandemic situation where people can't go out freely due to the COVID-19,
 > 21900140@handong.edu -> Yeonhee.    
 > 21800747@handong.edu -> Jueun.    
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2c81ef8abd25439cff57c679707395003fe23f57
 =======
 >>>>>>> 2c81ef8abd25439cff57c679707395003fe23f57

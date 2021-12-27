@@ -55,10 +55,9 @@ class _TrainingState extends State<Training> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Jumpingjack(bluetoothServices: widget.bluetoothServices)));
                         if (widget.bluetoothServices == null)
                           SchedulerBinding.instance!.addPostFrameCallback((_) {
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
-
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    Bluetooth()), (route) => false);
                           });
                       },
                       child: Image.asset('jumpingButton.png', width: MediaQuery.of(context).size.width*0.9,),
