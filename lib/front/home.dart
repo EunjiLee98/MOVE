@@ -76,7 +76,7 @@ class _HomeState extends State<Homepage> {
             child: TextButton(
               onPressed: () {
                 SchedulerBinding.instance!.addPostFrameCallback((_) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth(cameras: widget.cameras)));
                 });
               },
               child: Image.asset('bluetooth.png'),

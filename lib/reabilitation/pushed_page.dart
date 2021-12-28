@@ -46,7 +46,9 @@ class _PushedPageState extends State<PushedPage> {
 
   loadModel() async {
     return await Tflite.loadModel(
-        model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
+        // model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
+        model: "assets/lite-model_movenet_singlepose_lightning_3.tflite");
+        // model: "assets/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite");
   }
 
   @override

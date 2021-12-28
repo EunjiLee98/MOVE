@@ -70,6 +70,32 @@ class _WarriorState extends State<Warrior> {
     var h = MediaQuery.of(context).size.height;
 
     setState(() {
+      // leftShoulderY = poses['left_shoulder']![1];
+      // rightShoulderY = poses['right_shoulder']![1];
+      // leftShoulderX = poses['left_shoulder']![0];
+      // rightShoulderX = poses['right_shoulder']![0];
+      // leftWristX = poses['left_wrist']![0];
+      // leftWristY = poses['left_wrist']![1];
+      // rightWristX = poses['right_wrist']![0];
+      // rightWristY = poses['left_wrist']![1];
+      // leftAnkleX = poses['left_ankle']![0];
+      // rightAnkleX = poses['right_ankle']![0];
+      // leftKneeY = poses['left_knee']![1];
+      // leftHipY = poses['left_hip']![1];
+
+      // leftShoulderY = poses['LEFT_SHOULDER']![1];
+      // rightShoulderY = poses['RIGHT_SHOULDER']![1];
+      // leftShoulderX = poses['LEFT_SHOULDER']![0];
+      // rightShoulderX = poses['RIGHT_SHOULDER']![0];
+      // leftWristX = poses['LEFT_WRIST']![0];
+      // leftWristY = poses['LEFT_WRIST']![1];
+      // rightWristX = poses['RIGHT_WRIST']![0];
+      // rightWristY = poses['LEFT_WRIST']![1];
+      // leftAnkleX = poses['LEFT_ANKLE']![0];
+      // rightAnkleX = poses['RIGHT_ANKLE']![0];
+      // leftKneeY = poses['LEFT_KNEE']![1];
+      // leftHipY = poses['LEFT_HIP']![1];
+
       leftShoulderY = poses['leftShoulder']![1];
       rightShoulderY = poses['rightShoulder']![1];
       leftShoulderX = poses['leftShoulder']![0];

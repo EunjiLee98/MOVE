@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,10 @@ final StreamController<int> streamController = StreamController<int>();
 String gesture_name = "";
 
 class Bluetooth extends StatefulWidget {
+  final List<CameraDescription>? cameras;
+
+  Bluetooth({this.cameras});
+
   @override
   _BluetoothState createState() => _BluetoothState();
 }
@@ -196,7 +201,7 @@ class _BluetoothState extends State<Bluetooth> {
         Navigator.pop(context);
         Navigator.pop(context);
         Navigator.pop(context);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: bluetoothServices)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: bluetoothServices, cameras: widget.cameras,)));
       });
     }
      return _buildListViewOfDevices();
