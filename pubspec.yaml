@@ -171,6 +171,11 @@ flutter:
     - image2.png
     - posenet_mv1_075_float_from_checkpoints.tflite
     - tree.png
+    - danceButton_comingSoon.png
+    - stretchingButton.png
+    - treeButton.png
+    - warriorButton.png
+    - bowButton.png
 
 
 

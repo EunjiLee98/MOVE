@@ -89,22 +89,30 @@ class _SelectState extends State<Select> {
                 ),
                 Flexible(
                   child: TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Dance(bluetoothServices: widget.bluetoothServices)));
-                      },
-                      child: Image.asset('danceButton.png', width: MediaQuery.of(context).size.width*0.7,)
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Flexible(
-                  child: TextButton(
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) =>
                           ReabSelect(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras,)));
                     },
-                    child: Image.asset('reabButton.png', width: MediaQuery.of(context).size.width*0.7,)
+                    child: Image.asset('stretchingButton.png', width: MediaQuery.of(context).size.width*0.7,)
+                  ),
+                ),
+                Flexible(
+                  child: TextButton(
+                      onPressed: () => showDialog<String>(
+                        //Navigator.push(context, MaterialPageRoute(builder: (context) => Dance(bluetoothServices: widget.bluetoothServices)));
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Note!'),
+                          content: const Text('This feature will be updated soon :)'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'OK'),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      child: Image.asset('danceButton_comingSoon.png', width: MediaQuery.of(context).size.width*0.7,)
                   ),
                 ),
               ],

@@ -51,6 +51,26 @@ class _TrainingState extends State<Training> {
                     SizedBox(height: 30,),
                     TextButton(
                       onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Tutorial1(cameras: widget.cameras!)));
+                        // if (widget.bluetoothServices == null)
+                        //   SchedulerBinding.instance!.addPostFrameCallback((_) {
+                        //     Navigator.pop(context);
+                        //     Navigator.pop(context);
+                        //     Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+                        //   });
+                      },
+                      child: Image.asset('squatButton.png', width: MediaQuery.of(context).size.width*0.9,),
+                    ),
+                    // SizedBox(height: 5,),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                            ArmPress(cameras: widget.cameras!, title: 'MOVE! - Arm Press',)));
+                      },
+                      child: Image.asset('dumbbell.png', width: MediaQuery.of(context).size.width*0.9,),
+                    ),
+                    TextButton(
+                      onPressed: () {
                         if(widget.bluetoothServices != null)
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Jumpingjack(bluetoothServices: widget.bluetoothServices)));
                         if (widget.bluetoothServices == null)
@@ -75,27 +95,6 @@ class _TrainingState extends State<Training> {
                           });
                       },
                       child: Image.asset('crossButton.png', width: MediaQuery.of(context).size.width*0.9,),
-                    ),
-                    // SizedBox(height: 5,),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Tutorial1(cameras: widget.cameras!)));
-                        // if (widget.bluetoothServices == null)
-                        //   SchedulerBinding.instance!.addPostFrameCallback((_) {
-                        //     Navigator.pop(context);
-                        //     Navigator.pop(context);
-                        //     Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
-                        //   });
-                      },
-                      child: Image.asset('squatButton.png', width: MediaQuery.of(context).size.width*0.9,),
-                    ),
-                    // SizedBox(height: 5,),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                            ArmPress(cameras: widget.cameras!, title: 'MOVE! - Arm Press',)));
-                      },
-                      child: Image.asset('dumbbell.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
                     // SizedBox(height: 5,),
                     TextButton(

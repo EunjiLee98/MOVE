@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class Bow extends StatefulWidget {
   final List<dynamic>? data;
@@ -20,6 +21,7 @@ class _BowState extends State<Bow> {
   Color? correctColor;
   Color? armColor, shoulderColor, legColor;
   String memo = 'Warrior position not aligned.';
+  FlutterTts ? flutterTts;
 
   double? leftShoulderY,
       rightShoulderY,
@@ -61,6 +63,9 @@ class _BowState extends State<Bow> {
     armColor = Colors.red;
     shoulderColor = Colors.red;
     legColor = Colors.red;
+    flutterTts = new FlutterTts();
+    flutterTts!.setSpeechRate(0.4);
+    flutterTts!.speak("양 다리를 모아주시고 상체를 최대한 숙여, 손바닥이 땅과 닿게 해주세요");
     super.initState();
   }
 

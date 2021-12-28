@@ -67,38 +67,38 @@ class _JumpingstartState extends State<Jumpingstart> {
     super.dispose();
   }
 
-  Future<void> addScore(num score) async{
-    FirebaseFirestore.instance
-        .collection('user')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then((doc) {
-          if(mounted) {
-            setState(() {
-              dino = doc.get('dino');
-              boxing = doc.get('boxing');
-              jumpingJack = doc.get('jumpingJack');
-              crossJack = doc.get('crossJack');
-            });
-
-            if(score > jumpingJack) {
-              avg = (dino + boxing + score + crossJack)/4;
-
-              updateScore();
-            }
-          }
-    });
-  }
-
-  Future<void> updateScore() {
-    return FirebaseFirestore.instance
-        .collection('user')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .update({
-      'jumpingJack': double.parse(score.toStringAsFixed(0)),
-      'avg': double.parse(avg.toStringAsFixed(0)),
-    });
-  }
+  // Future<void> addScore(num score) async{
+  //   FirebaseFirestore.instance
+  //       .collection('user')
+  //       .doc(FirebaseAuth.instance.currentUser!.uid)
+  //       .get()
+  //       .then((doc) {
+  //         if(mounted) {
+  //           setState(() {
+  //             dino = doc.get('dino');
+  //             boxing = doc.get('boxing');
+  //             jumpingJack = doc.get('jumpingJack');
+  //             crossJack = doc.get('crossJack');
+  //           });
+  //
+  //           if(score > jumpingJack) {
+  //             avg = (dino + boxing + score + crossJack)/4;
+  //
+  //             updateScore();
+  //           }
+  //         }
+  //   });
+  // }
+  //
+  // Future<void> updateScore() {
+  //   return FirebaseFirestore.instance
+  //       .collection('user')
+  //       .doc(FirebaseAuth.instance.currentUser!.uid)
+  //       .update({
+  //     'jumpingJack': double.parse(score.toStringAsFixed(0)),
+  //     'avg': double.parse(avg.toStringAsFixed(0)),
+  //   });
+  // }
 
   ListView _buildConnectDeviceView() {
     // ignore: deprecated_member_use
@@ -194,7 +194,7 @@ class _JumpingstartState extends State<Jumpingstart> {
                                           // foreground
                                         ),
                                         onPressed: () {
-                                          addScore(score);
+                                          //addScore(score);
                                           Navigator.pop(context);
                                           Navigator.pop(context);
                                           Navigator.pop(context);
@@ -208,7 +208,7 @@ class _JumpingstartState extends State<Jumpingstart> {
                                           // foreground
                                         ),
                                         onPressed: () {
-                                          addScore(score);
+                                          //addScore(score);
                                           Navigator.pop(context);
                                         },
                                         child: Image.asset('restart.png',height: 72,),

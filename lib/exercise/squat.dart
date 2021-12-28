@@ -49,19 +49,20 @@ class _SquatState extends State<Squat> {
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('MOVE! - Squat',style: GoogleFonts.russoOne(
-          fontSize: 25,
-          color: Colors.deepPurple,
-          fontWeight: FontWeight.bold,),),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
       body: Stack(
         children: <Widget>[
           Camera(
             cameras: widget.cameras,
             setRecognitions: _setRecognitions,
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Row(
+              children: [
+                IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back, color: Colors.white,)),
+                Text('Squat', style: TextStyle(color: Colors.white, fontSize: 20),),
+              ],
+            ),
           ),
           SquatPage(
             data: _data == null ? [] : _data,

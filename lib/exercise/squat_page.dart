@@ -89,7 +89,8 @@ class _SquatPageState extends State<SquatPage> {
     isCorrectPosture=false;
     setRangeBasedOnModel();
     flutterTts = new FlutterTts();
-    flutterTts!.speak("스쿼트 운동이 시작되었습니다");
+    flutterTts!.setSpeechRate(0.4);
+    flutterTts!.speak("다리를 어깨너비로 벌려 준비자세를 취해주세요");
   }
 
   void resetCounter() {

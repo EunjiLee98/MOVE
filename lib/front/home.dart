@@ -82,14 +82,14 @@ class _HomeState extends State<Homepage> {
               child: Image.asset('bluetooth.png'),
             ),
           ),
-          Container(
-            width: 60,
-            child: TextButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Mypage()));},
-              child: Image.asset('user.png'),
-            ),
-          ),
+          // Container(
+          //   width: 60,
+          //   child: TextButton(
+          //     onPressed: () {
+          //       Navigator.push(context, MaterialPageRoute(builder: (context) => Mypage()));},
+          //     child: Image.asset('user.png'),
+          //   ),
+          // ),
         ],
       ),
       body: SingleChildScrollView(
