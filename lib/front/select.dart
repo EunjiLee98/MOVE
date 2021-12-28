@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/front/gameSelect.dart';
+import 'package:move/front/home.dart';
 import 'package:move/front/training.dart';
 import 'package:move/reabilitation/pushed_page.dart';
 import 'package:move/exercise/armPress.dart';
@@ -48,7 +49,14 @@ class _SelectState extends State<Select> {
         elevation: 0.0,
         leading: BackButton(
             color: Colors.white,
-            onPressed: () {Navigator.pop(context);},
+            onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => Homepage(
+                            bluetoothServices: widget.bluetoothServices)),
+                    (route) => false);
+            },
         ),
       ),
       body: Container(

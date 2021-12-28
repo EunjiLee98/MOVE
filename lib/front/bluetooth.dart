@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -15,13 +16,17 @@ final StreamController<int> streamController = StreamController<int>();
 String gesture_name = "";
 
 class Bluetooth extends StatefulWidget {
+  final List<CameraDescription>? cameras;
+
+  Bluetooth({this.cameras});
+
   @override
   _BluetoothState createState() => _BluetoothState();
 }
 
-
 class _BluetoothState extends State<Bluetooth> {
   final FlutterBlue flutterBlue = FlutterBlue.instance;
+
   // ignore: deprecated_member_use
 
   final List<BluetoothDevice> devicesList = [];
@@ -41,7 +46,8 @@ class _BluetoothState extends State<Bluetooth> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); //screen vertically
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp]); //screen vertically
 
     flutterBlue.connectedDevices
         .asStream()
@@ -59,7 +65,7 @@ class _BluetoothState extends State<Bluetooth> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -84,10 +90,11 @@ class _BluetoothState extends State<Bluetooth> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(device.name == '' ? '(unknown device)' : device.name,
+                        Text(
+                          device.name == '' ? '(unknown device)' : device.name,
                           style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
+                            fontSize: 20,
+                            color: Colors.white,
                           ),
                         ),
                         // Text(device.id.toString()),
@@ -96,15 +103,16 @@ class _BluetoothState extends State<Bluetooth> {
                   ),
                   // ignore: deprecated_member_use
                   FlatButton(
-                    child: Image.asset('connect.png', width: MediaQuery.of(context).size.width*0.35,),
+                    child: Image.asset(
+                      'connect.png',
+                      width: MediaQuery.of(context).size.width * 0.35,
+                    ),
                     onPressed: () async {
                       flutterBlue.stopScan();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Shake your controller!'),
-                            duration: Duration(seconds: 5),
-                          )
-                      );
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Shake your controller!'),
+                        duration: Duration(seconds: 5),
+                      ));
                       showDialog(
                           context: context,
                           barrierDismissible: false,
@@ -124,9 +132,10 @@ class _BluetoothState extends State<Bluetooth> {
                       } finally {
                         bluetoothServices = await device.discoverServices();
                       }
-                      setState(() {
-                        connectedDevice = device;
-                      });
+                      if (mounted)
+                        setState(() {
+                          connectedDevice = device;
+                        });
                     },
                   ),
                 ],
@@ -149,11 +158,11 @@ class _BluetoothState extends State<Bluetooth> {
     );
   }
 
-  void _bleRead(
-      BluetoothCharacteristic characteristic) {
+  void _bleRead(BluetoothCharacteristic characteristic) {
     if (characteristic.properties.notify) {
       characteristic.value.listen((value) {
-        readValues[characteristic.uuid] = value;});
+        readValues[characteristic.uuid] = value;
+      });
       characteristic.setNotifyValue(true);
     }
 
@@ -162,20 +171,28 @@ class _BluetoothState extends State<Bluetooth> {
   }
 
   Future<void> setnum(characteristic) async {
-    var sub = characteristic.value.listen((value) {
+    var sub = await characteristic.value.listen((value) {
+      if (mounted)
       setState(() {
         readValues[characteristic.uuid] = value;
         gesture = value.toString();
         gesture_num = int.parse(gesture[1]);
         print('GESTURE - ' + gesture);
-        switch(gesture_num){
-          case 1: gesture_name = "PUNCH"; break;
-          case 2: gesture_name = "UPPERCUT"; break;
+        switch (gesture_num) {
+          case 1:
+            gesture_name = "PUNCH";
+            break;
+          case 2:
+            gesture_name = "UPPERCUT";
+            break;
         }
       });
     });
 
-    await characteristic.read();
+    Future.delayed(Duration(milliseconds: 500), () async {
+      await characteristic.read();
+    });
+    // await characteristic.read();
     sub.cancel();
   }
 
@@ -189,45 +206,56 @@ class _BluetoothState extends State<Bluetooth> {
     }
   }
 
-   Widget _buildView() {
+  Widget _buildView() {
     if (connectedDevice != null) {
       _bleServices();
       SchedulerBinding.instance!.addPostFrameCallback((_) {
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-            builder: (BuildContext context) =>
-                Homepage(bluetoothServices: bluetoothServices)), (route) => false);
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: bluetoothServices, cameras: widget.cameras,)));
       });
+      //   Navigator.pushAndRemoveUntil(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder: (BuildContext context) => Homepage(
+      //               bluetoothServices: bluetoothServices)),
+      //       (route) => false);
+      // });
     }
-     return _buildListViewOfDevices();
-   }
+    return _buildListViewOfDevices();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    extendBodyBehindAppBar: true,
-    appBar: AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      centerTitle: true,
-      title: Text("Connect",textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back,color: Colors.white,),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-    ),
-    body: Container(
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('background.png'),
-                fit: BoxFit.fill
-            )
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          centerTitle: true,
+          title: Text(
+            "Connect",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
+          ),
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
-          child: _buildView(),
-        )
-    ),
-  );
+        body: Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('background.png'), fit: BoxFit.fill)),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
+              child: _buildView(),
+            )),
+      );
 }

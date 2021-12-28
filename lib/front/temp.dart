@@ -10,9 +10,7 @@ class PlayPauseAnimation extends StatefulWidget {
 
 class _PlayPauseAnimationState extends State<PlayPauseAnimation> {
   /// Controller for playback
-  late RiveAnimationController close_controller;
-
-  late RiveAnimationController open_controller;
+  late RiveAnimationController _controller;
 
   /// Is the animation currently playing?
   bool _isPlaying = false;
@@ -20,14 +18,8 @@ class _PlayPauseAnimationState extends State<PlayPauseAnimation> {
   @override
   void initState() {
     super.initState();
-    close_controller = OneShotAnimation(
-      '팔오므리기',
-      autoplay: false,
-      onStop: () => setState(() => _isPlaying = false),
-      onStart: () => setState(() => _isPlaying = true),
-    );
-    open_controller = OneShotAnimation(
-      '팔벌리기',
+    _controller = OneShotAnimation(
+      '점핑잭',
       autoplay: false,
       onStop: () => setState(() => _isPlaying = false),
       onStart: () => setState(() => _isPlaying = true),
@@ -42,7 +34,7 @@ class _PlayPauseAnimationState extends State<PlayPauseAnimation> {
         child: RiveAnimation.asset(
           'assets/rive/jumpingjack.riv',
           animations: ['기본'], // Default Animation
-          controllers: [close_controller, open_controller],
+          controllers: [_controller],
         ),
       ),
       floatingActionButton: Row(
@@ -51,17 +43,9 @@ class _PlayPauseAnimationState extends State<PlayPauseAnimation> {
           // Animation 'Close Arm' once
           FloatingActionButton(
             // disable the button while playing the animation
-            onPressed: () => _isPlaying ? null : close_controller.isActive = true,
+            onPressed: () => _isPlaying ? null : _controller.isActive = true,
             tooltip: 'Close Arm',
             child: const Icon(Icons.close),
-          ),
-          SizedBox(width: 20,),
-          // Animation 'Open Arm' once
-          FloatingActionButton(
-            // disable the button while playing the animation
-            onPressed: () => _isPlaying ? null : open_controller.isActive = true,
-            tooltip: 'Open Arm',
-            child: const Icon(Icons.open_in_full),
           ),
         ],
       ),
