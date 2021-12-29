@@ -81,9 +81,9 @@ class _GameSelectState extends State<GameSelect> {
                                     .bluetoothServices!)));
                       if (widget.bluetoothServices == null)
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  Bluetooth()), (route) => false);
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
                         });
                     },
                     child: Image.asset('dinoButton.png', width: MediaQuery
@@ -101,9 +101,9 @@ class _GameSelectState extends State<GameSelect> {
                                     .bluetoothServices)));
                       if (widget.bluetoothServices == null)
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  Bluetooth()), (route) => false);
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
                         });
                     },
                     child: Image.asset('boxButton.png', width: MediaQuery
@@ -114,8 +114,8 @@ class _GameSelectState extends State<GameSelect> {
                   // SizedBox(height: 5,),
                   TextButton(
                     onPressed: () {
-                       if(widget.bluetoothServices != null)
-                         Navigator.push(context, MaterialPageRoute(builder: (context) => FishingStart(bluetoothServices: widget.bluetoothServices)));
+                      if(widget.bluetoothServices != null)
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => FishingStart(bluetoothServices: widget.bluetoothServices)));
                     },
                     child: Image.asset('fishing.png', width: MediaQuery
                         .of(context)

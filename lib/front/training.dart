@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -7,9 +8,12 @@ import 'package:move/exercise/armPress.dart';
 import 'package:move/exercise/crossJack.dart';
 import 'package:move/exercise/jumpingJack.dart';
 import 'package:move/exercise/squat.dart';
+import 'package:move/exercise/squatRive.dart';
 import 'package:move/front/bluetooth.dart';
 import 'package:camera/camera.dart';
+import 'package:move/front/temp.dart';
 import 'package:move/tutorial/tutorial1.dart';
+import 'package:rive/rive.dart';
 
 class Training extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
@@ -55,9 +59,9 @@ class _TrainingState extends State<Training> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Jumpingjack(bluetoothServices: widget.bluetoothServices)));
                         if (widget.bluetoothServices == null)
                           SchedulerBinding.instance!.addPostFrameCallback((_) {
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    Bluetooth()), (route) => false);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
                           });
                       },
                       child: Image.asset('jumpingButton.png', width: MediaQuery.of(context).size.width*0.9,),
@@ -69,9 +73,9 @@ class _TrainingState extends State<Training> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Crossjack(bluetoothServices: widget.bluetoothServices)));
                         if (widget.bluetoothServices == null)
                           SchedulerBinding.instance!.addPostFrameCallback((_) {
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    Bluetooth()), (route) => false);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
                           });
                       },
                       child: Image.asset('crossButton.png', width: MediaQuery.of(context).size.width*0.9,),
@@ -101,7 +105,7 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
-                        //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => PlayPauseAnimation()));
                       },
                       child: Image.asset('crunch.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
@@ -110,6 +114,8 @@ class _TrainingState extends State<Training> {
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
                         //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                            SquatRive(cameras: widget.cameras!, title: 'Squat Rive',)));
                       },
                       child: Image.asset('plank.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
