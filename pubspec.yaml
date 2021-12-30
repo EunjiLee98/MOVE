@@ -178,6 +178,9 @@ flutter:
     - assets/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite
     - assets/rive/squats_rive.riv
     - assets/rive/liquid_download.riv
+    - assets/rive/test.riv
+    - assets/rive/squat_test.riv
+
 
 
 

@@ -32,7 +32,7 @@ class _PlayPauseAnimationState extends State<PlayPauseAnimation> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: RiveAnimation.asset(
-         "assets/squats_rive.riv",
+          'assets/rive/squat_test.riv',
           animations: ['Idle'], // Default Animation
           controllers: [_controller],
         ),

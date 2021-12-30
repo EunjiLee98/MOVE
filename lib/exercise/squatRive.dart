@@ -333,7 +333,7 @@ class _SquatPageState extends State<SquatPage> {
       Container(
         width: MediaQuery.of(context).size.width,
         child: RiveAnimation.asset(
-          'assets/squats_rive.riv',
+          'assets/rive/squats_rive.riv',
           // animations: const ['Idle'],
           controllers: [_controller, _squatController],
         ),

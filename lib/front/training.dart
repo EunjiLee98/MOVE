@@ -124,7 +124,7 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => LiquidDownload()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LiquidDownload(cameras: widget.cameras!, title: 'Squat State Machine Rive',)));
                       },
                       child: Image.asset('pushUp.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
