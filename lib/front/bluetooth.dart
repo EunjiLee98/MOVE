@@ -118,6 +118,7 @@ class _BluetoothState extends State<Bluetooth> {
                               child: CircularProgressIndicator(),
                             );
                           });
+
                       try {
                         await device.connect();
                       } catch (e) {

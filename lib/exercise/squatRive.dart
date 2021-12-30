@@ -214,11 +214,6 @@ class _SquatPageState extends State<SquatPage> {
 
   //region Core
   _postureAccordingToExercise(Map<String, List<double>> poses){
-    // if(widget.customModel==bodyWeight[1]) {
-    //   return poses['leftShoulder']![1] < upperRange!
-    //       && poses['rightShoulder']![1] < upperRange!;
-    // }
-    //if(widget.customModel==bodyWeight[0]) {
     return poses['leftShoulder']![1] < upperRange!
         && poses['rightShoulder']![1] < upperRange!
         && poses['rightKnee']![1]>lowerRange!

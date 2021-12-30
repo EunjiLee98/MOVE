@@ -8,6 +8,9 @@ import 'package:move/reabilitation/bow.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math';
 import 'package:move/reabilitation/camera.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
+
+import 'dart:io';
 
 import 'leg.dart';
 
@@ -44,10 +47,14 @@ class _PushedPageState extends State<PushedPage> {
     });
   }
 
+  // loadModel() async {
+  //   return await Interpreter.fromAsset("lite-model_movenet_singlepose_lightning_3.tflite");
+  // }
+
   loadModel() async {
     return await Tflite.loadModel(
-        // model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
-        model: "assets/lite-model_movenet_singlepose_lightning_3.tflite");
+        model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
+        // model: "assets/lite-model_movenet_singlepose_lightning_3.tflite");
         // model: "assets/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite");
   }
 
