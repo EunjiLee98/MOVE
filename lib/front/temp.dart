@@ -19,7 +19,7 @@ class _PlayPauseAnimationState extends State<PlayPauseAnimation> {
   void initState() {
     super.initState();
     _controller = OneShotAnimation(
-      '점핑잭',
+      'Squat',
       autoplay: false,
       onStop: () => setState(() => _isPlaying = false),
       onStart: () => setState(() => _isPlaying = true),
@@ -32,8 +32,8 @@ class _PlayPauseAnimationState extends State<PlayPauseAnimation> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: RiveAnimation.asset(
-          'assets/rive/jumpingjack.riv',
-          animations: ['기본'], // Default Animation
+         "assets/squats_rive.riv",
+          animations: ['Idle'], // Default Animation
           controllers: [_controller],
         ),
       ),

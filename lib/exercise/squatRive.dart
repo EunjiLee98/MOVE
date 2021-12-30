@@ -325,16 +325,16 @@ class _SquatPageState extends State<SquatPage> {
       Stack(
         children: _renderHelperBlobs(),
       ),
-      // Container(
-      //   width: MediaQuery.of(context).size.width,
-      //   height: MediaQuery.of(context).size.height,
-      //   color: const Color(0xffB9F08E),
-      // ),
+      Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: const Color(0xffB9F08E),
+      ),
       Container(
         width: MediaQuery.of(context).size.width,
         child: RiveAnimation.asset(
           'assets/squats_rive.riv',
-          // animations: ['Idle'],
+          // animations: const ['Idle'],
           controllers: [_controller, _squatController],
         ),
       ),

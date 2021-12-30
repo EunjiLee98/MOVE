@@ -7,6 +7,7 @@ import 'package:move/exercise/armPress.dart';
 
 import 'package:move/exercise/crossJack.dart';
 import 'package:move/exercise/jumpingJack.dart';
+import 'package:move/exercise/riveTest.dart';
 import 'package:move/exercise/squat.dart';
 import 'package:move/exercise/squatRive.dart';
 import 'package:move/front/bluetooth.dart';
@@ -123,7 +124,7 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
-                        //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LiquidDownload()));
                       },
                       child: Image.asset('pushUp.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),

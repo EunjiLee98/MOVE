@@ -177,6 +177,8 @@ flutter:
     - assets/rive/jumpingjack.riv
     - assets/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite
     - assets/rive/squats_rive.riv
+    - assets/rive/liquid_download.riv
+
 
 
 
