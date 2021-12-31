@@ -105,8 +105,8 @@ class _TrainingState extends State<Training> {
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
-                        // if(widget.bluetoothServices != null)
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => PlayPauseAnimation()));
+                        if(widget.bluetoothServices != null)
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => RiveTest(bluetoothServices: widget.bluetoothServices)));
                       },
                       child: Image.asset('crunch.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
@@ -116,7 +116,7 @@ class _TrainingState extends State<Training> {
                         // if(widget.bluetoothServices != null)
                         //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
                         Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                            SquatRive(cameras: widget.cameras!, title: 'Squat Rive',)));
+                            PlayPauseAnimation()));
                       },
                       child: Image.asset('plank.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
@@ -157,6 +157,123 @@ class _TrainingState extends State<Training> {
           );
         }
         )
+    );
+  }
+}
+
+class RiveTest extends StatefulWidget {
+  final List<BluetoothService>? bluetoothServices;
+  RiveTest({this.bluetoothServices});
+
+  @override
+  _RiveTestState createState() => _RiveTestState();
+}
+
+class _RiveTestState extends State<RiveTest> {
+  final Map<Guid, List<int>> readValues = new Map<Guid, List<int>>();
+  String gesture = "";
+  // ignore: non_constant_identifier_names
+  int gesture_num = 0;
+
+  late RiveAnimationController _controller;
+  late RiveAnimationController _openController;
+  late RiveAnimationController _closeController;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = SimpleAnimation('기본');
+
+    _openController = OneShotAnimation(
+      '팔벌리기',
+      autoplay: false,
+    );
+
+    _closeController = OneShotAnimation(
+      '팔오므리기',
+      autoplay: false,
+    );
+
+  }
+
+  ListView _buildConnectDeviceView() {
+    // ignore: deprecated_member_use
+    List<Container> containers = [];
+    for (BluetoothService service in widget.bluetoothServices!) {
+      // ignore: deprecated_member_use
+      List<Widget> characteristicsWidget = [];
+
+      for (BluetoothCharacteristic characteristic in service.characteristics) {
+        if (characteristic.properties.notify) {
+          characteristic.value.listen((value) {
+            readValues[characteristic.uuid] = value;
+          });
+          characteristic.setNotifyValue(true);
+        }
+        if (characteristic.properties.read && characteristic.properties.notify) {
+          setnum(characteristic);
+        }
+      }
+      containers.add(
+        Container(
+          child: ExpansionTile(
+              title: Center(child:Text("블루투스 연결설정")),
+              children: characteristicsWidget),
+        ),
+      );
+    }
+
+    return ListView(
+      padding: const EdgeInsets.all(8),
+      children: <Widget>[
+        Container(
+          height: MediaQuery.of(context).size.height,
+          child: RiveAnimation.asset(
+            'assets/test.riv',
+            controllers: [_controller, _openController, _closeController],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> setnum(characteristic) async {
+    var sub = characteristic.value.listen((value) {
+      setState(() {
+        readValues[characteristic.uuid] = value;
+        gesture = value.toString();
+        gesture_num = int.parse(gesture[1]);
+      });
+    });
+
+    if(gesture_num == 2) {
+      setState(() {
+        _closeController.isActive = true;
+        _openController.isActive = false;
+      });
+    }
+
+    if(gesture_num == 1) {
+      setState(() {
+        _openController.isActive = true;
+        _closeController.isActive = false;
+      });
+    }
+
+    await characteristic.read();
+    sub.cancel();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+              color: const Color(0xff3AB7F7)
+          ),
+          child: _buildConnectDeviceView()
+      )
     );
   }
 }

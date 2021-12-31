@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:move/reabilitation/side.dart';
 import 'package:move/reabilitation/warrior.dart';
 import 'package:move/reabilitation/tree.dart';
 import 'package:move/reabilitation/bow.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math';
 import 'package:move/reabilitation/camera.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
+
+import 'dart:io';
+
+import 'leg.dart';
 
 class PushedPage extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -41,9 +47,15 @@ class _PushedPageState extends State<PushedPage> {
     });
   }
 
+  // loadModel() async {
+  //   return await Interpreter.fromAsset("lite-model_movenet_singlepose_lightning_3.tflite");
+  // }
+
   loadModel() async {
     return await Tflite.loadModel(
         model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
+        // model: "assets/lite-model_movenet_singlepose_lightning_3.tflite");
+        // model: "assets/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite");
   }
 
   @override
@@ -82,15 +94,31 @@ class _PushedPageState extends State<PushedPage> {
               screenH: screen.height,
               screenW: screen.width,
             ),
-            Center(
-              child: Container(
-                // width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height*0.8,
-                child: Image.asset('tree.png'),
-              ),
-            )
+            // Center(
+            //   child: Container(
+            //     // width: MediaQuery.of(context).size.width,
+            //     height: MediaQuery.of(context).size.height*0.8,
+            //     child: Image.asset('tree.png'),
+            //   ),
+            // )
           ]else if(widget.name == 'Bow') ...[
             Bow(
+              data: _data == null ? [] : _data,
+              previewH: max(_imageHeight, _imageWidth),
+              previewW: min(_imageHeight, _imageWidth),
+              screenH: screen.height,
+              screenW: screen.width,
+            ),
+          ]else if(widget.name == 'Leg') ...[
+            Leg(
+              data: _data == null ? [] : _data,
+              previewH: max(_imageHeight, _imageWidth),
+              previewW: min(_imageHeight, _imageWidth),
+              screenH: screen.height,
+              screenW: screen.width,
+            ),
+          ]else if(widget.name == 'Side') ...[
+            Side(
               data: _data == null ? [] : _data,
               previewH: max(_imageHeight, _imageWidth),
               previewW: min(_imageHeight, _imageWidth),

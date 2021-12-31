@@ -174,7 +174,7 @@ class _SquatPageTestState extends State<SquatPageTest> {
     // Load the animation file from the bundle, note that you could also
     // download this. The RiveFile just expects a list of bytes.
     rootBundle.load('assets/rive/squat_test.riv').then(
-      (data) async {
+          (data) async {
         // Load the RiveFile from the binary data.
         final file = RiveFile.import(data);
 
@@ -182,7 +182,7 @@ class _SquatPageTestState extends State<SquatPageTest> {
         // Rive widget.
         final artboard = file.mainArtboard;
         var controller =
-            StateMachineController.fromArtboard(artboard, 'squatController');
+        StateMachineController.fromArtboard(artboard, 'squatController');
         if (controller != null) {
           artboard.addController(controller);
           _progress = controller.findInput('squat_controll');
@@ -353,13 +353,13 @@ class _SquatPageTestState extends State<SquatPageTest> {
             width: 100,
             height: 15,
             child: Container(
-          //     child: Text(
-          //       "●",
-          //       style: TextStyle(
-          //         color: Color.fromRGBO(37, 213, 253, 1.0),
-          //         fontSize: 12.0,
-          //       ),
-          //     ),
+              //     child: Text(
+              //       "●",
+              //       style: TextStyle(
+              //         color: Color.fromRGBO(37, 213, 253, 1.0),
+              //         fontSize: 12.0,
+              //       ),
+              //     ),
             ),
           );
         }).toList();
@@ -383,10 +383,14 @@ class _SquatPageTestState extends State<SquatPageTest> {
       ),
       Container(
         width: MediaQuery.of(context).size.width,
-        child: Expanded(
-          child: Rive(
-            artboard: _riveArtboard!,
-          ),
+        child: Column(
+          children: [
+            Expanded(
+              child: Rive(
+                artboard: _riveArtboard!,
+              ),
+            ),
+          ],
         ),
       ),
       Column(

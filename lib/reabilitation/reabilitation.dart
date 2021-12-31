@@ -57,9 +57,47 @@ class _ReabSelectState extends State<ReabSelect> {
                 ));
               },
               child: Text('Bow')
-          )
+          ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => PushedPage(
+                    cameras: widget.cameras!,
+                    title: 'posenet',
+                    name: 'Leg',
+                  ),
+                ));
+              },
+              child: Text('Leg')
+          ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => PushedPage(
+                    cameras: widget.cameras!,
+                    title: 'posenet',
+                    name: 'Side',
+                  ),
+                ));
+              },
+              child: Text('Side')
+          ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => PushedPage(
+                    cameras: widget.cameras!,
+                    title: 'posenet',
+                    name: 'rive',
+                  ),
+                ));
+              },
+              child: Text('Rive Text')
+          ),
         ],
       ),
     );
   }
 }
+
+

@@ -36,6 +36,7 @@ dependencies:
   tflite: ^1.1.2
   flutter_tts: ^3.2.2
   rive: 0.7.28
+  tflite_flutter_helper: ^0.3.0
   url_launcher: ^6.0.10
 
   # The following adds the Cupertino Icons font to your application.
@@ -173,6 +174,13 @@ flutter:
     - image2.png
     - posenet_mv1_075_float_from_checkpoints.tflite
     - tree.png
+    - zombie.riv
+    - squats_rive.riv
+    - test.riv
+    - lite-model_movenet_singlepose_lightning_3.tflite
+    - lite-model_movenet_multipose_lightning_tflite_float16_1.tflite
+    - lite-model_movenet_singlepose_lightning_tflite_int8_4.tflite
+    - liquid_download.riv
     - assets/rive/zombie_character.riv
     - assets/rive/jumpingjack.riv
     - assets/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite
@@ -181,10 +189,6 @@ flutter:
     - assets/rive/test.riv
     - assets/rive/squat_test.riv
     - assets/rive/character.riv
-
-
-
-
 
 
 

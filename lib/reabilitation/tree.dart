@@ -30,6 +30,7 @@ class _TreeState extends State<Tree> {
       rightWristX,
       rightWristY,
       leftAnkleX,
+      leftAnkleY,
       rightAnkleX,
       rightAnkleY,
       leftKneeY,
@@ -83,6 +84,7 @@ class _TreeState extends State<Tree> {
       rightWristX = poses['rightWrist']![0];
       rightWristY = poses['leftWrist']![1];
       leftAnkleX = poses['leftAnkle']![0];
+      leftAnkleY = poses['leftAnkle']![1];
       rightAnkleX = poses['rightAnkle']![0];
       rightAnkleY = poses['rightAnkle']![1];
       leftKneeY = poses['leftKnee']![1];
@@ -107,8 +109,8 @@ class _TreeState extends State<Tree> {
         shoulderColor = Colors.red;
       });
     }
-    if(rightKneeX! < rightHipX!) {
-    // if (rightAnkleY! < leftKneeY! && rightAnkleY! - rightHipY! < leftKneeY! - leftHipY!) {
+    // if(rightKneeX! < rightHipX!) {
+    if (rightAnkleY! < leftAnkleY! && rightAnkleY! - rightHipY! < leftAnkleY! - leftHipY!) {
       ankleAlignment = true;
       setState(() {
         legColor = Colors.green;
