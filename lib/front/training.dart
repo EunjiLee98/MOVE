@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -11,6 +12,7 @@ import 'package:move/exercise/squat.dart';
 import 'package:move/exercise/squatRive.dart';
 import 'package:move/front/bluetooth.dart';
 import 'package:camera/camera.dart';
+import 'package:move/front/temp.dart';
 import 'package:move/tutorial/tutorial1.dart';
 import 'package:rive/rive.dart';
 
@@ -122,7 +124,7 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => LiquidDownload()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LiquidDownload(cameras: widget.cameras!, title: 'Squat State Machine Rive',)));
                       },
                       child: Image.asset('pushUp.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),

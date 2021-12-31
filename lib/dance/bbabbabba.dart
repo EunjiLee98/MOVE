@@ -289,7 +289,7 @@ class _ClearState extends State<Clear> {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.indigo,),
+          icon: Icon(Icons.arrow_back, color: Colors.white,),
           onPressed: () {
             SchedulerBinding.instance!.addPostFrameCallback((_) {
               Navigator.pop(context);
@@ -337,9 +337,9 @@ class _ClearState extends State<Clear> {
                       onPressed: () {
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           // addScore();
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Bba(bluetoothServices: widget.bluetoothServices)));
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  Bba(bluetoothServices: widget.bluetoothServices)), (route) => false);
                         });
                       },
                     ),

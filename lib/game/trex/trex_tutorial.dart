@@ -70,13 +70,9 @@ class _TrexTutorialState extends State<TrexTutorial> {
                                     ),
                                     onPressed: () {
                                       if(widget.bluetoothServices != null)
-                                        Navigator.pop(context);
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TRexGameWrapper(
-                                                        bluetoothServices: widget
-                                                            .bluetoothServices)));
+                                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                TRexGameWrapper(bluetoothServices: widget.bluetoothServices,)), (route) => false);
                                       },
                                     child: Image.asset('ok.png'),
                                   ),

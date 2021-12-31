@@ -193,10 +193,9 @@ class _CrossjackstartState extends State<Crossjackstart> {
                                         ),
                                         onPressed: () {
                                           addScore(score);
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
+                                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  Homepage(bluetoothServices: widget.bluetoothServices)), (route) => false);
                                         },
                                         child: Image.asset('exit.png',height: 72,),
                                       ),

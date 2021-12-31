@@ -91,8 +91,8 @@ class _BluetoothState extends State<Bluetooth> {
                       children: <Widget>[
                         Text(device.name == '' ? '(unknown device)' : device.name,
                           style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
+                            fontSize: 20,
+                            color: Colors.white,
                           ),
                         ),
                         // Text(device.id.toString()),
@@ -195,7 +195,7 @@ class _BluetoothState extends State<Bluetooth> {
     }
   }
 
-   Widget _buildView() {
+  Widget _buildView() {
     if (connectedDevice != null) {
       _bleServices();
       SchedulerBinding.instance!.addPostFrameCallback((_) {
@@ -205,8 +205,8 @@ class _BluetoothState extends State<Bluetooth> {
         Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: bluetoothServices, cameras: widget.cameras,)));
       });
     }
-     return _buildListViewOfDevices();
-   }
+    return _buildListViewOfDevices();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(

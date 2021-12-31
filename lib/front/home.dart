@@ -136,7 +136,7 @@ class _HomeState extends State<Homepage> {
                                   child: Container(
                                     width: MediaQuery.of(context).size.width*0.8,
                                     decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.8),
+                                        color: Colors.white.withOpacity(0.8),
                                         borderRadius: BorderRadius.circular(20),
                                         // gradient: LinearGradient(
                                         //   begin: Alignment.topCenter,

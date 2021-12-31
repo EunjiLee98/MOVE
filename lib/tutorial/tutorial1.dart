@@ -52,7 +52,7 @@ class _Tutorial1State extends State<Tutorial1> {
                           builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
                             if (snapshot.hasError) {
                               tutorial = <Widget>[
-                                 Icon(
+                                Icon(
                                   Icons.error_outline,
                                   color: Colors.red,
                                   size: 60,
@@ -93,7 +93,7 @@ class _Tutorial1State extends State<Tutorial1> {
                                               builder: (context) => Squat(
                                                 cameras: widget.cameras!,
                                                 title: 'MOVE! - Squat',
-                                                model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
+                                                model: "assets/posenet_mv1_075_float_from_checkpoints.tflite",
                                                 //customModel: 'MOVE! - Squat',
                                               ),
                                             ),
@@ -130,7 +130,7 @@ class _Tutorial1State extends State<Tutorial1> {
                                               builder: (context) => Squat(
                                                 cameras: widget.cameras!,
                                                 title: 'MOVE! - Squat',
-                                                model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
+                                                model: "assets/posenet_mv1_075_float_from_checkpoints.tflite",
                                                 //customModel: 'MOVE! - Squat',
                                               ),
                                             ),
@@ -167,7 +167,7 @@ class _Tutorial1State extends State<Tutorial1> {
                                               builder: (context) => Squat(
                                                 cameras: widget.cameras!,
                                                 title: 'MOVE! - Squat',
-                                                model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
+                                                model: "assets/posenet_mv1_075_float_from_checkpoints.tflite",
                                                 //customModel: 'MOVE! - Squat',
                                               ),
                                             ),
@@ -204,7 +204,7 @@ class _Tutorial1State extends State<Tutorial1> {
                                               builder: (context) => Squat(
                                                 cameras: widget.cameras!,
                                                 title: 'MOVE! - Squat',
-                                                model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
+                                                model: "assets/posenet_mv1_075_float_from_checkpoints.tflite",
                                                 //customModel: 'MOVE! - Squat',
                                               ),
                                             ),
@@ -239,7 +239,7 @@ class _Tutorial1State extends State<Tutorial1> {
                                           builder: (context) => Squat(
                                             cameras: widget.cameras!,
                                             title: 'MOVE! - Squat',
-                                            model: "assets/models/posenet_mv1_075_float_from_checkpoints.tflite",
+                                            model: "assets/posenet_mv1_075_float_from_checkpoints.tflite",
                                             //customModel: 'MOVE! - Squat',
                                           ),
                                         ),
