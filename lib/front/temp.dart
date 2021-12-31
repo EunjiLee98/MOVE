@@ -19,7 +19,7 @@ class _PlayPauseAnimationState extends State<PlayPauseAnimation> {
   void initState() {
     super.initState();
     _controller = OneShotAnimation(
-      'Squat',
+      'jumpingjack',
       autoplay: false,
       onStop: () => setState(() => _isPlaying = false),
       onStart: () => setState(() => _isPlaying = true),
@@ -32,8 +32,8 @@ class _PlayPauseAnimationState extends State<PlayPauseAnimation> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: RiveAnimation.asset(
-          'assets/rive/squat_test.riv',
-          animations: ['Idle'], // Default Animation
+          'assets/rive/character.riv',
+          animations: ['default'], // Default Animation
           controllers: [_controller],
         ),
       ),
@@ -44,7 +44,7 @@ class _PlayPauseAnimationState extends State<PlayPauseAnimation> {
           FloatingActionButton(
             // disable the button while playing the animation
             onPressed: () => _isPlaying ? null : _controller.isActive = true,
-            tooltip: 'Close Arm',
+            tooltip: 'Jumping Jack',
             child: const Icon(Icons.close),
           ),
         ],
