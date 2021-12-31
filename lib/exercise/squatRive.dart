@@ -701,13 +701,13 @@ class _SquatPageState extends State<SquatPage> {
             width: 100,
             height: 15,
             child: Container(
-              child: Text(
-                "●",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.0,
-                ),
-              ),
+              // child: Text(
+              //   "●",
+              //   style: TextStyle(
+              //     color: Colors.white,
+              //     fontSize: 12.0,
+              //   ),
+              // ),
             ),
           );
         }).toList();
