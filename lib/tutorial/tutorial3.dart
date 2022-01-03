@@ -70,6 +70,9 @@ class _Tutorial3State extends State<Tutorial3> {
                         StreamBuilder<int>(
                           stream: _bids,
                           builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                            if (!snapshot.hasData) {
+                              return Text('Loading...');
+                            }
                             if (snapshot.hasError) {
                               tutorial = <Widget>[
                                 Icon(
