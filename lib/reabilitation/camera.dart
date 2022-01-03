@@ -52,7 +52,7 @@ class _CameraState extends State<Camera> {
               numResults: 1,
               rotation: -90,
               threshold: 0.1,
-              nmsRadius: 10,
+              // nmsRadius: 10,
             ).then((recognitions) {
               int endTime = new DateTime.now().millisecondsSinceEpoch;
               print("Detection took ${endTime - startTime}");

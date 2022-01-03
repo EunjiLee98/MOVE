@@ -33,6 +33,7 @@ class _BowState extends State<Bow> {
       rightAnkleX,
       rightAnkleY,
       leftKneeY,
+      rightKneeY,
       leftHipY;
 
   bool? wristAlignment, shoulderAlignment, ankleAlignment, kneeAndHipAlignment;
@@ -63,9 +64,6 @@ class _BowState extends State<Bow> {
     armColor = Colors.red;
     shoulderColor = Colors.red;
     legColor = Colors.red;
-    flutterTts = new FlutterTts();
-    flutterTts!.setSpeechRate(0.4);
-    flutterTts!.speak("양 다리를 모아주시고 상체를 최대한 숙여, 손바닥이 땅과 닿게 해주세요");
     super.initState();
   }
 
@@ -84,13 +82,14 @@ class _BowState extends State<Bow> {
       rightAnkleX = poses['rightAnkle']![0];
       rightAnkleY = poses['rightAnkle']![1];
       leftKneeY = poses['leftKnee']![1];
+      rightKneeY = poses['rightKnee']![1];
       leftHipY = poses['leftHip']![1];
     });
 
     // leftWristY! < h/3 && rightWristY! < h/3 &&
 
-    if (rightWristY! > h/4*3 &&
-        leftWristY! > h/4*3) {
+    if (rightWristY! > rightKneeY! &&
+        leftWristY! > leftKneeY!) {
       wristAlignment = true;
       setState(() {
         armColor = Colors.green;
@@ -103,29 +102,30 @@ class _BowState extends State<Bow> {
         shoulderColor = Colors.red;
       });
     }
-    if (leftAnkleX! < w && rightAnkleX! < w && rightAnkleY! < h) {
+    // if (leftAnkleX! < w && rightAnkleX! < w && rightAnkleY! < h) {
       ankleAlignment = true;
-      setState(() {
-        legColor = Colors.green;
-      });
-    } else {
-      ankleAlignment = false;
-      setState(() {
-        legColor = Colors.red;
-      });
-    }
-    if (leftKneeY! < h && leftHipY! < h) {
-      kneeAndHipAlignment = true;
-      setState(() {
-        //legColor = Colors.green;
-      });
-    } else {
-      kneeAndHipAlignment = false;
-      setState(() {
-        legColor = Colors.red;
-      });
-    }
-    if (wristAlignment! && ankleAlignment! && kneeAndHipAlignment!) {
+    //   setState(() {
+    //     legColor = Colors.green;
+    //   });
+    // } else {
+    //   ankleAlignment = false;
+    //   setState(() {
+    //     legColor = Colors.red;
+    //   });
+    // }
+    // if (leftKneeY! < h && leftHipY! < h) {
+    //   kneeAndHipAlignment = true;
+    //   setState(() {
+    //     //legColor = Colors.green;
+    //   });
+    // } else {
+    //   kneeAndHipAlignment = false;
+    //   setState(() {
+    //     legColor = Colors.red;
+    //   });
+    // }
+    // && kneeAndHipAlignment!
+    if (wristAlignment! && ankleAlignment!) {
       setState(() {
         correctColor = Colors.green;
         memo = 'Warrior position aligned!';

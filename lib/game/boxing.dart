@@ -8,6 +8,7 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:just_audio/just_audio.dart';
 import 'dart:math';
 
+import 'package:move/front/home.dart';
 
 class BoxingStart extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
@@ -234,10 +235,10 @@ class _BoxingState extends State<Boxing> {
             children: [
               Row(children: [
                 IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.arrow_back))
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back), color: Colors.white,)
               ],),
               Container(
                   height: 1,
@@ -245,7 +246,7 @@ class _BoxingState extends State<Boxing> {
               ),
               SizedBox(height: 40),
               FutureBuilder(
-              future: Future.delayed(Duration(milliseconds: Random().nextInt(800) + 500)),
+                future: Future.delayed(Duration(milliseconds: Random().nextInt(800) + 500)),
                 builder: (c, s) {
                   if(s.connectionState == ConnectionState.done) {
                     var ran = Random().nextInt(2);
@@ -352,18 +353,18 @@ class _BoxingClearState extends State<BoxingClear> {
   void initState() {
     super.initState();
 
-  //   FirebaseFirestore.instance
-  //       .collection('user')
-  //       .doc(FirebaseAuth.instance.currentUser!.uid)
-  //       .get()
-  //       .then((doc) {
-  //     setState(() {
-  //       dino = doc.get('dino');
-  //       boxing = doc.get('boxing');
-  //       jumpingJack = doc.get('jumpingJack');
-  //       crossJack = doc.get('crossJack');
-  //     });
-  //   });
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((doc) {
+      setState(() {
+        dino = doc.get('dino');
+        boxing = doc.get('boxing');
+        jumpingJack = doc.get('jumpingJack');
+        crossJack = doc.get('crossJack');
+      });
+    });
   }
 
   @override
@@ -371,19 +372,19 @@ class _BoxingClearState extends State<BoxingClear> {
     super.dispose();
   }
 
-  // Future<void> addScore() async{
-  //   if(widget.score > boxing) {
-  //     avg = (dino + widget.score + jumpingJack + crossJack)/4;
-  //
-  //     FirebaseFirestore.instance
-  //         .collection('user')
-  //         .doc(FirebaseAuth.instance.currentUser!.uid)
-  //         .update({
-  //       'boxing': double.parse(widget.score.toStringAsFixed(0)),
-  //       'avg': double.parse(avg.toStringAsFixed(2)),
-  //     });
-  //   }
-  // }
+  Future<void> addScore() async{
+    if(widget.score > boxing) {
+      avg = (dino + widget.score + jumpingJack + crossJack)/4;
+
+      FirebaseFirestore.instance
+          .collection('user')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({
+        'boxing': double.parse(widget.score.toStringAsFixed(0)),
+        'avg': double.parse(avg.toStringAsFixed(2)),
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -395,12 +396,12 @@ class _BoxingClearState extends State<BoxingClear> {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.indigo,),
+          icon: Icon(Icons.arrow_back, color: Colors.white,),
           onPressed: () {
             SchedulerBinding.instance!.addPostFrameCallback((_) {
-              Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.pop(context);
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      Homepage(bluetoothServices: widget.bluetoothServices,)), (route) => false);
               // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
             });
           },
@@ -429,10 +430,10 @@ class _BoxingClearState extends State<BoxingClear> {
                       child: Image.asset('exit.png', width: MediaQuery.of(context).size.width/2.2,),
                       onPressed: () {
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          //addScore();
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
+                          addScore();
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  Homepage(bluetoothServices: widget.bluetoothServices,)), (route) => false);
                           // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
                         });
                       },
@@ -441,10 +442,10 @@ class _BoxingClearState extends State<BoxingClear> {
                       child: Image.asset('restart.png', width: MediaQuery.of(context).size.width/2.2,),
                       onPressed: () {
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          //addScore();
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => BoxingStart(bluetoothServices: widget.bluetoothServices)));
+                          addScore();
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  BoxingStart(bluetoothServices: widget.bluetoothServices,)), (route) => false);
                         });
                       },
                     ),

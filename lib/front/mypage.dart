@@ -55,7 +55,7 @@ class _MypageState extends State<Mypage> {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         leading: BackButton(
-            color: Colors.indigo
+            color: Colors.white
         ),
       ),
       body: Container(
@@ -154,10 +154,9 @@ class _MypageState extends State<Mypage> {
                     child: Text('Sign Out'),
                     onPressed: () {
                       signOut();
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SplashScreen()));
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              SplashScreen()), (route) => false);
                     },
                   )
                   ],

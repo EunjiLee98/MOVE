@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,10 @@ final StreamController<int> streamController = StreamController<int>();
 String gesture_name = "";
 
 class Bluetooth extends StatefulWidget {
+  final List<CameraDescription>? cameras;
+
+  Bluetooth({this.cameras});
+
   @override
   _BluetoothState createState() => _BluetoothState();
 }
@@ -74,70 +79,72 @@ class _BluetoothState extends State<Bluetooth> {
     List<Container> containers = [];
     for (BluetoothDevice device in devicesList) {
       containers.add(
-        Container(
-          height: 50,
-          child: Column(
-            children: [
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(device.name == '' ? '(unknown device)' : device.name,
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                          ),
+          device.name.contains('Move!') ?
+            Container(
+              height: 50,
+              child: Column(
+                children: [
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(device.name == '' ? '(unknown device)' : device.name,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                            // Text(device.id.toString()),
+                          ],
                         ),
-                        // Text(device.id.toString()),
-                      ],
-                    ),
-                  ),
-                  // ignore: deprecated_member_use
-                  FlatButton(
-                    child: Image.asset('connect.png', width: MediaQuery.of(context).size.width*0.35,),
-                    onPressed: () async {
-                      flutterBlue.stopScan();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Shake your controller!'),
-                            duration: Duration(seconds: 5),
-                          )
-                      );
-                      showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
+                      ),
+                      // ignore: deprecated_member_use
+                      FlatButton(
+                        child: Image.asset('connect.png', width: MediaQuery.of(context).size.width*0.35,),
+                        onPressed: () async {
+                          flutterBlue.stopScan();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Shake your controller!'),
+                                duration: Duration(seconds: 5),
+                              )
+                          );
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              });
+
+                          try {
+                            await device.connect();
+                          } catch (e) {
+                            if (e != 'already_connected') {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              throw e;
+                            }
+                          } finally {
+                            bluetoothServices = await device.discoverServices();
+                          }
+                          setState(() {
+                            connectedDevice = device;
                           });
-                      try {
-                        await device.connect();
-                      } catch (e) {
-                        if (e != 'already_connected') {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          throw e;
-                        }
-                      } finally {
-                        bluetoothServices = await device.discoverServices();
-                      }
-                      setState(() {
-                        connectedDevice = device;
-                      });
-                    },
+                        },
+                      ),
+                    ],
                   ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    child: Divider(height: 1, color: Colors.white),
+                  )
                 ],
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                child: Divider(height: 1, color: Colors.white),
               )
-            ],
-          ),
-        ),
+            ): Container()
       );
     }
 
@@ -189,18 +196,18 @@ class _BluetoothState extends State<Bluetooth> {
     }
   }
 
-   Widget _buildView() {
+  Widget _buildView() {
     if (connectedDevice != null) {
       _bleServices();
       SchedulerBinding.instance!.addPostFrameCallback((_) {
         Navigator.pop(context);
         Navigator.pop(context);
         Navigator.pop(context);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: bluetoothServices)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: bluetoothServices, cameras: widget.cameras,)));
       });
     }
-     return _buildListViewOfDevices();
-   }
+    return _buildListViewOfDevices();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(

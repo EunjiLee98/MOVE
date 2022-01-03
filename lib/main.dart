@@ -12,7 +12,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  WidgetsFlutterBinding.ensureInitialized();
   try {
     cameras = await availableCameras();
   } on CameraException catch (e) {
@@ -26,7 +25,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

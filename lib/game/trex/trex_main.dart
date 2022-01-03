@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:move/front/bluetooth.dart';
+import 'package:move/front/select.dart';
 import 'package:move/game/trex/game.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -122,43 +123,43 @@ class _TRexGameWrapperState extends State<TRexGameWrapper> {
     sub.cancel();
   }
 
-  // Future<void> addScore() async{
-  //   FirebaseFirestore.instance
-  //       .collection('user')
-  //       .doc(FirebaseAuth.instance.currentUser!.uid)
-  //       .get()
-  //       .then((doc) {
-  //         if(mounted) {
-  //           setState(() {
-  //             dino = doc.get('dino');
-  //             print(doc.get('dino'));
-  //             print('DINO SCORE - ' + dino.toString());
-  //             boxing = doc.get('boxing');
-  //             jumpingJack = doc.get('jumpingJack');
-  //             crossJack = doc.get('crossJack');
-  //           });
-  //
-  //           if(score > dino) {
-  //             avg = (score + boxing + jumpingJack + crossJack)/4;
-  //             print('score = $score');
-  //             print('dino = $dino');
-  //
-  //             updateScore();
-  //           }
-  //         }
-  //   });
-  //
-  // }
+  Future<void> addScore() async{
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((doc) {
+      if(mounted) {
+        setState(() {
+          dino = doc.get('dino');
+          print(doc.get('dino'));
+          print('DINO SCORE - ' + dino.toString());
+          boxing = doc.get('boxing');
+          jumpingJack = doc.get('jumpingJack');
+          crossJack = doc.get('crossJack');
+        });
 
-  // Future<void> updateScore() {
-  //   return FirebaseFirestore.instance
-  //       .collection('user')
-  //       .doc(FirebaseAuth.instance.currentUser!.uid)
-  //       .update({
-  //     'dino': score,
-  //     'avg': double.parse(avg.toStringAsFixed(2)),
-  //   });
-  // }
+        if(score > dino) {
+          avg = (score + boxing + jumpingJack + crossJack)/4;
+          print('score = $score');
+          print('dino = $dino');
+
+          updateScore();
+        }
+      }
+    });
+
+  }
+
+  Future<void> updateScore() {
+    return FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      'dino': score,
+      'avg': double.parse(avg.toStringAsFixed(2)),
+    });
+  }
 
   Widget scoreBox(BuildContext buildContext, TRexGame game) {
     return Row(
@@ -174,38 +175,39 @@ class _TRexGameWrapperState extends State<TRexGameWrapper> {
 
   Widget exitBox(BuildContext buildContext, TRexGame game) {
     return Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Flexible(
-            child: TextButton(
-              onPressed: () {
-                //addScore();
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-              child: Image.asset('dino_Exit.png', height: 30,),
-            ),
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Flexible(
+          child: TextButton(
+            onPressed: () {
+              addScore();
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      Select(bluetoothServices: widget.bluetoothServices)), (route) => false);
+            },
+            child: Image.asset('dino_Exit.png', height: 30,),
           ),
-        ],
-      );
+        ),
+      ],
+    );
   }
 
   Widget restartBox(BuildContext buildContext, TRexGame game) {
     return Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Flexible(
-              child: TextButton(
-                onPressed: () {
-                  //addScore();
-                  game.restart();
-                },
-                child: Image.asset('dino_Restart.png', height: 30,),
-              ),
-            ),
-        ],
-      );
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Flexible(
+          child: TextButton(
+            onPressed: () {
+              addScore();
+              game.restart();
+            },
+            child: Image.asset('dino_Restart.png', height: 30,),
+          ),
+        ),
+      ],
+    );
   }
 
   @override

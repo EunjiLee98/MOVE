@@ -66,38 +66,38 @@ class _CrossjackstartState extends State<Crossjackstart> {
     super.dispose();
   }
 
-  // Future<void> addScore(num score) async{
-  //   FirebaseFirestore.instance
-  //       .collection('user')
-  //       .doc(FirebaseAuth.instance.currentUser!.uid)
-  //       .get()
-  //       .then((doc) {
-  //         if(mounted) {
-  //           setState(() {
-  //             dino = doc.get('dino');
-  //             boxing = doc.get('boxing');
-  //             jumpingJack = doc.get('jumpingJack');
-  //             crossJack = doc.get('crossJack');
-  //           });
-  //
-  //           if (score > crossJack) {
-  //             avg = (dino + boxing + jumpingJack + score) / 4;
-  //
-  //             updateScore();
-  //           }
-  //         }
-  //       });
-  // }
-  //
-  // Future<void> updateScore() {
-  //   return FirebaseFirestore.instance
-  //       .collection('user')
-  //       .doc(FirebaseAuth.instance.currentUser!.uid)
-  //       .update({
-  //     'crossJack': double.parse(score.toStringAsFixed(0)),
-  //     'avg': double.parse(avg.toStringAsFixed(0)),
-  //   });
-  // }
+  Future<void> addScore(num score) async{
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((doc) {
+      if(mounted) {
+        setState(() {
+          dino = doc.get('dino');
+          boxing = doc.get('boxing');
+          jumpingJack = doc.get('jumpingJack');
+          crossJack = doc.get('crossJack');
+        });
+
+        if (score > crossJack) {
+          avg = (dino + boxing + jumpingJack + score) / 4;
+
+          updateScore();
+        }
+      }
+    });
+  }
+
+  Future<void> updateScore() {
+    return FirebaseFirestore.instance
+        .collection('user')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      'crossJack': double.parse(score.toStringAsFixed(0)),
+      'avg': double.parse(avg.toStringAsFixed(0)),
+    });
+  }
 
   ListView _buildConnectDeviceView() {
     // ignore: deprecated_member_use
@@ -139,6 +139,9 @@ class _CrossjackstartState extends State<Crossjackstart> {
                         StreamBuilder<int>(
                           stream: _bids,
                           builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                            if (!snapshot.hasData) {
+                              return Text('Loading...');
+                            }
                             if (snapshot.hasError) {
                               tutorial = <Widget>[
                                 Icon(
@@ -192,11 +195,10 @@ class _CrossjackstartState extends State<Crossjackstart> {
                                           // foreground
                                         ),
                                         onPressed: () {
-                                          //addScore(score);
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
+                                          addScore(score);
+                                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  Homepage(bluetoothServices: widget.bluetoothServices)), (route) => false);
                                         },
                                         child: Image.asset('exit.png',height: 72,),
                                       ),
@@ -206,7 +208,7 @@ class _CrossjackstartState extends State<Crossjackstart> {
                                           // foreground
                                         ),
                                         onPressed: () {
-                                          //addScore(score);
+                                          addScore(score);
                                           Navigator.pop(context);
                                         },
                                         child: Image.asset('restart.png',height: 72,),

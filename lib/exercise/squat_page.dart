@@ -177,20 +177,17 @@ class _SquatPageState extends State<SquatPage> {
   }
 
   Future<void> _countingLogic(Map<String, List<double>> poses) async {
-    if (poses != null) {
-      //check posture before beginning count
-      if (isCorrectPosture! && poses['leftShoulder']![1] > upperRange! && poses['rightShoulder']![1] > upperRange!) {
-        setMidCount(true);
-      }
+    if (isCorrectPosture! && poses['leftShoulder']![1] > upperRange! && poses['rightShoulder']![1] > upperRange!) {
+      setMidCount(true);
+    }
 
-      if (midCount! && poses['leftShoulder']![1] < upperRange! && poses['rightShoulder']![1] < upperRange!) {
-        incrementCounter();
-        setMidCount(false);
-      }
-      //check the posture when not in midcount
-      if(!midCount!) {
-        _checkCorrectPosture(poses);
-      }
+    if (midCount! && poses['leftShoulder']![1] < upperRange! && poses['rightShoulder']![1] < upperRange!) {
+      incrementCounter();
+      setMidCount(false);
+    }
+    //check the posture when not in midcount
+    if(!midCount!) {
+      _checkCorrectPosture(poses);
     }
   }
   //endregion

@@ -43,6 +43,7 @@ class _SquatState extends State<Squat> {
   loadModel() async {
     return await Tflite.loadModel(
         model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
+        // model: "assets/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite");
   }
 
   @override
