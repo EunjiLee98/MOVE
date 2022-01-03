@@ -79,71 +79,72 @@ class _BluetoothState extends State<Bluetooth> {
     List<Container> containers = [];
     for (BluetoothDevice device in devicesList) {
       containers.add(
-        Container(
-          height: 50,
-          child: Column(
-            children: [
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(device.name == '' ? '(unknown device)' : device.name,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
+          device.name.contains('Move!') ?
+            Container(
+              height: 50,
+              child: Column(
+                children: [
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(device.name == '' ? '(unknown device)' : device.name,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                            // Text(device.id.toString()),
+                          ],
                         ),
-                        // Text(device.id.toString()),
-                      ],
-                    ),
-                  ),
-                  // ignore: deprecated_member_use
-                  FlatButton(
-                    child: Image.asset('connect.png', width: MediaQuery.of(context).size.width*0.35,),
-                    onPressed: () async {
-                      flutterBlue.stopScan();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Shake your controller!'),
-                            duration: Duration(seconds: 5),
-                          )
-                      );
-                      showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          });
+                      ),
+                      // ignore: deprecated_member_use
+                      FlatButton(
+                        child: Image.asset('connect.png', width: MediaQuery.of(context).size.width*0.35,),
+                        onPressed: () async {
+                          flutterBlue.stopScan();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Shake your controller!'),
+                                duration: Duration(seconds: 5),
+                              )
+                          );
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              });
 
-                      try {
-                        await device.connect();
-                      } catch (e) {
-                        if (e != 'already_connected') {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          throw e;
-                        }
-                      } finally {
-                        bluetoothServices = await device.discoverServices();
-                      }
-                      setState(() {
-                        connectedDevice = device;
-                      });
-                    },
+                          try {
+                            await device.connect();
+                          } catch (e) {
+                            if (e != 'already_connected') {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              throw e;
+                            }
+                          } finally {
+                            bluetoothServices = await device.discoverServices();
+                          }
+                          setState(() {
+                            connectedDevice = device;
+                          });
+                        },
+                      ),
+                    ],
                   ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    child: Divider(height: 1, color: Colors.white),
+                  )
                 ],
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                child: Divider(height: 1, color: Colors.white),
               )
-            ],
-          ),
-        ),
+            ): Container()
       );
     }
 
