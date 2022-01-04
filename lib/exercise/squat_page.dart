@@ -155,8 +155,8 @@ class _SquatPageState extends State<SquatPage> {
     //if(widget.customModel==bodyWeight[0]) {
     return poses['leftShoulder']![1] < upperRange!
         && poses['rightShoulder']![1] < upperRange!
-        && poses['rightKnee']![1]>lowerRange!
-        && poses['leftKnee']![1]>lowerRange!;
+        && poses['rightKnee']![1] > lowerRange!
+        && poses['leftKnee']![1] > lowerRange!;
     //}
   }
 
