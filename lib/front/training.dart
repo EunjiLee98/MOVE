@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/exercise/armPress.dart';
+import 'package:move/exercise/bridge.dart';
 
 import 'package:move/exercise/crossJack.dart';
 import 'package:move/exercise/jumpingJack.dart';
@@ -132,7 +133,7 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
-                        //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Bridge(cameras: widget.cameras! ,title: 'SquatRive')));
                       },
                       child: Image.asset('bridge.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
