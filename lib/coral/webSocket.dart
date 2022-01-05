@@ -3,6 +3,24 @@ import 'package:web_socket_channel/io.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+class JsonDataFromCoral {
+  List<int>? l0;
+  List<int>? l1;
+
+  JsonDataFromCoral({this.l0, this.l1});
+
+  JsonDataFromCoral.fromJson(Map<String, dynamic> json) {
+    l0 = json['0'].cast<int>();
+    l1 = json['1'].cast<int>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['0'] = this.l0;
+    data['1'] = this.l1;
+    return data;
+  }
+}
 
 class WebSocket extends StatelessWidget {
   @override
@@ -37,18 +55,8 @@ class _WebSocketPageState extends State<WebSocketPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          //crossAxisAlignment: CrossAxisAlignment.start,
-            child:
-            //ren: <Widget>[
-            // Form(
-            //   child: TextFormField(
-            //     controller: _controller,
-            //     decoration: InputDecoration(labelText: 'Send a message'),
-            //   ),
-            // ),
+      body: Stack(
+        children: <Widget>[
             StreamBuilder(
               stream: widget.channel.stream,
               builder: (context, snapshot) {
@@ -58,15 +66,9 @@ class _WebSocketPageState extends State<WebSocketPage> {
                 );
               },
             )
-          // ],
+          ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _sendMessage,
-        tooltip: 'Send message',
-        child: Icon(Icons.send),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+      );
   }
 
   void _sendMessage() {
