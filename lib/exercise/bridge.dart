@@ -8,6 +8,8 @@ import 'package:move/reabilitation/camera.dart';
 import 'package:rive/rive.dart';
 import 'package:tflite/tflite.dart';
 
+import '../main.dart';
+
 /// An example showing how to drive a StateMachine via a trigger and number
 /// input.
 class Bridge extends StatefulWidget {
@@ -155,7 +157,11 @@ class _SquatPageTestState extends State<SquatPageTest> {
   StateMachineController? _controller;
   SMIInput<double>? _progress;
 
-  double leftStart= 0;
+  double leftStart = 0;
+
+  // Temporally Working
+  CameraController? controller_temp;
+  bool isDetecting = false;
 
   void setRangeBasedOnModel() {
     upperRange = 300;
@@ -174,7 +180,7 @@ class _SquatPageTestState extends State<SquatPageTest> {
     // Load the animation file from the bundle, note that you could also
     // download this. The RiveFile just expects a list of bytes.
     rootBundle.load('assets/rive/move_squat.riv').then(
-          (data) async {
+      (data) async {
         // Load the RiveFile from the binary data.
         final file = RiveFile.import(data);
 
@@ -182,7 +188,7 @@ class _SquatPageTestState extends State<SquatPageTest> {
         // Rive widget.
         final artboard = file.mainArtboard;
         var controller =
-        StateMachineController.fromArtboard(artboard, 'Squat_Controller');
+            StateMachineController.fromArtboard(artboard, 'Squat_Controller');
         if (controller != null) {
           artboard.addController(controller);
           _progress = controller.findInput('Progress');
@@ -190,6 +196,18 @@ class _SquatPageTestState extends State<SquatPageTest> {
         setState(() => _riveArtboard = artboard);
       },
     );
+
+    controller_temp = new CameraController(
+      cameras![1],
+      ResolutionPreset.max,
+    );
+    controller_temp!.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    });
+
   }
 
   void resetCounter() {
@@ -290,24 +308,23 @@ class _SquatPageTestState extends State<SquatPageTest> {
       _checkCorrectPosture(poses);
     }
 
-    if(poses['leftShoulder']![1] > leftStart) {
+    if (poses['leftShoulder']![1] > leftStart) {
       setState(() {
         leftStart = poses['leftShoulder']![1];
 
-        if(_progress!.value != 100) {
-          _progress!.value = (leftStart-300)/2;
+        if (_progress!.value != 100) {
+          _progress!.value = (leftStart - 300) / 2;
         }
       });
     }
 
-    if(poses['leftShoulder']![1] < leftStart) {
+    if (poses['leftShoulder']![1] < leftStart) {
       setState(() {
         leftStart = poses['leftShoulder']![1];
 
-        _progress!.value = (leftStart-300)/2;
+        _progress!.value = (leftStart - 300) / 2;
       });
     }
-
   }
 
   //endregion
@@ -353,13 +370,13 @@ class _SquatPageTestState extends State<SquatPageTest> {
             width: 100,
             height: 15,
             child: Container(
-              //     child: Text(
-              //       "●",
-              //       style: TextStyle(
-              //         color: Color.fromRGBO(37, 213, 253, 1.0),
-              //         fontSize: 12.0,
-              //       ),
-              //     ),
+              child: Text(
+                "●",
+                style: TextStyle(
+                  color: Color.fromRGBO(37, 213, 253, 1.0),
+                  fontSize: 12.0,
+                ),
+              ),
             ),
           );
         }).toList();
@@ -373,25 +390,29 @@ class _SquatPageTestState extends State<SquatPageTest> {
     }
 
     return Stack(children: <Widget>[
+      // Stack(
+      //   children: _renderHelperBlobs(),
+      // ),
+      // Container(
+      //   width: MediaQuery.of(context).size.width,
+      //   height: MediaQuery.of(context).size.height,
+      //   color: const Color(0xff37384E),
+      // ),
+      // Container(
+      //   width: MediaQuery.of(context).size.width,
+      //   child: Column(
+      //     children: [
+      //       Expanded(
+      //         child: Rive(
+      //           artboard: _riveArtboard!,
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
+      CameraPreview(controller_temp!),
       Stack(
-        children: _renderHelperBlobs(),
-      ),
-      Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: const Color(0xff37384E),
-      ),
-      Container(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            Expanded(
-              child: Rive(
-                artboard: _riveArtboard!,
-              ),
-            ),
-          ],
-        ),
+        children: _renderKeypoints(),
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -420,23 +441,6 @@ class _SquatPageTestState extends State<SquatPageTest> {
           ),
         ],
       ),
-      Stack(
-        children: _renderKeypoints(),
-      ),
     ]);
-
-
-    //           Slider(
-    //             value: _progress!.value,
-    //             min: 0,
-    //             max: 100,
-    //             label:,
-    //             onChanged: (double value) {
-    //               setState(() {
-    //                 _progress!.value = value;
-    //               });
-    //             },
-    //           ),
-
   }
 }
