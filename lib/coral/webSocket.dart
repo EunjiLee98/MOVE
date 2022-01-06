@@ -5,6 +5,7 @@ import 'package:web_socket_channel/io.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
+import 'package:queue/queue.dart';
 
 class JsonDataFromCoral {
   String? l0;
@@ -50,13 +51,20 @@ class WebSocketPage extends StatefulWidget {
 
 class _WebSocketPageState extends State<WebSocketPage> {
   TextEditingController _controller = TextEditingController();
-
-  //Map<String, dynamic> ? jsonData;
   String? jsonData;
-  Map<String, dynamic>? jsonDataConverted;
+  String? jsonDataConverted;
+  String? newResult;
   var newJsonList;
   List result = [];
 
+  makeList(List result) {
+    List x = [];
+    for(int i=0; i < result.length; i++)
+      {
+        print(result[i]);
+      }
+    return x;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,9 +78,10 @@ class _WebSocketPageState extends State<WebSocketPage> {
             builder: (context, snapshot) {
               // if (jsonData != null && jsonDataConverted != null) {
               jsonData = jsonEncode(snapshot.data.toString());
-              var jsonList = json.decode(jsonData!);
+              jsonDataConverted = json.decode(jsonData!);
               //List<String> result = jsonList.split('\n');
-              //result = jsonList.split(' ');
+              result = jsonDataConverted!.split(' ');
+              //newResult = makeList(result);
               //newJsonList[0] = jsonList[0];
               //jsonDataConverted = jsonDecode(jsonData!);
               //var jsonDataList =  JsonDataFromCoral.fromJson(jsonDataConverted!);
@@ -81,9 +90,13 @@ class _WebSocketPageState extends State<WebSocketPage> {
               return Column(
                 children: [
                   //Text(snapshot.hasData ? '${snapshot.data.toString()}' : ''),
-                  Text(jsonData!),
-                  // Text(result[0]),
-                  // Text(result[1]),
+                  Text(jsonDataConverted.toString()),
+                  Text(result[0]),
+                  Text(result[1]),
+                  // Text(result[2]),
+                  // Text(result[3]),
+                  // Text(result[4]),
+                  // Text(result[5]),
                 ],
               );
             },
