@@ -439,19 +439,5 @@ class _SquatPageTestState extends State<SquatPageTest> {
         children: _renderKeypoints(),
       ),
     ]);
-
-
-    //           Slider(
-    //             value: _progress!.value,
-    //             min: 0,
-    //             max: 100,
-    //             label:,
-    //             onChanged: (double value) {
-    //               setState(() {
-    //                 _progress!.value = value;
-    //               });
-    //             },
-    //           ),
-
   }
 }
