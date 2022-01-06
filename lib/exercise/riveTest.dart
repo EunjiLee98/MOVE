@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:move/reabilitation/camera.dart';
-import 'package:rive/rive.dart';
+import 'package:rive/rive.dart' as rive;
 import 'package:tflite/tflite.dart';
 
 /// An example showing how to drive a StateMachine via a trigger and number
@@ -160,9 +160,9 @@ class _SquatPageTestState extends State<SquatPageTest> {
   /// Tracks if the animation is playing by whether controller is running.
   bool get isPlaying => _controller?.isActive ?? false;
 
-  Artboard? _riveArtboard;
-  StateMachineController? _controller;
-  SMIInput<double>? _progress;
+  rive.Artboard? _riveArtboard;
+  rive.StateMachineController? _controller;
+  rive.SMIInput<double>? _progress;
 
   double leftStart= 0;
 
@@ -185,13 +185,13 @@ class _SquatPageTestState extends State<SquatPageTest> {
     rootBundle.load('assets/rive/move_squat.riv').then(
           (data) async {
         // Load the RiveFile from the binary data.
-        final file = RiveFile.import(data);
+        final file = rive.RiveFile.import(data);
 
         // The artboard is the root of the animation and gets drawn in the
         // Rive widget.
         final artboard = file.mainArtboard;
         var controller =
-        StateMachineController.fromArtboard(artboard, 'Squat_Controller');
+        rive.StateMachineController.fromArtboard(artboard, 'Squat_Controller');
         if (controller != null) {
           artboard.addController(controller);
           _progress = controller.findInput('Progress');
@@ -388,14 +388,20 @@ class _SquatPageTestState extends State<SquatPageTest> {
       Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: const Color(0xff37384E),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [const Color(0xff37384E), const Color(0xff53304C)],
+          ),
+        ),
       ),
       Container(
-        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
             Expanded(
-              child: Rive(
+              child: rive.Rive(
                 artboard: _riveArtboard!,
               ),
             ),
