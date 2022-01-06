@@ -67,16 +67,24 @@ class _LiquidDownloadState extends State<LiquidDownload> {
       ),
       body: Stack(
         children: <Widget>[
-          Camera(
-            cameras: widget.cameras,
-            setRecognitions: _setRecognitions,
-          ),
           SquatPageTest(
             data: _data == null ? [] : _data,
             previewH: max(_imageHeight, _imageWidth),
             previewW: min(_imageHeight, _imageWidth),
             screenH: screen.height,
             screenW: screen.width,
+          ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: Container(
+              width: MediaQuery.of(context).size.width*0.25,
+              height: MediaQuery.of(context).size.height*0.25,
+              child: Camera(
+                cameras: widget.cameras,
+                setRecognitions: _setRecognitions,
+              ),
+            ),
           ),
         ],
       ),
@@ -353,13 +361,13 @@ class _SquatPageTestState extends State<SquatPageTest> {
             width: 100,
             height: 15,
             child: Container(
-              //     child: Text(
-              //       "●",
-              //       style: TextStyle(
-              //         color: Color.fromRGBO(37, 213, 253, 1.0),
-              //         fontSize: 12.0,
-              //       ),
-              //     ),
+                  child: Text(
+                    "●",
+                    style: TextStyle(
+                      color: Color.fromRGBO(37, 213, 253, 1.0),
+                      fontSize: 12.0,
+                    ),
+                  ),
             ),
           );
         }).toList();
@@ -383,10 +391,8 @@ class _SquatPageTestState extends State<SquatPageTest> {
       ),
       Container(
         width: MediaQuery.of(context).size.width,
-        child: Expanded(
-          child: Rive(
-            artboard: _riveArtboard!,
-          ),
+        child: Rive(
+          artboard: _riveArtboard!,
         ),
       ),
       Column(
