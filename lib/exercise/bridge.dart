@@ -197,17 +197,22 @@ class _SquatPageTestState extends State<SquatPageTest> {
       },
     );
 
-    controller_temp = new CameraController(
-      cameras![1],
-      ResolutionPreset.max,
-    );
-    controller_temp!.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    });
+    // controller_temp = new CameraController(
+    //   widget.cameras[1],
+    //   ResolutionPreset.max,
+    // );
+    // controller_temp!.initialize().then((_) {
+    //   if (!mounted) {
+    //     return;
+    //   }
+    //   setState(() {});
+    // });
+  }
 
+  @override
+  void dispose() {
+    controller_temp?.dispose();
+    super.dispose();
   }
 
   void resetCounter() {
@@ -390,27 +395,26 @@ class _SquatPageTestState extends State<SquatPageTest> {
     }
 
     return Stack(children: <Widget>[
-      // Stack(
-      //   children: _renderHelperBlobs(),
-      // ),
-      // Container(
-      //   width: MediaQuery.of(context).size.width,
-      //   height: MediaQuery.of(context).size.height,
-      //   color: const Color(0xff37384E),
-      // ),
-      // Container(
-      //   width: MediaQuery.of(context).size.width,
-      //   child: Column(
-      //     children: [
-      //       Expanded(
-      //         child: Rive(
-      //           artboard: _riveArtboard!,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      CameraPreview(controller_temp!),
+      Stack(
+        children: _renderHelperBlobs(),
+      ),
+      Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: const Color(0xff37384E),
+      ),
+      Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Expanded(
+              child: Rive(
+                artboard: _riveArtboard!,
+              ),
+            ),
+          ],
+        ),
+      ),
       Stack(
         children: _renderKeypoints(),
       ),
