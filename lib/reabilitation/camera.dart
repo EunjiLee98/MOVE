@@ -88,12 +88,13 @@ class _CameraState extends State<Camera> {
     var screenRatio = screenH / screenW;
     var previewRatio = previewH / previewW;
 
-    return OverflowBox(
-      maxHeight:
-          screenRatio > previewRatio ? screenH : screenW / previewW * previewH,
-      maxWidth:
-          screenRatio > previewRatio ? screenH / previewH * previewW : screenW,
-      child: CameraPreview(controller!),
-    );
+    return CameraPreview(controller!);
+    // return OverflowBox(
+    //   // maxHeight: MediaQuery.of(context).size.height*0.4,
+    //   //     // screenRatio > previewRatio ? screenH : screenW / previewW * previewH,
+    //   // maxWidth: MediaQuery.of(context).size.width*0.4,
+    //       // screenRatio > previewRatio ? screenH / previewH * previewW : screenW,
+    //   child: CameraPreview(controller!),
+    // );
   }
 }

@@ -4,10 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/front/gameSelect.dart';
 import 'package:move/front/training.dart';
-import 'package:move/reabilitation/pushed_page.dart';
-import 'package:move/exercise/armPress.dart';
-import 'package:move/exercise/squat.dart';
-import 'package:move/tutorial/tutorial1.dart';
 import '../reabilitation/reabilitation.dart';
 import '../dance/dance.dart';
 

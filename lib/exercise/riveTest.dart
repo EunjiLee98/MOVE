@@ -10,17 +10,17 @@ import 'package:tflite/tflite.dart';
 
 /// An example showing how to drive a StateMachine via a trigger and number
 /// input.
-class LiquidDownload extends StatefulWidget {
+class Squat extends StatefulWidget {
   final List<CameraDescription> cameras;
   final String title;
 
-  LiquidDownload({required this.cameras, required this.title});
+  Squat({required this.cameras, required this.title});
 
   @override
-  _LiquidDownloadState createState() => _LiquidDownloadState();
+  _SquatState createState() => _SquatState();
 }
 
-class _LiquidDownloadState extends State<LiquidDownload> {
+class _SquatState extends State<Squat> {
   List<dynamic>? _data;
   int _imageHeight = 0;
   int _imageWidth = 0;
@@ -67,16 +67,24 @@ class _LiquidDownloadState extends State<LiquidDownload> {
       ),
       body: Stack(
         children: <Widget>[
-          Camera(
-            cameras: widget.cameras,
-            setRecognitions: _setRecognitions,
-          ),
           SquatPageTest(
             data: _data == null ? [] : _data,
             previewH: max(_imageHeight, _imageWidth),
             previewW: min(_imageHeight, _imageWidth),
             screenH: screen.height,
             screenW: screen.width,
+          ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: Container(
+              width: MediaQuery.of(context).size.width*0.25,
+              height: MediaQuery.of(context).size.height*0.25,
+              child: Camera(
+                cameras: widget.cameras,
+                setRecognitions: _setRecognitions,
+              ),
+            ),
           ),
         ],
       ),
@@ -173,7 +181,7 @@ class _SquatPageTestState extends State<SquatPageTest> {
 
     // Load the animation file from the bundle, note that you could also
     // download this. The RiveFile just expects a list of bytes.
-    rootBundle.load('assets/rive/squat_test.riv').then(
+    rootBundle.load('assets/rive/move_squat.riv').then(
           (data) async {
         // Load the RiveFile from the binary data.
         final file = RiveFile.import(data);
@@ -182,10 +190,10 @@ class _SquatPageTestState extends State<SquatPageTest> {
         // Rive widget.
         final artboard = file.mainArtboard;
         var controller =
-        StateMachineController.fromArtboard(artboard, 'squatController');
+        StateMachineController.fromArtboard(artboard, 'Squat_Controller');
         if (controller != null) {
           artboard.addController(controller);
-          _progress = controller.findInput('squat_controll');
+          _progress = controller.findInput('Progress');
         }
         setState(() => _riveArtboard = artboard);
       },
@@ -353,13 +361,13 @@ class _SquatPageTestState extends State<SquatPageTest> {
             width: 100,
             height: 15,
             child: Container(
-              //     child: Text(
-              //       "●",
-              //       style: TextStyle(
-              //         color: Color.fromRGBO(37, 213, 253, 1.0),
-              //         fontSize: 12.0,
-              //       ),
-              //     ),
+                  // child: Text(
+                  //   "●",
+                  //   style: TextStyle(
+                  //     color: Color.fromRGBO(37, 213, 253, 1.0),
+                  //     fontSize: 12.0,
+                  //   ),
+                  // ),
             ),
           );
         }).toList();

@@ -4,17 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/exercise/armPress.dart';
-import 'package:move/exercise/bridge.dart';
-
 import 'package:move/exercise/crossJack.dart';
 import 'package:move/exercise/jumpingJack.dart';
 import 'package:move/exercise/riveTest.dart';
-import 'package:move/exercise/squat.dart';
-import 'package:move/exercise/squatRive.dart';
 import 'package:move/front/bluetooth.dart';
 import 'package:camera/camera.dart';
-import 'package:move/front/temp.dart';
-import 'package:move/tutorial/tutorial1.dart';
 import 'package:rive/rive.dart';
 
 class Training extends StatefulWidget {
@@ -85,13 +79,7 @@ class _TrainingState extends State<Training> {
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Tutorial1(cameras: widget.cameras!)));
-                        // if (widget.bluetoothServices == null)
-                        //   SchedulerBinding.instance!.addPostFrameCallback((_) {
-                        //     Navigator.pop(context);
-                        //     Navigator.pop(context);
-                        //     Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
-                        //   });
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(cameras: widget.cameras!, title: 'Squat State Machine Rive',)));
                       },
                       child: Image.asset('squatButton.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
@@ -115,9 +103,6 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
-                        //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
-                        Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                            PlayPauseAnimation()));
                       },
                       child: Image.asset('plank.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
@@ -125,7 +110,6 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => LiquidDownload(cameras: widget.cameras!, title: 'Squat State Machine Rive',)));
                       },
                       child: Image.asset('pushUp.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
@@ -133,7 +117,6 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Bridge(cameras: widget.cameras! ,title: 'SquatRive')));
                       },
                       child: Image.asset('bridge.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),

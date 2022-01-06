@@ -121,7 +121,7 @@ class _BluetoothState extends State<Bluetooth> {
                               });
 
                           try {
-                            await device.connect();
+                            await device.connect(autoConnect: false);
                           } catch (e) {
                             if (e != 'already_connected') {
                               Navigator.pop(context);
