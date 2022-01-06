@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'dart:convert';
 
 class JsonDataFromCoral {
-  List<int>? l0;
-  List<int>? l1;
+  String? l0;
+  String? l1;
 
   JsonDataFromCoral({this.l0, this.l1});
 
@@ -14,8 +17,7 @@ class JsonDataFromCoral {
     l1 = json['1'].cast<int>();
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<String, dynamic> toJson(Map<String, dynamic> data) {
     data['0'] = this.l0;
     data['1'] = this.l1;
     return data;
@@ -49,6 +51,12 @@ class WebSocketPage extends StatefulWidget {
 class _WebSocketPageState extends State<WebSocketPage> {
   TextEditingController _controller = TextEditingController();
 
+  //Map<String, dynamic> ? jsonData;
+  String? jsonData;
+  Map<String, dynamic>? jsonDataConverted;
+  var newJsonList;
+  List result = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,18 +65,32 @@ class _WebSocketPageState extends State<WebSocketPage> {
       ),
       body: Stack(
         children: <Widget>[
-            StreamBuilder(
-              stream: widget.channel.stream,
-              builder: (context, snapshot) {
-                return SingleChildScrollView(
-                  //padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  child: Text(snapshot.hasData ? '${snapshot.data.toString()}' : ''),
-                );
-              },
-            )
-          ],
-        ),
-      );
+          StreamBuilder(
+            stream: widget.channel.stream,
+            builder: (context, snapshot) {
+              // if (jsonData != null && jsonDataConverted != null) {
+              jsonData = jsonEncode(snapshot.data.toString());
+              var jsonList = json.decode(jsonData!);
+              //List<String> result = jsonList.split('\n');
+              //result = jsonList.split(' ');
+              //newJsonList[0] = jsonList[0];
+              //jsonDataConverted = jsonDecode(jsonData!);
+              //var jsonDataList =  JsonDataFromCoral.fromJson(jsonDataConverted!);
+              //print(jsonDataList);
+              //}
+              return Column(
+                children: [
+                  //Text(snapshot.hasData ? '${snapshot.data.toString()}' : ''),
+                  Text(jsonData!),
+                  // Text(result[0]),
+                  // Text(result[1]),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   void _sendMessage() {
