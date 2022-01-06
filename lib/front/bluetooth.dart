@@ -199,12 +199,13 @@ class _BluetoothState extends State<Bluetooth> {
   Widget _buildView() {
     if (connectedDevice != null) {
       _bleServices();
-      SchedulerBinding.instance!.addPostFrameCallback((_) {
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: bluetoothServices, cameras: widget.cameras,)));
-      });
+      if(bluetoothServices != null) {
+        SchedulerBinding.instance!.addPostFrameCallback((_) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: bluetoothServices, cameras: widget.cameras,)));
+        });
+      }
     }
     return _buildListViewOfDevices();
   }
