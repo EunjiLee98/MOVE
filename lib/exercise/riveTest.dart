@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:move/reabilitation/camera.dart';
 import 'package:rive/rive.dart';
@@ -55,7 +56,7 @@ class _SquatState extends State<Squat> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'MOVE! - Squat StateMachine Rive',
+          'MOVE! - Squat Rive',
           style: GoogleFonts.russoOne(
             fontSize: 25,
             color: Colors.deepPurple,
@@ -76,7 +77,7 @@ class _SquatState extends State<Squat> {
           ),
           Positioned(
             right: 0,
-            bottom: 0,
+            top: 0,
             child: Container(
               width: MediaQuery.of(context).size.width*0.25,
               height: MediaQuery.of(context).size.height*0.25,
@@ -387,7 +388,7 @@ class _SquatPageTestState extends State<SquatPageTest> {
       Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: const Color(0xffB9F08E),
+        color: const Color(0xff37384E),
       ),
       Container(
         width: MediaQuery.of(context).size.width,

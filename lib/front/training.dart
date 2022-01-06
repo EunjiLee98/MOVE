@@ -79,7 +79,7 @@ class _TrainingState extends State<Training> {
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(cameras: widget.cameras!, title: 'Squat State Machine Rive',)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(cameras: widget.cameras!, title: 'MOVE! - Squat Rive',)));
                       },
                       child: Image.asset('squatButton.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
@@ -166,15 +166,10 @@ class _RiveTestState extends State<RiveTest> {
   @override
   void initState() {
     super.initState();
-    _controller = SimpleAnimation('기본');
+    _controller = SimpleAnimation('Idle');
 
     _openController = OneShotAnimation(
-      '팔벌리기',
-      autoplay: false,
-    );
-
-    _closeController = OneShotAnimation(
-      '팔오므리기',
+      'Jumpingjack',
       autoplay: false,
     );
 
@@ -213,8 +208,8 @@ class _RiveTestState extends State<RiveTest> {
         Container(
           height: MediaQuery.of(context).size.height,
           child: RiveAnimation.asset(
-            'assets/test.riv',
-            controllers: [_controller, _openController, _closeController],
+            'assets/rive/move_jumpingjack.riv',
+            controllers: [_controller, _openController],
           ),
         ),
       ],
@@ -230,17 +225,9 @@ class _RiveTestState extends State<RiveTest> {
       });
     });
 
-    if(gesture_num == 2) {
-      setState(() {
-        _closeController.isActive = true;
-        _openController.isActive = false;
-      });
-    }
-
     if(gesture_num == 1) {
       setState(() {
         _openController.isActive = true;
-        _closeController.isActive = false;
       });
     }
 
@@ -253,8 +240,9 @@ class _RiveTestState extends State<RiveTest> {
     return Scaffold(
       body: Container(
           height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-              color: const Color(0xff3AB7F7)
+              color: const Color(0xff37384E)
           ),
           child: _buildConnectDeviceView()
       )

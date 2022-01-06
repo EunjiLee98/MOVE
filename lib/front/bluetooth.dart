@@ -220,9 +220,9 @@ class _BluetoothState extends State<Bluetooth> {
       elevation: 0,
       backgroundColor: Colors.transparent,
       centerTitle: true,
-      title: Text("Connect",textAlign: TextAlign.center,style: TextStyle(color: Colors.indigo),),
+      title: Text("Connect",textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),
       leading: IconButton(
-        icon: Icon(Icons.arrow_back,color: Colors.indigo,),
+        icon: Icon(Icons.arrow_back,color: Colors.white,),
         onPressed: () {
           Navigator.pop(context);
         },
