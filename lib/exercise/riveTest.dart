@@ -10,17 +10,17 @@ import 'package:tflite/tflite.dart';
 
 /// An example showing how to drive a StateMachine via a trigger and number
 /// input.
-class LiquidDownload extends StatefulWidget {
+class Squat extends StatefulWidget {
   final List<CameraDescription> cameras;
   final String title;
 
-  LiquidDownload({required this.cameras, required this.title});
+  Squat({required this.cameras, required this.title});
 
   @override
-  _LiquidDownloadState createState() => _LiquidDownloadState();
+  _SquatState createState() => _SquatState();
 }
 
-class _LiquidDownloadState extends State<LiquidDownload> {
+class _SquatState extends State<Squat> {
   List<dynamic>? _data;
   int _imageHeight = 0;
   int _imageWidth = 0;
@@ -361,13 +361,13 @@ class _SquatPageTestState extends State<SquatPageTest> {
             width: 100,
             height: 15,
             child: Container(
-                  child: Text(
-                    "●",
-                    style: TextStyle(
-                      color: Color.fromRGBO(37, 213, 253, 1.0),
-                      fontSize: 12.0,
-                    ),
-                  ),
+                  // child: Text(
+                  //   "●",
+                  //   style: TextStyle(
+                  //     color: Color.fromRGBO(37, 213, 253, 1.0),
+                  //     fontSize: 12.0,
+                  //   ),
+                  // ),
             ),
           );
         }).toList();
