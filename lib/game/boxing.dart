@@ -235,10 +235,10 @@ class _BoxingState extends State<Boxing> {
             children: [
               Row(children: [
                 IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.arrow_back), color: Colors.white,)
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back), color: Colors.white,)
               ],),
               Container(
                   height: 1,
@@ -246,7 +246,7 @@ class _BoxingState extends State<Boxing> {
               ),
               SizedBox(height: 40),
               FutureBuilder(
-              future: Future.delayed(Duration(milliseconds: Random().nextInt(800) + 500)),
+                future: Future.delayed(Duration(milliseconds: Random().nextInt(800) + 500)),
                 builder: (c, s) {
                   if(s.connectionState == ConnectionState.done) {
                     var ran = Random().nextInt(2);

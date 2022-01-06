@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:move/exercise/squat_page.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math';
 import 'package:move/reabilitation/camera.dart';
-import 'package:move/exercise/armPress_data.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class ArmPress extends StatefulWidget {
+class Squat extends StatefulWidget {
   final List<CameraDescription> cameras;
   final String title;
-  const ArmPress({required this.cameras, required this.title});
+  final String model;
+  const Squat({required this.cameras, required this.title, required this.model});
+
   @override
-  _ArmPressState createState() => _ArmPressState();
+  _SquatState createState() => _SquatState();
 }
 
-class _ArmPressState extends State<ArmPress> {
+class _SquatState extends State<Squat> {
   List<dynamic> ? _data;
   int _imageHeight = 0;
   int _imageWidth = 0;
@@ -41,6 +43,7 @@ class _ArmPressState extends State<ArmPress> {
   loadModel() async {
     return await Tflite.loadModel(
         model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
+        // model: "assets/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite");
   }
 
   @override
@@ -58,16 +61,17 @@ class _ArmPressState extends State<ArmPress> {
             child: Row(
               children: [
                 IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back, color: Colors.white,)),
-                Text('Arm Press', style: TextStyle(color: Colors.white, fontSize: 20),),
+                Text('Squat', style: TextStyle(color: Colors.white, fontSize: 20),),
               ],
             ),
           ),
-          ArmPressData(
+          SquatPage(
             data: _data == null ? [] : _data,
             previewH: max(_imageHeight, _imageWidth),
             previewW: min(_imageHeight, _imageWidth),
             screenH: screen.height,
             screenW: screen.width,
+            //customModel: widget.customModel,
           ),
         ],
       ),

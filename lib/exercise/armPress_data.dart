@@ -63,7 +63,8 @@ class _ArmPressDataState extends State<ArmPressData> {
     kneeLY = 0;
     squatUp = true;
     flutterTts = new FlutterTts();
-    flutterTts!.speak("팔 운동이 시작되었습니다");
+    flutterTts!.setSpeechRate(0.4);
+    flutterTts!.speak("두 팔을 어깨와 일직선이 되도록 벌려서 준비 자세를 취해주세요");
   }
 
   bool ? _postureAccordingToExercise(Map<String, List<double>> poses) {

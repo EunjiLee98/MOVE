@@ -73,20 +73,20 @@ class _JumpingstartState extends State<Jumpingstart> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((doc) {
-          if(mounted) {
-            setState(() {
-              dino = doc.get('dino');
-              boxing = doc.get('boxing');
-              jumpingJack = doc.get('jumpingJack');
-              crossJack = doc.get('crossJack');
-            });
+      if(mounted) {
+        setState(() {
+          dino = doc.get('dino');
+          boxing = doc.get('boxing');
+          jumpingJack = doc.get('jumpingJack');
+          crossJack = doc.get('crossJack');
+        });
 
-            if(score > jumpingJack) {
-              avg = (dino + boxing + score + crossJack)/4;
+        if(score > jumpingJack) {
+          avg = (dino + boxing + score + crossJack)/4;
 
-              updateScore();
-            }
-          }
+          updateScore();
+        }
+      }
     });
   }
 

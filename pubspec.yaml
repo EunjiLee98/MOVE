@@ -38,6 +38,7 @@ dependencies:
   rive: 0.7.28
   tflite_flutter_helper: ^0.3.0
   url_launcher: ^6.0.10
+  web_socket_channel: ^2.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -174,14 +175,29 @@ flutter:
     - image2.png
     - posenet_mv1_075_float_from_checkpoints.tflite
     - tree.png
+<<<<<<< HEAD
+=======
+    - danceButton_comingSoon.png
+    - stretchingButton.png
+    - treeButton.png
+    - warriorButton.png
+    - bowButton.png
+    - zombie.riv
+    - squats_rive.riv
+>>>>>>> 62775a3de9beb192af82c711041c9ad933447e31
     - test.riv
     - lite-model_movenet_singlepose_lightning_3.tflite
     - lite-model_movenet_multipose_lightning_tflite_float16_1.tflite
     - lite-model_movenet_singlepose_lightning_tflite_int8_4.tflite
     - assets/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite
     - assets/rive/squat_test.riv
+<<<<<<< HEAD
     - assets/rive/move_squat.riv
     - assets/rive/move_jumpingjack.riv
+=======
+    - assets/rive/character.riv
+
+>>>>>>> 62775a3de9beb192af82c711041c9ad933447e31
 
 
   # To add assets to your application, add an assets section, like this:

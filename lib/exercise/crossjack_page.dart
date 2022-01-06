@@ -72,21 +72,21 @@ class _CrossjackstartState extends State<Crossjackstart> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((doc) {
-          if(mounted) {
-            setState(() {
-              dino = doc.get('dino');
-              boxing = doc.get('boxing');
-              jumpingJack = doc.get('jumpingJack');
-              crossJack = doc.get('crossJack');
-            });
-
-            if (score > crossJack) {
-              avg = (dino + boxing + jumpingJack + score) / 4;
-
-              updateScore();
-            }
-          }
+      if(mounted) {
+        setState(() {
+          dino = doc.get('dino');
+          boxing = doc.get('boxing');
+          jumpingJack = doc.get('jumpingJack');
+          crossJack = doc.get('crossJack');
         });
+
+        if (score > crossJack) {
+          avg = (dino + boxing + jumpingJack + score) / 4;
+
+          updateScore();
+        }
+      }
+    });
   }
 
   Future<void> updateScore() {

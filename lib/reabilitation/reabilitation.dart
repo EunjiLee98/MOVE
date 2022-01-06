@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:move/coral/webSocket.dart';
 import 'package:move/reabilitation/pushed_page.dart';
 
 class ReabSelect extends StatefulWidget {
@@ -25,11 +26,11 @@ class _ReabSelectState extends State<ReabSelect> {
           ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => PushedPage(
-                      cameras: widget.cameras!,
-                      title: 'posenet',
-                      name: 'Warrior',
-                    ),
+                  builder: (context) => PushedPage(
+                    cameras: widget.cameras!,
+                    title: 'posenet',
+                    name: 'Warrior',
+                  ),
                 ));
               },
               child: Text('Warrior')
@@ -94,10 +95,16 @@ class _ReabSelectState extends State<ReabSelect> {
               },
               child: Text('Rive Text')
           ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => WebSocket(),
+                ));
+              },
+              child: Text('Coral WebSocket Text')
+          ),
         ],
       ),
     );
   }
 }
-
-

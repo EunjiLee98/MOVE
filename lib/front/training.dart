@@ -161,7 +161,6 @@ class _RiveTestState extends State<RiveTest> {
 
   late RiveAnimationController _controller;
   late RiveAnimationController _openController;
-  late RiveAnimationController _closeController;
 
   @override
   void initState() {
