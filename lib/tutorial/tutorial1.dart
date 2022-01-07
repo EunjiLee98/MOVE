@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:camera/camera.dart';
-import 'package:move/exercise/riveTest.dart';
+import 'package:move/exercise/squatRive.dart';
 
 //Squat tutorial
 class Tutorial1 extends StatefulWidget {
