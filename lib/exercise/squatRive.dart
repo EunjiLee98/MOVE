@@ -68,7 +68,7 @@ class _SquatState extends State<Squat> {
       body: Stack(
         children: <Widget>[
           SquatPageTest(
-            data: _data == null ? [] : _data,
+            data: _data ?? [],
             previewH: max(_imageHeight, _imageWidth),
             previewW: min(_imageHeight, _imageWidth),
             screenH: screen.height,
@@ -78,8 +78,8 @@ class _SquatState extends State<Squat> {
             right: 0,
             top: 0,
             child: Container(
-              width: MediaQuery.of(context).size.width*0.25,
-              height: MediaQuery.of(context).size.height*0.25,
+              width: MediaQuery.of(context).size.width * 0.25,
+              height: MediaQuery.of(context).size.height * 0.25,
               child: Camera(
                 cameras: widget.cameras,
                 setRecognitions: _setRecognitions,
@@ -93,7 +93,7 @@ class _SquatState extends State<Squat> {
 }
 
 class SquatPageTest extends StatefulWidget {
-  final List<dynamic>? data;
+  final List<dynamic> data;
   final int previewH;
   final int previewW;
   final double screenH;
@@ -163,7 +163,7 @@ class _SquatPageTestState extends State<SquatPageTest> {
   rive.StateMachineController? _controller;
   rive.SMIInput<double>? _progress;
 
-  double leftStart= 0;
+  double leftStart = 0;
 
   void setRangeBasedOnModel() {
     upperRange = 300;
@@ -182,15 +182,15 @@ class _SquatPageTestState extends State<SquatPageTest> {
     // Load the animation file from the bundle, note that you could also
     // download this. The RiveFile just expects a list of bytes.
     rootBundle.load('assets/rive/move_squat.riv').then(
-          (data) async {
+      (data) async {
         // Load the RiveFile from the binary data.
         final file = rive.RiveFile.import(data);
 
         // The artboard is the root of the animation and gets drawn in the
         // Rive widget.
         final artboard = file.mainArtboard;
-        var controller =
-        rive.StateMachineController.fromArtboard(artboard, 'Squat_Controller');
+        var controller = rive.StateMachineController.fromArtboard(
+            artboard, 'Squat_Controller');
         if (controller != null) {
           artboard.addController(controller);
           _progress = controller.findInput('Progress');
@@ -298,24 +298,23 @@ class _SquatPageTestState extends State<SquatPageTest> {
       _checkCorrectPosture(poses);
     }
 
-    if(poses['leftShoulder']![1] > leftStart) {
+    if (poses['leftShoulder']![1] > leftStart) {
       setState(() {
         leftStart = poses['leftShoulder']![1];
 
-        if(_progress!.value != 100) {
-          _progress!.value = (leftStart-300)/2;
+        if (_progress!.value != 100) {
+          _progress!.value = (leftStart - 300) / 2;
         }
       });
     }
 
-    if(poses['leftShoulder']![1] < leftStart) {
+    if (poses['leftShoulder']![1] < leftStart) {
       setState(() {
         leftStart = poses['leftShoulder']![1];
 
-        _progress!.value = (leftStart-300)/2;
+        _progress!.value = (leftStart - 300) / 2;
       });
     }
-
   }
 
   //endregion
@@ -324,7 +323,7 @@ class _SquatPageTestState extends State<SquatPageTest> {
   Widget build(BuildContext context) {
     List<Widget> _renderKeypoints() {
       var lists = <Widget>[];
-      widget.data!.forEach((re) {
+      widget.data.forEach((re) {
         var list = re["keypoints"].values.map<Widget>((k) {
           var _x = k["x"];
           var _y = k["y"];
@@ -361,14 +360,14 @@ class _SquatPageTestState extends State<SquatPageTest> {
             width: 100,
             height: 15,
             child: Container(
-                  // child: Text(
-                  //   "●",
-                  //   style: TextStyle(
-                  //     color: Color.fromRGBO(37, 213, 253, 1.0),
-                  //     fontSize: 12.0,
-                  //   ),
-                  // ),
-            ),
+                // child: Text(
+                //   "●",
+                //   style: TextStyle(
+                //     color: Color.fromRGBO(37, 213, 253, 1.0),
+                //     fontSize: 12.0,
+                //   ),
+                // ),
+                ),
           );
         }).toList();
 
