@@ -180,9 +180,7 @@ flutter:
     - treeButton.png
     - warriorButton.png
     - bowButton.png
-    - zombie.riv
     - squats_rive.riv
-    - test.riv
     - lite-model_movenet_singlepose_lightning_3.tflite
     - lite-model_movenet_multipose_lightning_tflite_float16_1.tflite
     - lite-model_movenet_singlepose_lightning_tflite_int8_4.tflite

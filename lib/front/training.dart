@@ -52,6 +52,7 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         if(widget.bluetoothServices != null)
+                          // Navigator.push(context, MaterialPageRoute(builder: (context) => Jumpingjack(bluetoothServices: widget.bluetoothServices)));
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Jumpingjack(bluetoothServices: widget.bluetoothServices)));
                         if (widget.bluetoothServices == null)
                           SchedulerBinding.instance!.addPostFrameCallback((_) {
