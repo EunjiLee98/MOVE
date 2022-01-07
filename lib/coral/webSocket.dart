@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:move/coral/moveNet.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -52,19 +53,11 @@ class WebSocketPage extends StatefulWidget {
 class _WebSocketPageState extends State<WebSocketPage> {
   TextEditingController _controller = TextEditingController();
   String? jsonData;
-  String? jsonDataConverted;
+  String ? jsonDataConverted;
   String? newResult;
   var newJsonList;
   List result = [];
 
-  makeList(List result) {
-    List x = [];
-    for(int i=0; i < result.length; i++)
-      {
-        print(result[i]);
-      }
-    return x;
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,31 +72,30 @@ class _WebSocketPageState extends State<WebSocketPage> {
               // if (jsonData != null && jsonDataConverted != null) {
               jsonData = jsonEncode(snapshot.data.toString());
               jsonDataConverted = json.decode(jsonData!);
-              //List<String> result = jsonList.split('\n');
-              result = jsonDataConverted!.split(' ');
+              //jsonDataConverted = convert(jsonData!);
+              //result =  jsonData! as List;
+              result = jsonDataConverted!.split(', ');
               //newResult = makeList(result);
               //newJsonList[0] = jsonList[0];
-              //jsonDataConverted = jsonDecode(jsonData!);
               //var jsonDataList =  JsonDataFromCoral.fromJson(jsonDataConverted!);
               //print(jsonDataList);
               //}
-              return Column(
-                children: [
-                  //Text(snapshot.hasData ? '${snapshot.data.toString()}' : ''),
-                  Text(jsonDataConverted.toString()),
-                  Text(result[0]),
-                  Text(result[1]),
-                  // Text(result[2]),
-                  // Text(result[3]),
-                  // Text(result[4]),
-                  // Text(result[5]),
-                ],
+              //Text(snapshot.hasData ? '${snapshot.data.toString()}' : ''),
+              //Text(jsonDataConverted.toString()),
+              return Container (
+                child: Text(jsonDataConverted.toString()),
               );
             },
           ),
         ],
       ),
     );
+  }
+
+  List convert(String input) {
+    List output;
+    output = json.decode(input);
+    return output;
   }
 
   void _sendMessage() {

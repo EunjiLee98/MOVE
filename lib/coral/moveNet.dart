@@ -1,54 +1,332 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:move/coral/moveNet_page.dart';
-import 'package:move/exercise/squat_page.dart';
-import 'package:tflite/tflite.dart';
-import 'dart:math';
-import 'package:move/reabilitation/camera.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:just_audio/just_audio.dart';
 
 class MoveNet extends StatefulWidget {
+  final List ? data;
+
+  MoveNet({
+    required this.data,
+  });
+
   @override
   _MoveNetState createState() => _MoveNetState();
+
 }
 
+
+
 class _MoveNetState extends State<MoveNet> {
-  List<dynamic> ? _data;
-  int _imageHeight = 0;
-  int _imageWidth = 0;
-  int x = 1;
+
+  double?  noseX,
+      noseY,
+      leftEyeX,
+      leftEyeY,
+      rightEyeX,
+      rightEyeY,
+      leftEarX,
+      leftEarY,
+      rightEarX,
+      rightEarY,
+      leftShoulderX,
+      leftShoulderY,
+      rightShoulderX,
+      rightShoulderY,
+      leftElbowX,
+      leftElbowY,
+      rightElbowX,
+      rightElbowY,
+      leftWristX,
+      leftWristY,
+      rightWristX,
+      rightWristY,
+      leftHipX,
+      leftHipY,
+      rightHipX,
+      rightHipY,
+      leftKneeX,
+      leftKneeY,
+      rightKneeX,
+      rightKneeY,
+      leftAnkleX,
+      leftAnkleY,
+      rightAnkleX,
+      rightAnkleY;
+
+  // double setXY (List data)
+  // {
+  //   double x, y;
+  //   int i = 0;
+  //   int index;
+  //   for (i = 0 ; i < data.length; i ++)
+  //     {
+  //       if (i % 3 == 0)
+  //         index = i;
+  //       else if (i % 2 == 0)
+  //         y = data[i];
+  //       else
+  //         x = data[i];
+  //     }
+  //   return
+  // }
+
+  bool? wristAlignment, shoulderAlignment, ankleAlignment, kneeAndHipAlignment;
+  List ? dataListed;
+  // var leftEyePos = Vector(0, 0);
+  // var rightEyePos = Vector(0, 0);
+  // var leftShoulderPos = Vector(0, 0);
+  // var rightShoulderPos = Vector(0, 0);
+  // var leftHipPos = Vector(0, 0);
+  // var rightHipPos = Vector(0, 0);
+  // var leftElbowPos = Vector(0, 0);
+  // var rightElbowPos = Vector(0, 0);
+  // var leftWristPos = Vector(0, 0);
+  // var rightWristPos = Vector(0, 0);
+  // var leftKneePos = Vector(0, 0);
+  // var rightKneePos = Vector(0, 0);
+  // var leftAnklePos = Vector(0, 0);
+  // var rightAnklePos = Vector(0, 0);
+
+  List<String>  bodyWeight= [
+    'Coral test',
+  ];
+
+  Map<String, List<double>> ? inputArr;
+  int ? _counter;
+  double ? lowerRange, upperRange;
+  bool ? midCount,isCorrectPosture;
+
+  late AudioPlayer player = AudioPlayer();
 
   @override
   void initState() {
     super.initState();
+    makeListDynamic(widget.data!);
+    setRangeBasedOnModel();
   }
 
 
+  makeListDynamic(List data) {
+
+  }
+
+  Future<void> bgmPlay() async {
+    await player.setAsset('assets/audio/bgm_ex.mp3');
+    player.setLoopMode(LoopMode.one);
+    player.play();
+  }
+
+  void setRangeBasedOnModel(){
+    upperRange=300;
+    lowerRange=500;
+  }
+
+
+  void resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
+  void incrementCounter() {
+    setState(() {
+      if (_counter!=null)
+        _counter = _counter! + 1;
+    });
+  }
+
+  void setMidCount(bool f) {
+    //when midcount is activated
+    if(f && !midCount!) {
+      //flutterTts!.speak("잘했습니다!");
+    }
+    setState(() {
+      midCount = f;
+    });
+
+  }
+
+  Color getCounterColor() {
+    if(isCorrectPosture!) {
+      return Colors.green;
+    } else {
+      return Colors.red;
+    }
+  }
+
+  Positioned _createPositionedBlobs(double x, double y) {
+    return Positioned(
+      height: 5,
+      width: 40,
+      left:x,
+      top:y,
+      child: Container(
+        color: getCounterColor(),
+      ),
+    );
+  }
+
+  List<Widget>  _renderHelperBlobs() {
+    List<Widget>  listToReturn = <Widget>[];
+    listToReturn.add(_createPositionedBlobs(0, upperRange!));
+    listToReturn.add(_createPositionedBlobs(0, lowerRange!));
+    return listToReturn;
+  }
+
+  //region Core
+  _postureAccordingToExercise(Map<String, List<double>> poses){
+    // if(widget.customModel==bodyWeight[1]) {
+    //   return poses['leftShoulder']![1] < upperRange!
+    //       && poses['rightShoulder']![1] < upperRange!;
+    // }
+    //if(widget.customModel==bodyWeight[0]) {
+    return poses['leftShoulder']![1] < upperRange!
+        && poses['rightShoulder']![1] < upperRange!
+        && poses['rightKnee']![1] > lowerRange!
+        && poses['leftKnee']![1] > lowerRange!;
+    //}
+  }
+
+  _checkCorrectPosture(Map<String, List<double>> poses) {
+    if(_postureAccordingToExercise(poses)){
+      if(!isCorrectPosture!){
+        setState(() {
+          isCorrectPosture=true;
+        });
+      }
+    } else {
+      if(isCorrectPosture!) {
+        setState(() {
+          isCorrectPosture = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _countingLogic(Map<String, List<double>> poses) async {
+    if (isCorrectPosture! && poses['leftShoulder']![1] > upperRange! && poses['rightShoulder']![1] > upperRange!) {
+      setMidCount(true);
+    }
+
+    if (midCount! && poses['leftShoulder']![1] < upperRange! && poses['rightShoulder']![1] < upperRange!) {
+      incrementCounter();
+      setMidCount(false);
+    }
+    //check the posture when not in midcount
+    if(!midCount!) {
+      _checkCorrectPosture(poses);
+    }
+  }
+  //endregion
+
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Stack(
+    List<Widget> _renderKeypoints() {
+      var lists = <Widget>[];
+      widget.data!.forEach((re) {
+        var list = re["keypointType"].values.map<Widget>((k) {
+          var _x = k["x"];
+          var _y = k["y"];
+          var scaleW, scaleH, x, y;
+
+          // if (widget.screenH / widget.screenW > widget.previewH / widget.previewW) {
+          //   scaleW = widget.screenH / widget.previewH * widget.previewW;
+          //   scaleH = widget.screenH;
+          //   var difW = (scaleW - widget.screenW) / scaleW;
+          //   x = (_x - difW / 2) * scaleW;
+          //   y = _y * scaleH;
+          // } else {
+          //   scaleH = widget.screenW / widget.previewW * widget.previewH;
+          //   scaleW = widget.screenW;
+          //   var difH = (scaleH - widget.screenH) / scaleH;
+          //   x = _x * scaleW;
+          //   y = (_y - difH / 2) * scaleH;
+          // }
+
+          inputArr![k['part']] = [x,y];
+
+          // To solve mirror problem on front camera
+          if (x > 320) {
+            var temp = x - 320;
+            x = 320 - temp;
+          } else {
+            var temp = 320 - x;
+            x = 320 + temp;
+          }
+          return Positioned(
+            left: x - 275,
+            top: y - 50,
+            width: 100,
+            height: 15,
+            child: Container(
+              child: Text(
+                "●",
+                style: TextStyle(
+                  color: Color.fromRGBO(37, 213, 253, 1.0),
+                  fontSize: 12.0,
+                ),
+              ),
+            ),
+          );
+        }).toList();
+
+        _countingLogic(inputArr!);
+
+        inputArr!.clear();
+        lists..addAll(list);
+      });
+      return lists;
+    }
+
+    return Stack(children: <Widget>[
+      Stack(
+        //children: _renderHelperBlobs(),
+      ),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Align(
-            alignment: Alignment.topLeft,
-            child: Row(
-              children: [
-                IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back, color: Colors.white,)),
-                Text('Coral & MoveNet', style: TextStyle(color: Colors.white, fontSize: 20),),
-              ],
+            alignment: Alignment.center,
+            child: Text(
+              widget.data![0] + ' ' +
+              widget.data![1] + ' ' +
+              widget.data![2] + ' ' ,
+              // widget.data![3],
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.black),
             ),
-          ),
-          MoveNetPage(
-            data: _data == null ? [] : _data,
-            previewH: max(_imageHeight, _imageWidth),
-            previewW: min(_imageHeight, _imageWidth),
-            screenH: screen.height,
-            screenW: screen.width,
-            //customModel: widget.customModel,
+//            child: LinearPercentIndicator(
+//              animation: true,
+//              lineHeight: 20.0,
+//              animationDuration: 500,
+//              animateFromLastPercent: true,
+//              percent: _counter,
+//              center: Text("${(_counter).toStringAsFixed(1)}"),
+//              linearStrokeCap: LinearStrokeCap.roundAll,
+//              progressColor: Colors.green,
+//            ),
+//             child: Padding(
+//               padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+//               child: Container(
+//                 height: 100,
+//                 width: 100,
+//                 child: FittedBox(
+//                   child: FloatingActionButton(
+//                     backgroundColor: getCounterColor(),
+//                     onPressed: resetCounter,
+//
+//                   ),
+//                 ),
+//               ),
+//             ),
           ),
         ],
       ),
-    );
+      Stack(
+        children: _renderKeypoints(),
+      ),
+    ]);
   }
 }
