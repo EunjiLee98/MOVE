@@ -54,9 +54,8 @@ class _WebSocketPageState extends State<WebSocketPage> {
   TextEditingController _controller = TextEditingController();
   String? jsonData;
   String ? jsonDataConverted;
-  String? newResult;
-  var newJsonList;
-  List result = [];
+  List ? jsonList;
+  var jsonDynamic;
 
   @override
   Widget build(BuildContext context) {
@@ -69,21 +68,17 @@ class _WebSocketPageState extends State<WebSocketPage> {
           StreamBuilder(
             stream: widget.channel.stream,
             builder: (context, snapshot) {
-              // if (jsonData != null && jsonDataConverted != null) {
               jsonData = jsonEncode(snapshot.data.toString());
-              jsonDataConverted = json.decode(jsonData!);
-              //jsonDataConverted = convert(jsonData!);
-              //result =  jsonData! as List;
-              result = jsonDataConverted!.split(', ');
-              //newResult = makeList(result);
-              //newJsonList[0] = jsonList[0];
-              //var jsonDataList =  JsonDataFromCoral.fromJson(jsonDataConverted!);
-              //print(jsonDataList);
-              //}
-              //Text(snapshot.hasData ? '${snapshot.data.toString()}' : ''),
-              //Text(jsonDataConverted.toString()),
-              return Container (
-                child: Text(jsonDataConverted.toString()),
+              //jsonDataConverted = json.decode(jsonData!);
+              jsonList = jsonData!.split("end");
+              //jsonDynamic = List<dynamic>.from(jsonList!);
+              return ListView.builder(
+                itemCount: jsonList!.length,
+                itemBuilder: (context, index) {
+                  return MoveNet(
+                    data : jsonList![index],
+                  );
+                },
               );
             },
           ),

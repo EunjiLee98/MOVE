@@ -198,6 +198,7 @@ class _SquatPageState extends State<SquatPage> {
       var lists = <Widget>[];
       widget.data!.forEach((re) {
         var list = re["keypoints"].values.map<Widget>((k) {
+          print(re["keypoints"].values.toString());
           var _x = k["x"];
           var _y = k["y"];
           var scaleW, scaleH, x, y;
@@ -242,7 +243,7 @@ class _SquatPageState extends State<SquatPage> {
             ),
           );
         }).toList();
-
+        //print("list : " + list.toString());
         _countingLogic(inputArr!);
 
         inputArr!.clear();
@@ -250,6 +251,7 @@ class _SquatPageState extends State<SquatPage> {
       });
       return lists;
     }
+
 
     return Stack(children: <Widget>[
       Stack(

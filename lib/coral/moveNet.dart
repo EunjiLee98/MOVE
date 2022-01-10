@@ -4,7 +4,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:just_audio/just_audio.dart';
 
 class MoveNet extends StatefulWidget {
-  final List ? data;
+  final String ? data;
 
   MoveNet({
     required this.data,
@@ -14,8 +14,6 @@ class MoveNet extends StatefulWidget {
   _MoveNetState createState() => _MoveNetState();
 
 }
-
-
 
 class _MoveNetState extends State<MoveNet> {
 
@@ -71,8 +69,7 @@ class _MoveNetState extends State<MoveNet> {
   //   return
   // }
 
-  bool? wristAlignment, shoulderAlignment, ankleAlignment, kneeAndHipAlignment;
-  List ? dataListed;
+
   // var leftEyePos = Vector(0, 0);
   // var rightEyePos = Vector(0, 0);
   // var leftShoulderPos = Vector(0, 0);
@@ -92,23 +89,20 @@ class _MoveNetState extends State<MoveNet> {
     'Coral test',
   ];
 
+  bool? wristAlignment, shoulderAlignment, ankleAlignment, kneeAndHipAlignment;
+  List<dynamic> ? dynamicList;
+  List ? dataList;
   Map<String, List<double>> ? inputArr;
   int ? _counter;
   double ? lowerRange, upperRange;
   bool ? midCount,isCorrectPosture;
-
   late AudioPlayer player = AudioPlayer();
 
   @override
   void initState() {
     super.initState();
-    makeListDynamic(widget.data!);
+    //dynamicList = makeDynamicList();
     setRangeBasedOnModel();
-  }
-
-
-  makeListDynamic(List data) {
-
   }
 
   Future<void> bgmPlay() async {
@@ -121,7 +115,17 @@ class _MoveNetState extends State<MoveNet> {
     upperRange=300;
     lowerRange=500;
   }
+  List makeList(String data) {
+    List temp;
+    temp = data.split(" ");
+    return temp;
+  }
 
+  List<dynamic> makeDynamicList(List dataList) {
+    var jsonDynamic;
+    jsonDynamic = List<dynamic>.from(dataList);
+    return jsonDynamic;
+  }
 
   void resetCounter() {
     setState(() {
@@ -222,81 +226,66 @@ class _MoveNetState extends State<MoveNet> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _renderKeypoints() {
-      var lists = <Widget>[];
-      widget.data!.forEach((re) {
-        var list = re["keypointType"].values.map<Widget>((k) {
-          var _x = k["x"];
-          var _y = k["y"];
-          var scaleW, scaleH, x, y;
+    dataList = makeList(widget.data!);
+    dynamicList = makeDynamicList(dataList!);
 
-          // if (widget.screenH / widget.screenW > widget.previewH / widget.previewW) {
-          //   scaleW = widget.screenH / widget.previewH * widget.previewW;
-          //   scaleH = widget.screenH;
-          //   var difW = (scaleW - widget.screenW) / scaleW;
-          //   x = (_x - difW / 2) * scaleW;
-          //   y = _y * scaleH;
-          // } else {
-          //   scaleH = widget.screenW / widget.previewW * widget.previewH;
-          //   scaleW = widget.screenW;
-          //   var difH = (scaleH - widget.screenH) / scaleH;
-          //   x = _x * scaleW;
-          //   y = (_y - difH / 2) * scaleH;
-          // }
+    // print("data : ");
+    // print(widget.data);
+    // List<Widget> _renderKeypoints() {
+    //   var lists = <Widget>[];
 
-          inputArr![k['part']] = [x,y];
+    var _x = "";
+    var _y = "";
+    int x = 0;
+    int y = 0;
+    _renderKeypoints() {
+      for (var value in dynamicList!) {
+        //print(value);
+        //var list = value.map<Widget>((k) {
+        _x = dynamicList![1].toString();
+        _y = dynamicList![2].toString();
 
-          // To solve mirror problem on front camera
-          if (x > 320) {
-            var temp = x - 320;
-            x = 320 - temp;
-          } else {
-            var temp = 320 - x;
-            x = 320 + temp;
-          }
-          return Positioned(
-            left: x - 275,
-            top: y - 50,
-            width: 100,
-            height: 15,
-            child: Container(
-              child: Text(
-                "●",
-                style: TextStyle(
-                  color: Color.fromRGBO(37, 213, 253, 1.0),
-                  fontSize: 12.0,
-                ),
+        print(dynamicList![0] + " " + _x + " " + _y);
+
+        x = int.parse(_x);
+        y = int.parse(_y);
+
+        // var scaleW, scaleH, x, y;
+
+        Size screen = MediaQuery
+            .of(context)
+            .size;
+        return Positioned(
+          left: screen.width - x,
+          top: screen.height - y,
+          width: 100,
+          height: 15,
+          child: Expanded(
+            child: Text(
+              "●",
+              style: TextStyle(
+                color: Color.fromRGBO(37, 213, 253, 1.0),
+                fontSize: 12.0,
               ),
             ),
-          );
-        }).toList();
+          ),
+        );
+        // }).toList();
 
-        _countingLogic(inputArr!);
-
-        inputArr!.clear();
-        lists..addAll(list);
-      });
-      return lists;
+      }
     }
 
-    return Stack(children: <Widget>[
-      Stack(
-        //children: _renderHelperBlobs(),
-      ),
-      Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              widget.data![0] + ' ' +
-              widget.data![1] + ' ' +
-              widget.data![2] + ' ' ,
-              // widget.data![3],
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.black),
-            ),
+
+      return Stack(children: <Widget>[
+        Stack(
+          children: _renderHelperBlobs(),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
 //            child: LinearPercentIndicator(
 //              animation: true,
 //              lineHeight: 20.0,
@@ -307,26 +296,34 @@ class _MoveNetState extends State<MoveNet> {
 //              linearStrokeCap: LinearStrokeCap.roundAll,
 //              progressColor: Colors.green,
 //            ),
-//             child: Padding(
-//               padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-//               child: Container(
-//                 height: 100,
-//                 width: 100,
-//                 child: FittedBox(
-//                   child: FloatingActionButton(
-//                     backgroundColor: getCounterColor(),
-//                     onPressed: resetCounter,
-//
-//                   ),
-//                 ),
-//               ),
-//             ),
-          ),
-        ],
-      ),
-      Stack(
-        children: _renderKeypoints(),
-      ),
-    ]);
-  }
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  child: FittedBox(
+                    child: FloatingActionButton(
+                      backgroundColor: getCounterColor(),
+                      onPressed: resetCounter,
+                      child: Text(
+                        '${_counter.toString()}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            Center(),
+            _renderKeypoints(),
+          ],
+        ),
+      ]);
+    }
+
 }
