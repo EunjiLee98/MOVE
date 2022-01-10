@@ -30,12 +30,8 @@ class _JumpingjackState extends State<Jumpingjack> {
       'Jumpingjack',
       autoplay: false,
     );
-  }
 
-  @override
-  void dispose(){
-    // _streamController.close();
-    super.dispose();
+    _openController.isActive = false;
   }
 
   ListView _buildConnectDeviceView() {

@@ -156,8 +156,7 @@ class _BluetoothState extends State<Bluetooth> {
     );
   }
 
-  void _bleRead(
-      BluetoothCharacteristic characteristic) {
+  void _bleRead(BluetoothCharacteristic characteristic) {
     if (characteristic.properties.notify) {
       characteristic.value.listen((value) {
         readValues[characteristic.uuid] = value;});
