@@ -197,7 +197,7 @@ class _BoxingState extends State<Boxing> {
         playPunch();
       }
     }else if(ran_gesture == 'Uppercut') {
-      if(gesture_num == 1) {
+      if(gesture_num == 4) {
         gesture_num = 0;
         correct += 1;
         jar++;

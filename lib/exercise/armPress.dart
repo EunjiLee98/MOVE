@@ -47,27 +47,38 @@ class _ArmPressState extends State<ArmPress> {
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'MOVE! - Dumbbell Rive',
+          style: GoogleFonts.russoOne(
+            fontSize: 25,
+            color: Colors.deepPurple,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
       body: Stack(
         children: <Widget>[
-          Camera(
-            cameras: widget.cameras,
-            setRecognitions: _setRecognitions,
-          ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Row(
-              children: [
-                IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back, color: Colors.white,)),
-                Text('Arm Press', style: TextStyle(color: Colors.white, fontSize: 20),),
-              ],
-            ),
-          ),
           ArmPressData(
             data: _data == null ? [] : _data,
             previewH: max(_imageHeight, _imageWidth),
             previewW: min(_imageHeight, _imageWidth),
             screenH: screen.height,
             screenW: screen.width,
+          ),
+          Positioned(
+            right: 0,
+            top: 0,
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.25,
+              height: MediaQuery.of(context).size.height * 0.25,
+              child: Camera(
+                cameras: widget.cameras,
+                setRecognitions: _setRecognitions,
+              ),
+            ),
           ),
         ],
       ),

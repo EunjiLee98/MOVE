@@ -31,7 +31,7 @@ class _JumpingjackState extends State<Jumpingjack> {
       autoplay: false,
     );
 
-    _openController.isActive = false;
+    // _openController.isActive = false;
   }
 
   ListView _buildConnectDeviceView() {
@@ -80,13 +80,14 @@ class _JumpingjackState extends State<Jumpingjack> {
       setState(() {
         readValues[characteristic.uuid] = value;
         gesture = value.toString();
-        gesture_num = int.parse(gesture[1]);
+        gesture_num = int.parse(gesture[3]);
       });
     });
 
-    if(gesture_num == 1) {
+    if(gesture_num == 3) {
       setState(() {
         _openController.isActive = true;
+        gesture_num = 0;
       });
     }
 
