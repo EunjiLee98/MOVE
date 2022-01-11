@@ -38,11 +38,11 @@ limitations under the License.
 // Values from Tiny Motion Trainer
 #define MOTION_THRESHOLD 0.25
 #define CAPTURE_DELAY 100 // This is now in milliseconds
-#define NUM_SAMPLES 20
+#define NUM_SAMPLES 60
 
 // Array to map gesture index to a name
 const char *GESTURES[] = {
-    "jump", "jumpingjack", "punch", "uppercut"
+    "jump", "punch", "jumpingjack", "uppercut"
 };
 
 
