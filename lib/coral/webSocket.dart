@@ -72,14 +72,17 @@ class _WebSocketPageState extends State<WebSocketPage> {
               //jsonDataConverted = json.decode(jsonData!);
               jsonList = jsonData!.split("end");
               //jsonDynamic = List<dynamic>.from(jsonList!);
-              return ListView.builder(
-                itemCount: jsonList!.length,
-                itemBuilder: (context, index) {
-                  return MoveNet(
-                    data : jsonList![index],
-                  );
-                },
+              return MoveNet(
+                data : jsonList!,
               );
+              // return ListView.builder(
+              //   itemCount: jsonList!.length,
+              //   itemBuilder: (context, index) {
+              //     return MoveNet(
+              //       data : jsonList![index],
+              //     );
+              //   },
+              // );
             },
           ),
         ],
