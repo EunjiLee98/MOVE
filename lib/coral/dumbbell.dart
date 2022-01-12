@@ -2,6 +2,8 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:rive/rive.dart' as rive;
 
 class Dumbbell extends StatefulWidget {
   final List? data;
@@ -41,10 +43,43 @@ class _DumbbellState extends State<Dumbbell> {
   int? _counter;
   double? lowerRange, upperRange;
   bool? midCount, isCorrectPosture;
+  rive.Artboard? _riveArtboard;
+  rive.StateMachineController? _controller;
+  rive.SMIInput<double>? _progress;
+
+  void setRangeBasedOnModel() {
+    upperRange = 300;
+    lowerRange = 500;
+  }
 
   @override
   void initState() {
     super.initState();
+    inputArr = new Map();
+    _counter = 0;
+    midCount = false;
+    isCorrectPosture = false;
+    setRangeBasedOnModel();
+
+    // Load the animation file from the bundle, note that you could also
+    // download this. The RiveFile just expects a list of bytes.
+    rootBundle.load('assets/rive/move_dumbbell.riv').then(
+          (data) async {
+        // Load the RiveFile from the binary data.
+        final file = rive.RiveFile.import(data);
+
+        // The artboard is the root of the animation and gets drawn in the
+        // Rive widget.
+        final artboard = file.mainArtboard;
+        var controller = rive.StateMachineController.fromArtboard(
+            artboard, 'Dumbbell_Controller');
+        if (controller != null) {
+          artboard.addController(controller);
+          _progress = controller.findInput('Progress');
+        }
+        setState(() => _riveArtboard = artboard);
+      },
+    );
   }
 
   List makeList(String data) {
