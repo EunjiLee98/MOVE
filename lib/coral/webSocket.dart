@@ -1,8 +1,30 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
+import 'package:move/coral/moveNet.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'dart:convert';
+import 'package:queue/queue.dart';
 
+class JsonDataFromCoral {
+  String? l0;
+  String? l1;
+
+  JsonDataFromCoral({this.l0, this.l1});
+
+  JsonDataFromCoral.fromJson(Map<String, dynamic> json) {
+    l0 = json['0'].cast<int>();
+    l1 = json['1'].cast<int>();
+  }
+
+  Map<String, dynamic> toJson(Map<String, dynamic> data) {
+    data['0'] = this.l0;
+    data['1'] = this.l1;
+    return data;
+  }
+}
 
 class WebSocket extends StatelessWidget {
   @override
@@ -30,6 +52,10 @@ class WebSocketPage extends StatefulWidget {
 
 class _WebSocketPageState extends State<WebSocketPage> {
   TextEditingController _controller = TextEditingController();
+  String? jsonData;
+  String ? jsonDataConverted;
+  List ? jsonList;
+  var jsonDynamic;
 
   @override
   Widget build(BuildContext context) {
@@ -37,36 +63,29 @@ class _WebSocketPageState extends State<WebSocketPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          //crossAxisAlignment: CrossAxisAlignment.start,
-            child:
-            //ren: <Widget>[
-            // Form(
-            //   child: TextFormField(
-            //     controller: _controller,
-            //     decoration: InputDecoration(labelText: 'Send a message'),
-            //   ),
-            // ),
-            StreamBuilder(
-              stream: widget.channel.stream,
-              builder: (context, snapshot) {
-                return SingleChildScrollView(
-                  //padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  child: Text(snapshot.hasData ? '${snapshot.data.toString()}' : ''),
-                );
-              },
-            )
-          // ],
-        ),
+      body: Stack(
+        children: <Widget>[
+          StreamBuilder(
+            stream: widget.channel.stream,
+            builder: (context, snapshot) {
+              jsonData = jsonEncode(snapshot.data.toString());
+              //jsonDataConverted = json.decode(jsonData!);
+              jsonList = jsonData!.split("end");
+              //jsonDynamic = List<dynamic>.from(jsonList!);
+              return MoveNet(
+                data : jsonList!,
+              );
+            },
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _sendMessage,
-        tooltip: 'Send message',
-        child: Icon(Icons.send),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  List convert(String input) {
+    List output;
+    output = json.decode(input);
+    return output;
   }
 
   void _sendMessage() {
