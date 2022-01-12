@@ -75,14 +75,6 @@ class _WebSocketPageState extends State<WebSocketPage> {
               return MoveNet(
                 data : jsonList!,
               );
-              // return ListView.builder(
-              //   itemCount: jsonList!.length,
-              //   itemBuilder: (context, index) {
-              //     return MoveNet(
-              //       data : jsonList![index],
-              //     );
-              //   },
-              // );
             },
           ),
         ],

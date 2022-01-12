@@ -2,6 +2,8 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:just_audio/just_audio.dart';
 
 class MoveNet extends StatefulWidget {
   final List? data;
@@ -73,9 +75,18 @@ class _MoveNetState extends State<MoveNet> {
   var leftAnklePos = Vector(0, 0);
   var rightAnklePos = Vector(0, 0);
 
+  List<String> bodyWeight = [
+    'Coral test',
+  ];
+
   bool? wristAlignment, shoulderAlignment, ankleAlignment, kneeAndHipAlignment;
   List<dynamic>? dynamicList;
   List? dataList;
+  Map<String, List<double>>? inputArr;
+  int? _counter;
+  double? lowerRange, upperRange;
+  bool? midCount, isCorrectPosture;
+  late AudioPlayer player = AudioPlayer();
 
   @override
   void initState() {
@@ -115,6 +126,13 @@ class _MoveNetState extends State<MoveNet> {
           key = dataList![0].toString().substring(13);
           x = double.parse(dataList![1]);
           y = double.parse(dataList![2]);
+          if (x > 320) {
+            var temp = x - 320;
+            x = 320 - temp;
+          } else {
+            var temp = 320 - x;
+            x = 320 + temp;
+          }
           dictionary.addAll({
             key: {"x": x, "y": y}
           });
@@ -130,7 +148,7 @@ class _MoveNetState extends State<MoveNet> {
         var _x = value["x"];
         var _y = value["y"];
         Widget list = Positioned(
-          left: _x - 275,
+          left: _x - 175,
           top: _y - 50,
           width: 100,
           height: 15,
@@ -145,7 +163,6 @@ class _MoveNetState extends State<MoveNet> {
           ),
         );
         lists.add(list);
-        //lists.clear();
       });
       return lists;
     }
