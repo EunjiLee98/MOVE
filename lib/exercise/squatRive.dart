@@ -67,7 +67,7 @@ class _SquatState extends State<Squat> {
       ),
       body: Stack(
         children: <Widget>[
-          SquatPageTest(
+          SquatData(
             data: _data ?? [],
             previewH: max(_imageHeight, _imageWidth),
             previewW: min(_imageHeight, _imageWidth),
@@ -92,14 +92,14 @@ class _SquatState extends State<Squat> {
   }
 }
 
-class SquatPageTest extends StatefulWidget {
+class SquatData extends StatefulWidget {
   final List<dynamic> data;
   final int previewH;
   final int previewW;
   final double screenH;
   final double screenW;
 
-  SquatPageTest({
+  SquatData({
     required this.data,
     required this.previewH,
     required this.previewW,
@@ -108,16 +108,10 @@ class SquatPageTest extends StatefulWidget {
   });
 
   @override
-  _SquatPageTestState createState() => _SquatPageTestState();
+  _SquatDataState createState() => _SquatDataState();
 }
 
-class Vector {
-  double x, y;
-
-  Vector(this.x, this.y);
-}
-
-class _SquatPageTestState extends State<SquatPageTest> {
+class _SquatDataState extends State<SquatData> {
   double? leftShoulderY,
       rightShoulderY,
       leftWristX,
@@ -145,10 +139,6 @@ class _SquatPageTestState extends State<SquatPageTest> {
   var rightKneePos = Vector(0, 0);
   var leftAnklePos = Vector(0, 0);
   var rightAnklePos = Vector(0, 0);
-
-  List<String> bodyWeight = [
-    'Squats',
-  ];
 
   Map<String, List<double>>? inputArr;
   int? _counter;
@@ -438,4 +428,10 @@ class _SquatPageTestState extends State<SquatPageTest> {
       ),
     ]);
   }
+}
+
+class Vector {
+  double x, y;
+
+  Vector(this.x, this.y);
 }
