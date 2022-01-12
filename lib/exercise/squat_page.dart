@@ -197,11 +197,13 @@ class _SquatPageState extends State<SquatPage> {
     List<Widget> _renderKeypoints() {
       var lists = <Widget>[];
       widget.data!.forEach((re) {
+        // print(widget.data!);
+
         var list = re["keypoints"].values.map<Widget>((k) {
           var _x = k["x"];
           var _y = k["y"];
           var scaleW, scaleH, x, y;
-
+          /*
           if (widget.screenH / widget.screenW > widget.previewH / widget.previewW) {
             scaleW = widget.screenH / widget.previewH * widget.previewW;
             scaleH = widget.screenH;
@@ -217,6 +219,7 @@ class _SquatPageState extends State<SquatPage> {
           }
 
           inputArr![k['part']] = [x,y];
+          print(inputArr);
 
           // To solve mirror problem on front camera
           if (x > 320) {
@@ -226,6 +229,7 @@ class _SquatPageState extends State<SquatPage> {
             var temp = 320 - x;
             x = 320 + temp;
           }
+          */
           return Positioned(
             left: x - 275,
             top: y - 50,
@@ -244,6 +248,7 @@ class _SquatPageState extends State<SquatPage> {
         }).toList();
 
         _countingLogic(inputArr!);
+        // print(list);
 
         inputArr!.clear();
         lists..addAll(list);
@@ -261,16 +266,6 @@ class _SquatPageState extends State<SquatPage> {
         children: <Widget>[
           Align(
             alignment: Alignment.center,
-//            child: LinearPercentIndicator(
-//              animation: true,
-//              lineHeight: 20.0,
-//              animationDuration: 500,
-//              animateFromLastPercent: true,
-//              percent: _counter,
-//              center: Text("${(_counter).toStringAsFixed(1)}"),
-//              linearStrokeCap: LinearStrokeCap.roundAll,
-//              progressColor: Colors.green,
-//            ),
             child: Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
               child: Container(

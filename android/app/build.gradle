@@ -49,7 +49,7 @@ android {
         versionName flutterVersionName
     }
 
-    signingConfigs {
+    /*signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
@@ -66,7 +66,7 @@ android {
             useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
+    } 절대 주석 지우지 말것! for 용재오빠*/
 
     aaptOptions {
         noCompress 'tflite'
