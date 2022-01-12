@@ -101,7 +101,7 @@ class _ReabSelectState extends State<ReabSelect> {
                   builder: (context) => WebSocket(),
                 ));
               },
-              child: Text('Coral WebSocket Text')
+              child: Text('Coral WebSocket Test')
           ),
         ],
       ),
