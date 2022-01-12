@@ -31,16 +31,17 @@ class _CameraState extends State<Camera> {
         ResolutionPreset.max,
       );
       controller!.initialize().then((_) {
+        var prevFrame = 0;
+
         if (!mounted) {
           return;
         }
-        setState(() {});
 
-        controller!.startImageStream((CameraImage img) {
+        controller!.startImageStream((img) {
+          final now = DateTime.now().millisecondsSinceEpoch;
+
           if (!isDetecting) {
             isDetecting = true;
-
-            int startTime = new DateTime.now().millisecondsSinceEpoch;
 
             Tflite.runPoseNetOnFrame(
               bytesList: img.planes.map((plane) {
@@ -54,15 +55,16 @@ class _CameraState extends State<Camera> {
               threshold: 0.1,
               // nmsRadius: 10,
             ).then((recognitions) {
-              int endTime = new DateTime.now().millisecondsSinceEpoch;
-              print("Detection took ${endTime - startTime}");
-
               widget.setRecognitions(recognitions!, img.height, img.width);
-
               isDetecting = false;
+
+              print('>>> Got frame after ${now - prevFrame}ms');
+              prevFrame = now;
             });
           }
         });
+
+        setState(() {});
       });
     }
   }
@@ -88,12 +90,13 @@ class _CameraState extends State<Camera> {
     var screenRatio = screenH / screenW;
     var previewRatio = previewH / previewW;
 
-    return OverflowBox(
-      maxHeight:
-          screenRatio > previewRatio ? screenH : screenW / previewW * previewH,
-      maxWidth:
-          screenRatio > previewRatio ? screenH / previewH * previewW : screenW,
-      child: CameraPreview(controller!),
-    );
+    return CameraPreview(controller!);
+    // return OverflowBox(
+    //   // maxHeight: MediaQuery.of(context).size.height*0.4,
+    //   //     // screenRatio > previewRatio ? screenH : screenW / previewW * previewH,
+    //   // maxWidth: MediaQuery.of(context).size.width*0.4,
+    //       // screenRatio > previewRatio ? screenH / previewH * previewW : screenW,
+    //   child: CameraPreview(controller!),
+    // );
   }
 }

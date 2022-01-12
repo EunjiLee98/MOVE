@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-
+import 'package:flutter/services.dart';
+import 'package:rive/rive.dart' as rive;
 
 class ArmPressData extends StatefulWidget {
   final List<dynamic> ? data;
@@ -17,7 +17,6 @@ class ArmPressData extends StatefulWidget {
 
 class _ArmPressDataState extends State<ArmPressData> {
   Map<String, List<double>>  ? inputArr;
-  FlutterTts ? flutterTts;
 
   String excercise = 'arm_press';
   double upperRange = 300;
@@ -49,6 +48,10 @@ class _ArmPressDataState extends State<ArmPressData> {
   var leftAnklePos = Vector(0, 0);
   var rightAnklePos = Vector(0, 0);
 
+  rive.Artboard? _riveArtboard;
+  rive.StateMachineController? _controller;
+  rive.SMIInput<double>? _progress;
+
   @override
   void initState() {
     super.initState();
@@ -62,9 +65,69 @@ class _ArmPressDataState extends State<ArmPressData> {
     kneeRY = 0;
     kneeLY = 0;
     squatUp = true;
-    flutterTts = new FlutterTts();
-    flutterTts!.setSpeechRate(0.4);
-    flutterTts!.speak("두 팔을 어깨와 일직선이 되도록 벌려서 준비 자세를 취해주세요");
+
+    rootBundle.load('assets/rive/move_dumbbell.riv').then((data) async {
+        final file = rive.RiveFile.import(data);
+
+        final artboard = file.mainArtboard;
+        var controller = rive.StateMachineController.fromArtboard(
+            artboard, 'Squat_Controller');
+        if (controller != null) {
+          artboard.addController(controller);
+          _progress = controller.findInput('Progress');
+        }
+        setState(() => _riveArtboard = artboard);
+      },
+    );
+  }
+
+  void resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
+  void incrementCounter() {
+    setState(() {
+      if (_counter!=null)
+        _counter = _counter! + 1;
+    });
+  }
+
+  void setMidCount(bool f) {
+    //when midcount is activated
+    if(f && !midCount!) {
+    }
+    setState(() {
+      midCount = f;
+    });
+  }
+
+  Color getCounterColor() {
+    if(isCorrectPosture!) {
+      return Colors.green;
+    } else {
+      return Colors.red;
+    }
+  }
+
+  Positioned _createPositionedBlobs(double x, double y) {
+    return Positioned(
+      height: 5,
+      width: 40,
+      left: x,
+      top: y,
+      child: Container(
+        color: getCounterColor(),
+      ),
+    );
+  }
+
+  List<Widget> _renderHelperBlobs() {
+    List<Widget> listToReturn = <Widget>[];
+    listToReturn.add(_createPositionedBlobs(0, upperRange));
+    listToReturn.add(_createPositionedBlobs(0, lowerRange));
+    return listToReturn;
   }
 
   bool ? _postureAccordingToExercise(Map<String, List<double>> poses) {
@@ -122,7 +185,6 @@ class _ArmPressDataState extends State<ArmPressData> {
       if (isCorrectPosture! && squatUp! && midCount == false) {
         //in correct initial posture
         setState(() {
-          flutterTts!.speak("lift");
           //correctColor = Colors.green;
         });
         squatUp = !squatUp!;
@@ -135,7 +197,6 @@ class _ArmPressDataState extends State<ArmPressData> {
         isCorrectPosture = false;
         squatUp = !squatUp!;
         setState(() {
-          flutterTts!.speak("drop");
           //correctColor = Colors.green;
         });
       }
@@ -149,39 +210,6 @@ class _ArmPressDataState extends State<ArmPressData> {
           whatToDo = 'Lift';
         });
       }
-    }
-  }
-
-  void resetCounter() {
-    setState(() {
-      _counter = 0;
-    });
-    flutterTts!.speak("운동이 초기화되었습니다");
-  }
-
-  void incrementCounter() {
-    setState(() {
-      if (_counter!=null)
-        _counter = _counter! + 1;
-    });
-    flutterTts!.speak(_counter.toString());
-  }
-
-  void setMidCount(bool f) {
-    //when midcount is activated
-    if(f && !midCount!) {
-      flutterTts!.speak("잘했습니다!");
-    }
-    setState(() {
-      midCount = f;
-    });
-  }
-
-  Color getCounterColor() {
-    if(isCorrectPosture!) {
-      return Colors.green;
-    } else {
-      return Colors.red;
     }
   }
 
@@ -294,13 +322,13 @@ class _ArmPressDataState extends State<ArmPressData> {
             width: 100,
             height: 15,
             child: Container(
-              child: Text(
-                "● ${k["part"]}",
-                style: TextStyle(
-                  color: Color.fromRGBO(37, 213, 253, 1.0),
-                  fontSize: 12.0,
-                ),
-              ),
+              // child: Text(
+              //   "● ${k["part"]}",
+              //   style: TextStyle(
+              //     color: Color.fromRGBO(37, 213, 253, 1.0),
+              //     fontSize: 12.0,
+              //   ),
+              // ),
             ),
           );
         }).toList();
@@ -315,88 +343,64 @@ class _ArmPressDataState extends State<ArmPressData> {
       return lists;
     }
 
-    return Stack(
-      children: <Widget>[
-        Stack(
+    return Stack(children: <Widget>[
+      Stack(
+        children: _renderHelperBlobs(),
+      ),
+      Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [const Color(0xff37384E), const Color(0xff53304C)],
+          ),
+        ),
+      ),
+      Container(
+        height: MediaQuery.of(context).size.height,
+        child: Column(
           children: [
-            CustomPaint(
-              painter:
-              MyPainter(left: leftShoulderPos, right: rightShoulderPos),
-            ),
-            CustomPaint(
-              painter: MyPainter(left: leftElbowPos, right: leftShoulderPos),
-            ),
-            CustomPaint(
-              painter: MyPainter(left: leftWristPos, right: leftElbowPos),
-            ),
-            CustomPaint(
-              painter: MyPainter(left: rightElbowPos, right: rightShoulderPos),
-            ),
-            CustomPaint(
-              painter: MyPainter(left: rightWristPos, right: rightElbowPos),
-            ),
-            CustomPaint(
-              painter: MyPainter(left: leftShoulderPos, right: leftHipPos),
-            ),
-            CustomPaint(
-              painter: MyPainter(left: leftHipPos, right: leftKneePos),
-            ),
-            CustomPaint(
-              painter: MyPainter(left: leftKneePos, right: leftAnklePos),
-            ),
-            CustomPaint(
-              painter: MyPainter(left: rightShoulderPos, right: rightHipPos),
-            ),
-            CustomPaint(
-              painter: MyPainter(left: rightHipPos, right: rightKneePos),
-            ),
-            CustomPaint(
-              painter: MyPainter(left: rightKneePos, right: rightAnklePos),
-            ),
-            CustomPaint(
-              painter: MyPainter(left: leftHipPos, right: rightHipPos),
+            Expanded(
+              child: rive.Rive(
+                artboard: _riveArtboard!,
+              ),
             ),
           ],
         ),
-        Stack(children: _renderKeypoints()),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget> [
-            Align(
-              alignment: Alignment.center,
-              // child: Container(
-              //   height: 50,
-              //   width: widget.screenW,
-              //   decoration: BoxDecoration(
-              //     color: correctColor,
-              //     borderRadius: BorderRadius.only(
-              //         topLeft: Radius.circular(25.0),
-              //         topRight: Radius.circular(25)),
-              //   ),
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                  child: Container(
-                    height: 100,
-                    width: 100,
-                    child: FittedBox(
-                      child: FloatingActionButton(
-                        backgroundColor: getCounterColor(),
-                        onPressed: resetCounter,
-                        child: Text(
-                          '${_counter.toString()}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                      ),
+      ),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              child: Container(
+                height: 100,
+                width: 100,
+                child: FittedBox(
+                  child: FloatingActionButton(
+                    backgroundColor: getCounterColor(),
+                    onPressed: resetCounter,
+                    child: Text(
+                      '${_counter.toString()}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                   ),
                 ),
               ),
-          ],
-        ),
-      ],
-    );
+            ),
+          ),
+        ],
+      ),
+      Stack(
+        children: _renderKeypoints(),
+      ),
+    ]);
   }
 }
 

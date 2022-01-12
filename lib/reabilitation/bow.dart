@@ -352,7 +352,7 @@ class MyPainter extends CustomPainter {
     final p2 = Offset(right!.x, right!.y);
     final paint = Paint()
       ..color = color! //Colors.blue
-      ..strokeWidth = 4;
+      ..strokeWidth = 30;
     canvas.drawLine(p1, p2, paint);
   }
 

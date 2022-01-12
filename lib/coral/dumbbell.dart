@@ -2,18 +2,16 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:just_audio/just_audio.dart';
 
-class MoveNet extends StatefulWidget {
+class Dumbbell extends StatefulWidget {
   final List? data;
 
-  MoveNet({
+  Dumbbell({
     required this.data,
   });
 
   @override
-  _MoveNetState createState() => _MoveNetState();
+  _DumbbellState createState() => _DumbbellState();
 }
 
 class Vector {
@@ -22,7 +20,7 @@ class Vector {
   Vector(this.x, this.y);
 }
 
-class _MoveNetState extends State<MoveNet> {
+class _DumbbellState extends State<Dumbbell> {
   double?
       leftWristX,
       leftWristY,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/exercise/squat.dart';
 import 'package:camera/camera.dart';
+import 'package:move/exercise/squatRive.dart';
 
 //Squat tutorial
 class Tutorial1 extends StatefulWidget {
@@ -97,7 +97,6 @@ class _Tutorial1State extends State<Tutorial1> {
                                               builder: (context) => Squat(
                                                 cameras: widget.cameras!,
                                                 title: 'MOVE! - Squat',
-                                                model: "assets/posenet_mv1_075_float_from_checkpoints.tflite",
                                                 //customModel: 'MOVE! - Squat',
                                               ),
                                             ),
@@ -134,7 +133,6 @@ class _Tutorial1State extends State<Tutorial1> {
                                               builder: (context) => Squat(
                                                 cameras: widget.cameras!,
                                                 title: 'MOVE! - Squat',
-                                                model: "assets/posenet_mv1_075_float_from_checkpoints.tflite",
                                                 //customModel: 'MOVE! - Squat',
                                               ),
                                             ),
@@ -171,7 +169,6 @@ class _Tutorial1State extends State<Tutorial1> {
                                               builder: (context) => Squat(
                                                 cameras: widget.cameras!,
                                                 title: 'MOVE! - Squat',
-                                                model: "assets/posenet_mv1_075_float_from_checkpoints.tflite",
                                                 //customModel: 'MOVE! - Squat',
                                               ),
                                             ),
@@ -208,7 +205,6 @@ class _Tutorial1State extends State<Tutorial1> {
                                               builder: (context) => Squat(
                                                 cameras: widget.cameras!,
                                                 title: 'MOVE! - Squat',
-                                                model: "assets/posenet_mv1_075_float_from_checkpoints.tflite",
                                                 //customModel: 'MOVE! - Squat',
                                               ),
                                             ),
@@ -243,7 +239,6 @@ class _Tutorial1State extends State<Tutorial1> {
                                           builder: (context) => Squat(
                                             cameras: widget.cameras!,
                                             title: 'MOVE! - Squat',
-                                            model: "assets/posenet_mv1_075_float_from_checkpoints.tflite",
                                             //customModel: 'MOVE! - Squat',
                                           ),
                                         ),
