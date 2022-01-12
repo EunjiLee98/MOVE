@@ -189,7 +189,7 @@ class _BoxingState extends State<Boxing> {
     count++;
 
     if(ran_gesture == 'Punch') {
-      if(gesture_num == 2) {
+      if(gesture_num == 2 || gesture_num == 1) {
         gesture_num = 0;
         correct += 1;
         jar++;
