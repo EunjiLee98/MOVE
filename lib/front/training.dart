@@ -1,19 +1,16 @@
 
+import 'dart:isolate';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/exercise/armPress.dart';
-
 import 'package:move/exercise/crossJack.dart';
 import 'package:move/exercise/jumpingJack.dart';
-import 'package:move/exercise/riveTest.dart';
-import 'package:move/exercise/squat.dart';
 import 'package:move/exercise/squatRive.dart';
 import 'package:move/front/bluetooth.dart';
 import 'package:camera/camera.dart';
-import 'package:move/front/temp.dart';
-import 'package:move/tutorial/tutorial1.dart';
 import 'package:rive/rive.dart';
 
 class Training extends StatefulWidget {
@@ -84,13 +81,7 @@ class _TrainingState extends State<Training> {
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Tutorial1(cameras: widget.cameras!)));
-                        // if (widget.bluetoothServices == null)
-                        //   SchedulerBinding.instance!.addPostFrameCallback((_) {
-                        //     Navigator.pop(context);
-                        //     Navigator.pop(context);
-                        //     Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
-                        //   });
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(cameras: widget.cameras!, title: 'MOVE! - Squat Rive',)));
                       },
                       child: Image.asset('squatButton.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
@@ -105,8 +96,7 @@ class _TrainingState extends State<Training> {
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
-                        if(widget.bluetoothServices != null)
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => RiveTest(bluetoothServices: widget.bluetoothServices)));
+                        // if(widget.bluetoothServices != null)
                       },
                       child: Image.asset('crunch.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
@@ -114,9 +104,6 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
-                        //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
-                        Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                            PlayPauseAnimation()));
                       },
                       child: Image.asset('plank.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
@@ -124,7 +111,6 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => LiquidDownload(cameras: widget.cameras!, title: 'Squat State Machine Rive',)));
                       },
                       child: Image.asset('pushUp.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
@@ -132,7 +118,6 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
-                        //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
                       },
                       child: Image.asset('bridge.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
@@ -156,123 +141,6 @@ class _TrainingState extends State<Training> {
             ),
           );
         }
-        )
-    );
-  }
-}
-
-class RiveTest extends StatefulWidget {
-  final List<BluetoothService>? bluetoothServices;
-  RiveTest({this.bluetoothServices});
-
-  @override
-  _RiveTestState createState() => _RiveTestState();
-}
-
-class _RiveTestState extends State<RiveTest> {
-  final Map<Guid, List<int>> readValues = new Map<Guid, List<int>>();
-  String gesture = "";
-  // ignore: non_constant_identifier_names
-  int gesture_num = 0;
-
-  late RiveAnimationController _controller;
-  late RiveAnimationController _openController;
-  late RiveAnimationController _closeController;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = SimpleAnimation('기본');
-
-    _openController = OneShotAnimation(
-      '팔벌리기',
-      autoplay: false,
-    );
-
-    _closeController = OneShotAnimation(
-      '팔오므리기',
-      autoplay: false,
-    );
-
-  }
-
-  ListView _buildConnectDeviceView() {
-    // ignore: deprecated_member_use
-    List<Container> containers = [];
-    for (BluetoothService service in widget.bluetoothServices!) {
-      // ignore: deprecated_member_use
-      List<Widget> characteristicsWidget = [];
-
-      for (BluetoothCharacteristic characteristic in service.characteristics) {
-        if (characteristic.properties.notify) {
-          characteristic.value.listen((value) {
-            readValues[characteristic.uuid] = value;
-          });
-          characteristic.setNotifyValue(true);
-        }
-        if (characteristic.properties.read && characteristic.properties.notify) {
-          setnum(characteristic);
-        }
-      }
-      containers.add(
-        Container(
-          child: ExpansionTile(
-              title: Center(child:Text("블루투스 연결설정")),
-              children: characteristicsWidget),
-        ),
-      );
-    }
-
-    return ListView(
-      padding: const EdgeInsets.all(8),
-      children: <Widget>[
-        Container(
-          height: MediaQuery.of(context).size.height,
-          child: RiveAnimation.asset(
-            'assets/test.riv',
-            controllers: [_controller, _openController, _closeController],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Future<void> setnum(characteristic) async {
-    var sub = characteristic.value.listen((value) {
-      setState(() {
-        readValues[characteristic.uuid] = value;
-        gesture = value.toString();
-        gesture_num = int.parse(gesture[1]);
-      });
-    });
-
-    if(gesture_num == 2) {
-      setState(() {
-        _closeController.isActive = true;
-        _openController.isActive = false;
-      });
-    }
-
-    if(gesture_num == 1) {
-      setState(() {
-        _openController.isActive = true;
-        _closeController.isActive = false;
-      });
-    }
-
-    await characteristic.read();
-    sub.cancel();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                color: const Color(0xff3AB7F7)
-            ),
-            child: _buildConnectDeviceView()
         )
     );
   }

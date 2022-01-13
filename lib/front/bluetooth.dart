@@ -121,7 +121,7 @@ class _BluetoothState extends State<Bluetooth> {
                               });
 
                           try {
-                            await device.connect();
+                            await device.connect(autoConnect: false);
                           } catch (e) {
                             if (e != 'already_connected') {
                               Navigator.pop(context);
@@ -156,8 +156,7 @@ class _BluetoothState extends State<Bluetooth> {
     );
   }
 
-  void _bleRead(
-      BluetoothCharacteristic characteristic) {
+  void _bleRead(BluetoothCharacteristic characteristic) {
     if (characteristic.properties.notify) {
       characteristic.value.listen((value) {
         readValues[characteristic.uuid] = value;});
@@ -199,12 +198,16 @@ class _BluetoothState extends State<Bluetooth> {
   Widget _buildView() {
     if (connectedDevice != null) {
       _bleServices();
-      SchedulerBinding.instance!.addPostFrameCallback((_) {
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: bluetoothServices, cameras: widget.cameras,)));
-      });
+      if(bluetoothServices != null) {
+        SchedulerBinding.instance!.addPostFrameCallback((_) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: bluetoothServices, cameras: widget.cameras,)));
+          //   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+          //       builder: (BuildContext context) =>
+          //           Homepage(bluetoothServices: bluetoothServices, cameras: widget.cameras,)), (route) => false);
+        });
+      }
     }
     return _buildListViewOfDevices();
   }
@@ -216,9 +219,9 @@ class _BluetoothState extends State<Bluetooth> {
       elevation: 0,
       backgroundColor: Colors.transparent,
       centerTitle: true,
-      title: Text("Connect",textAlign: TextAlign.center,style: TextStyle(color: Colors.indigo),),
+      title: Text("Connect",textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),
       leading: IconButton(
-        icon: Icon(Icons.arrow_back,color: Colors.indigo,),
+        icon: Icon(Icons.arrow_back,color: Colors.white,),
         onPressed: () {
           Navigator.pop(context);
         },
