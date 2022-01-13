@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:move/coral/dumbbell.dart';
 import 'package:move/exercise/armPress.dart';
 import 'package:move/exercise/crossJack.dart';
 import 'package:move/exercise/jumpingJack.dart';
@@ -89,7 +90,7 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                            ArmPress(cameras: widget.cameras!, title: 'MOVE! - Arm Press',)));
+                            Dumbbell(cameras: widget.cameras!, title: 'Dumbbell',)));
                       },
                       child: Image.asset('dumbbell.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),

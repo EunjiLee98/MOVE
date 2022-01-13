@@ -65,6 +65,10 @@ class _ArmPressState extends State<ArmPress> {
       ),
       body: Stack(
         children: <Widget>[
+          Camera(
+            cameras: widget.cameras,
+            setRecognitions: _setRecognitions,
+          ),
           ArmPressData(
             data: _data ?? [],
             previewH: max(_imageHeight, _imageWidth),
@@ -72,18 +76,18 @@ class _ArmPressState extends State<ArmPress> {
             screenH: screen.height,
             screenW: screen.width,
           ),
-          Positioned(
-            right: 0,
-            bottom: 0,
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.25,
-              height: MediaQuery.of(context).size.height * 0.25,
-              child: Camera(
-                cameras: widget.cameras,
-                setRecognitions: _setRecognitions,
-              ),
-            ),
-          ),
+          // Positioned(
+          //   right: 0,
+          //   bottom: 0,
+          //   child: Container(
+          //     width: MediaQuery.of(context).size.width * 0.25,
+          //     height: MediaQuery.of(context).size.height * 0.25,
+          //     child: Camera(
+          //       cameras: widget.cameras,
+          //       setRecognitions: _setRecognitions,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -342,13 +346,13 @@ class _ArmPressDataState extends State<ArmPressData> {
             width: 100,
             height: 15,
             child: Container(
-              // child: Text(
-              //   "●",
-              //   style: TextStyle(
-              //     color: Color.fromRGBO(37, 213, 253, 1.0),
-              //     fontSize: 12.0,
-              //   ),
-              // ),
+              child: Text(
+                "●",
+                style: TextStyle(
+                  color: Color.fromRGBO(37, 213, 253, 1.0),
+                  fontSize: 12.0,
+                ),
+              ),
             ),
           );
         }).toList();
@@ -365,29 +369,29 @@ class _ArmPressDataState extends State<ArmPressData> {
       Stack(
         children: _renderHelperBlobs(),
       ),
-      Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [const Color(0xff37384E), const Color(0xff53304C)],
-          ),
-        ),
-      ),
-      Container(
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          children: [
-            Expanded(
-              child: rive.Rive(
-                artboard: _riveArtboard!,
-              ),
-            ),
-          ],
-        ),
-      ),
+      // Container(
+      //   width: MediaQuery.of(context).size.width,
+      //   height: MediaQuery.of(context).size.height,
+      //   decoration: BoxDecoration(
+      //     gradient: LinearGradient(
+      //       begin: Alignment.topCenter,
+      //       end: Alignment.bottomCenter,
+      //       colors: [const Color(0xff37384E), const Color(0xff53304C)],
+      //     ),
+      //   ),
+      // ),
+      // Container(
+      //   height: MediaQuery.of(context).size.height,
+      //   child: Column(
+      //     children: [
+      //       Expanded(
+      //         child: rive.Rive(
+      //           artboard: _riveArtboard!,
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
       Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,

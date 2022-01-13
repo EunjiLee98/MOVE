@@ -23,70 +23,26 @@ class Vector {
 }
 
 class _MoveNetState extends State<MoveNet> {
-  double? noseX,
-      noseY,
-      leftEyeX,
-      leftEyeY,
-      rightEyeX,
-      rightEyeY,
-      leftEarX,
-      leftEarY,
-      rightEarX,
-      rightEarY,
-      leftShoulderX,
-      leftShoulderY,
-      rightShoulderX,
-      rightShoulderY,
-      leftElbowX,
-      leftElbowY,
-      rightElbowX,
-      rightElbowY,
+  double?
       leftWristX,
       leftWristY,
       rightWristX,
-      rightWristY,
-      leftHipX,
-      leftHipY,
-      rightHipX,
-      rightHipY,
-      leftKneeX,
-      leftKneeY,
-      rightKneeX,
-      rightKneeY,
-      leftAnkleX,
-      leftAnkleY,
-      rightAnkleX,
-      rightAnkleY;
+      rightWristY;
 
-  var leftEyePos = Vector(0, 0);
-  var rightEyePos = Vector(0, 0);
-  var leftEarPos = Vector(0, 0);
-  var rightEarPos = Vector(0, 0);
-  var leftShoulderPos = Vector(0, 0);
-  var rightShoulderPos = Vector(0, 0);
-  var leftHipPos = Vector(0, 0);
-  var rightHipPos = Vector(0, 0);
-  var leftElbowPos = Vector(0, 0);
-  var rightElbowPos = Vector(0, 0);
   var leftWristPos = Vector(0, 0);
   var rightWristPos = Vector(0, 0);
-  var leftKneePos = Vector(0, 0);
-  var rightKneePos = Vector(0, 0);
-  var leftAnklePos = Vector(0, 0);
-  var rightAnklePos = Vector(0, 0);
 
   List<String> bodyWeight = [
     'Coral test',
   ];
 
-  bool? wristAlignment, shoulderAlignment, ankleAlignment, kneeAndHipAlignment;
+  bool? wristAlignment;
   List<dynamic>? dynamicList;
   List? dataList;
   Map<String, List<double>>? inputArr;
   int? _counter;
   double? lowerRange, upperRange;
   bool? midCount, isCorrectPosture;
-  late AudioPlayer player = AudioPlayer();
 
   @override
   void initState() {
@@ -112,10 +68,6 @@ class _MoveNetState extends State<MoveNet> {
     String key = "";
     double x = 0;
     double y = 0;
-    double left_x = 0;
-    double left_y = 0;
-    double right_x = 0;
-    double right_y = 0;
     var dictionary = new SplayTreeMap();
     var element1 = new SplayTreeMap();
 
@@ -130,17 +82,6 @@ class _MoveNetState extends State<MoveNet> {
           key = dataList![0].toString().substring(13);
           x = double.parse(dataList![1]);
           y = double.parse(dataList![2]);
-          if (key == '9')
-          {
-            left_x = x;
-            left_y = y;
-          }
-          else if (key == '10')
-          {
-            right_x = x;
-            right_y = y;
-          }
-          print("left_x : $left_x left_y : $left_y right_x : $right_x right_y : $right_y" );
           if (x > 320) {
             var temp = x - 320;
             x = 320 - temp;
@@ -157,7 +98,7 @@ class _MoveNetState extends State<MoveNet> {
     print('dictionary: $dictionary');
 
     List<Widget> lists = <Widget>[];
-    // Widget ? list;
+
     List<Widget> _renderKeypoints() {
       dictionary.forEach((key, value) {
         var _x = value["x"];

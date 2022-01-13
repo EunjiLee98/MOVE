@@ -65,7 +65,7 @@ class _JumpingjackState extends State<Jumpingjack> {
         Container(
           height: MediaQuery.of(context).size.height,
           child: rive.RiveAnimation.asset(
-            'assets/rive/move_jumpingjack.riv',
+            'assets/rive/jumpingjack_short.riv',
             controllers: [_controller, _openController],
           ),
         ),
