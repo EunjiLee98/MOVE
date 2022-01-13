@@ -90,7 +90,7 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                            Dumbbell(cameras: widget.cameras!, title: 'Dumbbell',)));
+                            ArmPress(cameras: widget.cameras!, title: 'Dumbbell Rive',)));
                       },
                       child: Image.asset('dumbbell.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
