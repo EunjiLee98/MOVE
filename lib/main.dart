@@ -69,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       body: Stack(
           fit: StackFit.expand,
           children:<Widget>[
-            Image( image: AssetImage("background.png"), fit: BoxFit.cover, colorBlendMode: BlendMode.darken, ),
+            Image( image: AssetImage("background(login).png"), fit: BoxFit.cover, colorBlendMode: BlendMode.darken, ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
