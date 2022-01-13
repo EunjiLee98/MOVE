@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:move/coral/dumbbellRive.dart';
 import 'package:move/coral/moveNet.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class WebSocket extends StatelessWidget {
       title: title,
       home: WebSocketPage(
         title: title,
-        channel: IOWebSocketChannel.connect('ws://192.168.0.13:9998'),
+        channel: IOWebSocketChannel.connect('ws://192.168.0.12:9998'),
       ),
     );
   }
@@ -72,7 +73,7 @@ class _WebSocketPageState extends State<WebSocketPage> {
               //jsonDataConverted = json.decode(jsonData!);
               jsonList = jsonData!.split("end");
               //jsonDynamic = List<dynamic>.from(jsonList!);
-              return MoveNet(
+              return Dumbbell(
                 data : jsonList!,
               );
             },

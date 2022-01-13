@@ -369,64 +369,66 @@ class _SquatDataState extends State<SquatData> {
       return lists;
     }
 
-    return Stack(children: <Widget>[
-      Stack(
-        children: _renderHelperBlobs(),
-      ),
-      Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [const Color(0xff37384E), const Color(0xff53304C)],
+    return Stack(
+      children: <Widget>[
+        Stack(
+          children: _renderHelperBlobs(),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [const Color(0xff37384E), const Color(0xff53304C)],
+            ),
           ),
         ),
-      ),
-      Container(
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          children: [
-            Expanded(
-              child: rive.Rive(
-                artboard: _riveArtboard!,
+        Container(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              Expanded(
+                child: rive.Rive(
+                  artboard: _riveArtboard!,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-              child: Container(
-                height: 100,
-                width: 100,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: getCounterColor(),
-                    onPressed: resetCounter,
-                    child: Text(
-                      '${_counter.toString()}',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.white),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  child: FittedBox(
+                    child: FloatingActionButton(
+                      backgroundColor: getCounterColor(),
+                      onPressed: resetCounter,
+                      child: Text(
+                        '${_counter.toString()}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      Stack(
-        children: _renderKeypoints(),
-      ),
-    ]);
+          ],
+        ),
+        Stack(
+          children: _renderKeypoints(),
+        ),
+      ],
+    );
   }
 }
 
