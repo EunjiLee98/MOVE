@@ -24,39 +24,39 @@ class Vector {
 
 class _MoveNetState extends State<MoveNet> {
   double? noseX,
-      noseY,
+      noseY, //0
       leftEyeX,
-      leftEyeY,
+      leftEyeY, //1
       rightEyeX,
-      rightEyeY,
+      rightEyeY, //2
       leftEarX,
-      leftEarY,
+      leftEarY, //3
       rightEarX,
-      rightEarY,
+      rightEarY, //4
       leftShoulderX,
-      leftShoulderY,
+      leftShoulderY, //5
       rightShoulderX,
-      rightShoulderY,
+      rightShoulderY, //6
       leftElbowX,
-      leftElbowY,
+      leftElbowY, //7
       rightElbowX,
-      rightElbowY,
+      rightElbowY, //8
       leftWristX,
-      leftWristY,
+      leftWristY, //9
       rightWristX,
-      rightWristY,
+      rightWristY, //10
       leftHipX,
-      leftHipY,
+      leftHipY, //11
       rightHipX,
-      rightHipY,
+      rightHipY, //12
       leftKneeX,
-      leftKneeY,
+      leftKneeY, //13
       rightKneeX,
-      rightKneeY,
+      rightKneeY, //14
       leftAnkleX,
-      leftAnkleY,
+      leftAnkleY, //15
       rightAnkleX,
-      rightAnkleY;
+      rightAnkleY; //16
 
   var leftEyePos = Vector(0, 0);
   var rightEyePos = Vector(0, 0);
@@ -83,7 +83,6 @@ class _MoveNetState extends State<MoveNet> {
   List<dynamic>? dynamicList;
   List? dataList;
   Map<String, List<double>>? inputArr;
-  int? _counter;
   double? lowerRange, upperRange;
   bool? midCount, isCorrectPosture;
   late AudioPlayer player = AudioPlayer();
@@ -105,7 +104,7 @@ class _MoveNetState extends State<MoveNet> {
     return jsonDynamic;
   }
 
-
+  int count = 0;
   @override
   Widget build(BuildContext context) {
     String string_element = "";
@@ -114,6 +113,11 @@ class _MoveNetState extends State<MoveNet> {
     double y = 0;
     var dictionary = new SplayTreeMap();
     var element1 = new SplayTreeMap();
+    // double left_x = 0;
+    // double left_y = 0;
+    // double right_x = 0;
+    // double right_y = 0;
+
 
     widget.data!.forEach((element) {
       string_element = element.toString().replaceAll('"', '');
@@ -133,6 +137,25 @@ class _MoveNetState extends State<MoveNet> {
             var temp = 320 - x;
             x = 320 + temp;
           }
+
+
+          // if (key == "9"){
+          //   left_x = x;
+          //   left_y = y;
+          // }
+          // else if (key == "10"){
+          //   right_x = x;
+          //   right_y = y;
+          // }
+          // if (left_x < 200){
+          //   count = count + 1;
+          //   print(count);
+          // }
+
+          // print(left_x);
+          // print(left_y);
+          // print(right_x);
+          // print(right_y);
           dictionary.addAll({
             key: {"x": x, "y": y}
           });
@@ -142,14 +165,13 @@ class _MoveNetState extends State<MoveNet> {
     print('dictionary: $dictionary');
 
     List<Widget> lists = <Widget>[];
-    // Widget ? list;
     List<Widget> _renderKeypoints() {
       dictionary.forEach((key, value) {
         var _x = value["x"];
         var _y = value["y"];
         Widget list = Positioned(
-            left: _x - 175,
-            top: _y - 50,
+            left: _x * 0.6,
+            top: _y ,
             width: 100,
             height: 15,
             child: Container(
