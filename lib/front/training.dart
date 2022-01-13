@@ -1,11 +1,11 @@
-
 import 'dart:isolate';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/exercise/armPress.dart';
+import 'package:move/coral/dumbbellRive.dart';
+import 'package:move/coral/webSocket.dart';
 import 'package:move/exercise/crossJack.dart';
 import 'package:move/exercise/jumpingJack.dart';
 import 'package:move/exercise/squatRive.dart';
@@ -16,6 +16,7 @@ import 'package:rive/rive.dart';
 class Training extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
   final List<CameraDescription>? cameras;
+
   Training({this.bluetoothServices, this.cameras});
 
   @override
@@ -28,7 +29,10 @@ class _TrainingState extends State<Training> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('Home Workout', style: TextStyle(color: Colors.white),),
+          title: Text(
+            'Home Workout',
+            style: TextStyle(color: Colors.white),
+          ),
           centerTitle: true,
           elevation: 0.0,
           backgroundColor: Colors.transparent,
@@ -39,10 +43,7 @@ class _TrainingState extends State<Training> {
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('background.png'),
-                    fit: BoxFit.fill
-                )
-            ),
+                    image: AssetImage('background.png'), fit: BoxFit.fill)),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
               child: SingleChildScrollView(
@@ -50,98 +51,152 @@ class _TrainingState extends State<Training> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SizedBox(height: 30,),
+                    SizedBox(
+                      height: 30,
+                    ),
                     TextButton(
                       onPressed: () {
-                        if(widget.bluetoothServices != null)
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Jumpingjack(bluetoothServices: widget.bluetoothServices)));
+                        if (widget.bluetoothServices != null)
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Jumpingjack(
+                                      bluetoothServices:
+                                          widget.bluetoothServices)));
                         if (widget.bluetoothServices == null)
                           SchedulerBinding.instance!.addPostFrameCallback((_) {
                             Navigator.pop(context);
                             Navigator.pop(context);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Bluetooth()));
                           });
                       },
-                      child: Image.asset('jumpingButton.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset(
+                        'jumpingButton.png',
+                        width: MediaQuery.of(context).size.width * 0.9,
+                      ),
                     ),
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
-                        if(widget.bluetoothServices != null)
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Crossjack(bluetoothServices: widget.bluetoothServices)));
+                        if (widget.bluetoothServices != null)
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Crossjack(
+                                      bluetoothServices:
+                                          widget.bluetoothServices)));
                         if (widget.bluetoothServices == null)
                           SchedulerBinding.instance!.addPostFrameCallback((_) {
                             Navigator.pop(context);
                             Navigator.pop(context);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Bluetooth()));
                           });
                       },
-                      child: Image.asset('crossButton.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset(
+                        'crossButton.png',
+                        width: MediaQuery.of(context).size.width * 0.9,
+                      ),
                     ),
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(cameras: widget.cameras!, title: 'MOVE! - Squat Rive',)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Squat(
+                                      cameras: widget.cameras!,
+                                      title: 'MOVE! - Squat Rive',
+                                    )));
                       },
-                      child: Image.asset('squatButton.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset(
+                        'squatButton.png',
+                        width: MediaQuery.of(context).size.width * 0.9,
+                      ),
                     ),
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                            ArmPress(cameras: widget.cameras!, title: 'MOVE! - Arm Press',)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WebSocket()));
                       },
-                      child: Image.asset('dumbbell.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset(
+                        'dumbbell.png',
+                        width: MediaQuery.of(context).size.width * 0.9,
+                      ),
                     ),
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
                       },
-                      child: Image.asset('crunch.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset(
+                        'crunch.png',
+                        width: MediaQuery.of(context).size.width * 0.9,
+                      ),
                     ),
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
                       },
-                      child: Image.asset('plank.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset(
+                        'plank.png',
+                        width: MediaQuery.of(context).size.width * 0.9,
+                      ),
                     ),
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
                       },
-                      child: Image.asset('pushUp.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset(
+                        'pushUp.png',
+                        width: MediaQuery.of(context).size.width * 0.9,
+                      ),
                     ),
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
                       },
-                      child: Image.asset('bridge.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset(
+                        'bridge.png',
+                        width: MediaQuery.of(context).size.width * 0.9,
+                      ),
                     ),
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
                         //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
                       },
-                      child: Image.asset('buffett.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset(
+                        'buffett.png',
+                        width: MediaQuery.of(context).size.width * 0.9,
+                      ),
                     ),
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
                         //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
                       },
-                      child: Image.asset('hurdle.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset(
+                        'hurdle.png',
+                        width: MediaQuery.of(context).size.width * 0.9,
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
           );
-        }
-        )
-    );
+        }));
   }
 }

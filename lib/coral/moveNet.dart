@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:rive/rive.dart' as rive;
+import 'package:flutter/services.dart';
 
 class MoveNet extends StatefulWidget {
   final List? data;
@@ -88,9 +90,30 @@ class _MoveNetState extends State<MoveNet> {
   bool? midCount, isCorrectPosture;
   late AudioPlayer player = AudioPlayer();
 
+  rive.Artboard? _riveArtboard;
+  rive.StateMachineController? _controller;
+  rive.SMIInput<double>? _progress;
+
   @override
   void initState() {
     super.initState();
+    rootBundle.load('assets/rive/move_dumbbell.riv').then(
+      (data) async {
+        // Load the RiveFile from the binary data.
+        final file = rive.RiveFile.import(data);
+
+        // The artboard is the root of the animation and gets drawn in the
+        // Rive widget.
+        final artboard = file.mainArtboard;
+        var controller = rive.StateMachineController.fromArtboard(
+            artboard, 'Dumbbell_Controller');
+        if (controller != null) {
+          artboard.addController(controller);
+          _progress = controller.findInput('Progress');
+        }
+        setState(() => _riveArtboard = artboard);
+      },
+    );
   }
 
   List makeList(String data) {
@@ -104,7 +127,6 @@ class _MoveNetState extends State<MoveNet> {
     jsonDynamic = List<dynamic>.from(dataList);
     return jsonDynamic;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -168,6 +190,7 @@ class _MoveNetState extends State<MoveNet> {
     }
 
     return Stack(
-        children: _renderKeypoints());
+      children: _renderKeypoints(),
+    );
   }
 }

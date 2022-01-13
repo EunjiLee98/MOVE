@@ -185,6 +185,7 @@ flutter:
     - assets/rive/move_squat.riv
     - assets/rive/move_jumpingjack.riv
     - assets/rive/move_dumbbell.riv
+    - assets/rive/jumpingjack_short.riv
 
 
   # To add assets to your application, add an assets section, like this:
