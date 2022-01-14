@@ -20,8 +20,7 @@ class _SelectState extends State<Select> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp]); //screen vertically
+   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);//screen vertically
   }
 
   @override
