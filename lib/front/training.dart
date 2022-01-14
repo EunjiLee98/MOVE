@@ -11,6 +11,7 @@ import 'package:move/exercise/jumpingJack.dart';
 import 'package:move/exercise/squatRive.dart';
 import 'package:move/front/bluetooth.dart';
 import 'package:camera/camera.dart';
+import 'package:move/front/temp.dart';
 import 'package:rive/rive.dart';
 
 class Training extends StatefulWidget {
@@ -136,6 +137,10 @@ class _TrainingState extends State<Training> {
                     TextButton(
                       onPressed: () {
                         // if(widget.bluetoothServices != null)
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Temp(cameras: widget.cameras!)));
                       },
                       child: Image.asset(
                         'crunch.png',
