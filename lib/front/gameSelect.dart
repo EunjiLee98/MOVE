@@ -65,7 +65,7 @@ class _GameSelectState extends State<GameSelect> {
               )
           ),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 50, 0, 60),
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(

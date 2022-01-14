@@ -28,7 +28,7 @@ class _TrainingState extends State<Training> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('Home Workout', style: TextStyle(color: Colors.white),),
+          title: Text('Exercise', style: TextStyle(color: Colors.white),),
           centerTitle: true,
           elevation: 0.0,
           backgroundColor: Colors.transparent,
@@ -44,7 +44,7 @@ class _TrainingState extends State<Training> {
                 )
             ),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 50, 0, 60),
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
@@ -65,19 +65,6 @@ class _TrainingState extends State<Training> {
                       child: Image.asset('jumpingButton.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
                     // SizedBox(height: 5,),
-                    TextButton(
-                      onPressed: () {
-                        if(widget.bluetoothServices != null)
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Crossjack(bluetoothServices: widget.bluetoothServices)));
-                        if (widget.bluetoothServices == null)
-                          SchedulerBinding.instance!.addPostFrameCallback((_) {
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
-                          });
-                      },
-                      child: Image.asset('crossButton.png', width: MediaQuery.of(context).size.width*0.9,),
-                    ),
                     // SizedBox(height: 5,),
                     TextButton(
                       onPressed: () {
@@ -91,7 +78,20 @@ class _TrainingState extends State<Training> {
                         Navigator.push(context, MaterialPageRoute(builder: (context) =>
                             ArmPress(cameras: widget.cameras!, title: 'MOVE! - Arm Press',)));
                       },
-                      child: Image.asset('dumbbell.png', width: MediaQuery.of(context).size.width*0.9,),
+                      child: Image.asset('dumbbellButton.png', width: MediaQuery.of(context).size.width*0.9,),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        if(widget.bluetoothServices != null)
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Crossjack(bluetoothServices: widget.bluetoothServices)));
+                        if (widget.bluetoothServices == null)
+                          SchedulerBinding.instance!.addPostFrameCallback((_) {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
+                          });
+                      },
+                      child: Image.asset('crossButton.png', width: MediaQuery.of(context).size.width*0.9,),
                     ),
                     // SizedBox(height: 5,),
                     TextButton(

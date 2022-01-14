@@ -40,6 +40,8 @@ dependencies:
   url_launcher: ^6.0.10
   web_socket_channel: ^2.1.0
   queue: ^3.1.0+1
+  carousel_slider: ^4.0.0
+  smooth_page_indicator: ^0.3.0-nullsafety.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -68,6 +70,7 @@ flutter:
     - background.png
     - background(login).png
     - correct.png
+    - character.png
     - wrong.png
     - skip.png
     - next.png
@@ -77,7 +80,13 @@ flutter:
     - 3.png
     - 4.png
     - 5.png
+    - 6.png
+    - 7.png
+    - 8.png
+    - 9.png
+    - 10.png
     - moveButton.png
+    - myMove.png
     - connect.png
     - logo.png
     - boxButton.png
@@ -88,6 +97,7 @@ flutter:
     - reabButton.png
     - jumpingButton.png
     - crossButton.png
+    - dumbbellButton.png
     - squatButton.png
     - cross_1.png
     - cross_2.png
@@ -108,7 +118,6 @@ flutter:
     - uppercut.png
     - bridge.png
     - crunch.png
-    - dumbbell.png
     - plank.png
     - pushUp.png
     - fishing.png
@@ -119,10 +128,6 @@ flutter:
     - boxing_clear.png
     - feet.png
     - dino_back.png
-    - dance_back.png
-    - danceButton.png
-    - dance_back.png
-    - danceButton.png
     - assets/images/cloud.png
     - assets/images/cloud1.png
     - assets/images/cloud2.png

@@ -11,6 +11,7 @@ import 'package:move/theme/font.dart';
 import 'package:flutter/services.dart';
 import 'gameSelect.dart';
 import 'training.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'bluetooth.dart';
 
@@ -167,6 +168,8 @@ class _HomeState extends State<Homepage> {
   List<String> name = [];
   List<String> photo = [];
 
+  final controller = PageController(viewportFraction: 0.9);
+
   @override
   void initState() {
     super.initState();
@@ -246,128 +249,283 @@ class _HomeState extends State<Homepage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('background.png'),
-                    fit: BoxFit.fill
-                )
-            ),
+      body: Column(
+        children: [
+          Center(
             child: Container(
-              margin: const EdgeInsets.all(30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.baseline, //line alignment
-                textBaseline: TextBaseline.alphabetic, //line alignment
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundImage: NetworkImage(FirebaseAuth.instance.currentUser!.photoURL.toString()),
-                          backgroundColor: Colors.transparent,
-                        ),
-                        SizedBox(width: 15),
-                        Column(
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('background.png'),
+                      fit: BoxFit.fill
+                  )
+              ),
+              child: SingleChildScrollView(
+                child: Container(
+                  margin: const EdgeInsets.fromLTRB(20, 50, 30, 80),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.baseline, //line alignment
+                    textBaseline: TextBaseline.alphabetic, //line alignment
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+                        child: Row(
                           children: [
-                            Row(
-                              children: [
-                                navyNoto(FirebaseAuth.instance.currentUser!.displayName.toString(), 23, true),
-                                whiteNoto('님', 23, true),
-                              ],
+                            CircleAvatar(
+                              radius: 27,
+                              backgroundImage: NetworkImage(FirebaseAuth.instance.currentUser!.photoURL.toString()),
+                              backgroundColor: Colors.transparent,
                             ),
-                            SizedBox(height: 5),
-                            whiteNoto('오늘도 무브하세요!', 23, true),
+                            SizedBox(width: 15),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      navyNoto(FirebaseAuth.instance.currentUser!.displayName.toString(), 23, true),
+                                      SizedBox(width: 10),
+                                      whiteNoto('님', 23, true),
+                                    ],
+                                  ),
+                                  // SizedBox(height: 5),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      whiteNoto('오늘도 무브하세요!', 23, true),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
-                      ],
-                    )
-                  ),
-                  SizedBox(height: 20,),
-                  Flexible(
-                    child: FutureBuilder(
-                      builder: (context, snapshot) {
-                        return MediaQuery.removePadding(
-                          removeTop: true,
-                          context: context,
-                          child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: rankId.length,
-                              itemBuilder: (context, index) {
-                                var num = index + 1;
-                                return Padding(
-                                  padding: const EdgeInsets.fromLTRB(1, 1, 1, 5),
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width*0.8,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.8),
-                                        borderRadius: BorderRadius.circular(20),
-                                        // gradient: LinearGradient(
-                                        //   begin: Alignment.topCenter,
-                                        //   end: Alignment.bottomCenter,
-                                        //   colors: [const Color(0xffFFEED9), const Color(0xffF1E4A0)],
-                                        // ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.indigo.withOpacity(0.15),
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
-                                            offset: Offset(0, 3),
-                                          )
-                                        ]
-                                    ),
-                                    child: ListTile(
-                                      title: Text(name[index], style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black54),),
-                                      subtitle: Text(total[index], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.indigo),),
-                                      leading: Container(
-                                        width: 120,
-                                        child: Row(
-                                          children: [
-                                            Image.asset('$num.png', width: 50),
-                                            SizedBox(width: 10,),
-                                            Container(
-                                              width: 50,
-                                              child: CircleAvatar(
-                                                radius: 30,
-                                                backgroundImage: NetworkImage(photo[index]),
-                                                backgroundColor: Colors.transparent,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                      ),
+                      SizedBox(height: 20,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.star, color: Color(0xffFF7BEA),),
+                                  whiteNoto('새내기 무버', 14, true),
+                                ],
+                              ),
+                              SizedBox(height: 10,),
+                              Image.asset('character.png', width: MediaQuery.of(context).size.width*0.45,)
+                            ],
+                          ),
+                          SizedBox(width: 20,),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Image.asset('1.png', width: 40,),
+                              ),
+                              SizedBox(height: 10,),
+                              Container(
+                                width: MediaQuery.of(context).size.width*0.3,
+                                decoration: BoxDecoration(
+                                  color: Color(0xff290055),
+                                  borderRadius: BorderRadius.circular(50)
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(8, 3, 8, 3),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        whiteNoto('내 무브점수 ⓘ', 14, true),
+                                      ],
                                     ),
                                   ),
-                                );
-                              }
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+                              whiteRusso('500,000', 25, false),
+                              SizedBox(height: 20,),
+                              Container(
+                                width: MediaQuery.of(context).size.width*0.3,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff290055),
+                                    borderRadius: BorderRadius.circular(50)
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        whiteNoto('오늘 소모칼로리', 14, true),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+                              Container(
+                                width: MediaQuery.of(context).size.width*0.28,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    whiteRusso('150.2', 25, false),
+                                    Column(
+                                      children: [
+                                        whiteRusso('Kcal', 13, false),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 20,),
+                              Container(
+                                width: MediaQuery.of(context).size.width*0.3,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff290055),
+                                    borderRadius: BorderRadius.circular(50)
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        whiteNoto('오늘 운동시간', 14, true),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+                              Container(
+                                width: MediaQuery.of(context).size.width*0.28,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    whiteRusso('480', 25, false),
+                                    Column(
+                                      children: [
+                                        whiteRusso('min', 13, false),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                    ),
+                        ],
+                      ),
+                      SizedBox(height: 15,),
+                      Center(child: whiteNoto('7일동안 내 무브', 12, true)),
+                      Center(
+                          child: Column(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height*0.28,
+                                child: PageView(
+                                    controller: controller,
+                                    children: [
+                                      Container(
+                                        width: MediaQuery.of(context).size.width,
+                                        height: MediaQuery.of(context).size.height*0.28,
+                                        child: Image.asset('myMove.png', fit: BoxFit.fitHeight,),
+                                      ),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width,
+                                        height: MediaQuery.of(context).size.height*0.28,
+                                        child: Image.asset('myMove.png', fit: BoxFit.fitWidth,),
+                                      ),
+                                    ]
+                                ),
+                              ),
+                              Container(
+                                child: SmoothPageIndicator(
+                                  controller: controller,
+                                  count: 2,
+                                  effect: ScaleEffect(
+                                    dotWidth: 6,
+                                    dotHeight: 6,
+                                    dotColor: Colors.white.withOpacity(0.5),
+                                    activeDotColor: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                      ),
+
+                      // Flexible(
+                      //   child: FutureBuilder(
+                      //     builder: (context, snapshot) {
+                      //       return MediaQuery.removePadding(
+                      //         removeTop: true,
+                      //         context: context,
+                      //         child: ListView.builder(
+                      //             scrollDirection: Axis.vertical,
+                      //             shrinkWrap: true,
+                      //             itemCount: rankId.length,
+                      //             itemBuilder: (context, index) {
+                      //               var num = index + 1;
+                      //               return Padding(
+                      //                 padding: const EdgeInsets.fromLTRB(1, 1, 1, 5),
+                      //                 child: Container(
+                      //                   width: MediaQuery.of(context).size.width*0.8,
+                      //                   decoration: BoxDecoration(
+                      //                       color: Colors.white.withOpacity(0.8),
+                      //                       borderRadius: BorderRadius.circular(20),
+                      //                       // gradient: LinearGradient(
+                      //                       //   begin: Alignment.topCenter,
+                      //                       //   end: Alignment.bottomCenter,
+                      //                       //   colors: [const Color(0xffFFEED9), const Color(0xffF1E4A0)],
+                      //                       // ),
+                      //                       boxShadow: [
+                      //                         BoxShadow(
+                      //                           color: Colors.indigo.withOpacity(0.15),
+                      //                           spreadRadius: 5,
+                      //                           blurRadius: 7,
+                      //                           offset: Offset(0, 3),
+                      //                         )
+                      //                       ]
+                      //                   ),
+                      //                   child: ListTile(
+                      //                     title: Text(name[index], style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black54),),
+                      //                     subtitle: Text(total[index], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.indigo),),
+                      //                     leading: Container(
+                      //                       width: 120,
+                      //                       child: Row(
+                      //                         children: [
+                      //                           Image.asset('$num.png', width: 50),
+                      //                           SizedBox(width: 10,),
+                      //                           Container(
+                      //                             width: 50,
+                      //                             child: CircleAvatar(
+                      //                               radius: 30,
+                      //                               backgroundImage: NetworkImage(photo[index]),
+                      //                               backgroundColor: Colors.transparent,
+                      //                             ),
+                      //                           ),
+                      //                         ],
+                      //                       ),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               );
+                      //             }
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
+                    ],
                   ),
-                  // SizedBox(height: 10,),
-                  // Center(
-                  //   child: Container(
-                  //     width: MediaQuery.of(context).size.width*0.8,
-                  //     child: TextButton(
-                  //         onPressed: () {
-                  //           Navigator.push(context,
-                  //               MaterialPageRoute(builder: (context) => Select(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)));
-                  //         },
-                  //         child: Image.asset('moveButton.png')
-                  //     ),
-                  //   ),
-                  // )
-                ],
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
