@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:move/coral/dumbbell.dart';
+import 'package:move/coral/dumbbellRive.dart';
 import 'package:move/coral/moveNet.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +73,7 @@ class _WebSocketPageState extends State<WebSocketPage> {
               //jsonDataConverted = json.decode(jsonData!);
               jsonList = jsonData!.split("end");
               //jsonDynamic = List<dynamic>.from(jsonList!);
-              return MoveNet(
+              return Dumbbell(
                 data : jsonList!,
               );
             },
