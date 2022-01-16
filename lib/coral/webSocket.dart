@@ -1,13 +1,8 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:move/coral/dumbbellRive.dart';
-import 'package:move/coral/moveNet.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
-import 'package:queue/queue.dart';
 
 class JsonDataFromCoral {
   String? l0;
@@ -30,12 +25,12 @@ class JsonDataFromCoral {
 class WebSocket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final title = 'WebSocket between Coral and Flutter';
+    final title = 'Dumbbell using Coral';
     return MaterialApp(
       title: title,
       home: WebSocketPage(
         title: title,
-        channel: IOWebSocketChannel.connect('ws://192.168.0.12:9998'),
+        channel: IOWebSocketChannel.connect('ws://192.168.0.13:9998'),
       ),
     );
   }

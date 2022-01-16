@@ -52,7 +52,7 @@ class _DumbbellState extends State<Dumbbell> {
   List<dynamic>? dynamicList;
   List? dataList;
   Map<String, List<double>>? inputArr;
-  int? _counter;
+  int _counter = 0;
   double? lowerRange, upperRange;
   bool? midCount, isCorrectPosture;
   double leftStart = 0;
@@ -66,6 +66,8 @@ class _DumbbellState extends State<Dumbbell> {
   @override
   void initState() {
     super.initState();
+    resetCounter();
+    //SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     rootBundle.load('assets/rive/move_dumbbell.riv').then(
           (data) async {
         // Load the RiveFile from the binary data.
@@ -85,6 +87,7 @@ class _DumbbellState extends State<Dumbbell> {
     );
   }
 
+
   List makeList(String data) {
     List temp;
     temp = data.split(" ");
@@ -97,13 +100,24 @@ class _DumbbellState extends State<Dumbbell> {
     return jsonDynamic;
   }
 
+  void setRangeBasedOnCoral() {
+    upperRange = 300;
+    lowerRange = 500;
+  }
+
+
   void _countingLogic(double left_y){
     if (left_y > leftStart) {
       setState(() {
         leftStart = left_y;
 
         if (_progress!.value != 100) {
-          _progress!.value = (250 - leftStart) / 2;
+          _progress!.value = (250 - leftStart) * 0.6;
+          print("progress value : " + _progress!.value.toString());
+        }
+
+        if (_progress!.value > 90) {
+          incrementCounter();
         }
       });
     }
@@ -111,12 +125,25 @@ class _DumbbellState extends State<Dumbbell> {
     if (left_y < leftStart) {
       setState(() {
         leftStart = left_y;
-
-        _progress!.value = (250 - leftStart) / 2;
+        _progress!.value = (250 - leftStart) * 0.6;
+        print("progress value : " + _progress!.value.toString());
       });
     }
 
   }
+
+  void resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
+  void incrementCounter() {
+    setState(() {
+      _counter = _counter + 1;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -198,6 +225,17 @@ class _DumbbellState extends State<Dumbbell> {
     return Stack(
       children: <Widget>[
         Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [const Color(0xff37384E), const Color(0xff53304C)],
+            ),
+          ),
+        ),
+        Container(
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
@@ -208,6 +246,33 @@ class _DumbbellState extends State<Dumbbell> {
               ),
             ],
           ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  child: FittedBox(
+                    child: FloatingActionButton(
+                      //backgroundColor: getCounterColor(),
+                      onPressed: resetCounter,
+                      child: Text(
+                        '$_counter',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         Stack(
           children: _renderKeypoints(),
