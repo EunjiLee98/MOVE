@@ -2,20 +2,18 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:flutter/services.dart';
 
-class MoveNet extends StatefulWidget {
+class Dumbbell extends StatefulWidget {
   final List? data;
 
-  MoveNet({
+  Dumbbell({
     required this.data,
   });
 
   @override
-  _MoveNetState createState() => _MoveNetState();
+  _DumbbellState createState() => _DumbbellState();
 }
 
 class Vector {
@@ -24,17 +22,8 @@ class Vector {
   Vector(this.x, this.y);
 }
 
-class _MoveNetState extends State<MoveNet> {
-  double? noseX,
-      noseY,
-      leftEyeX,
-      leftEyeY,
-      rightEyeX,
-      rightEyeY,
-      leftEarX,
-      leftEarY,
-      rightEarX,
-      rightEarY,
+class _DumbbellState extends State<Dumbbell> {
+  double?
       leftShoulderX,
       leftShoulderY,
       rightShoulderX,
@@ -46,36 +35,14 @@ class _MoveNetState extends State<MoveNet> {
       leftWristX,
       leftWristY,
       rightWristX,
-      rightWristY,
-      leftHipX,
-      leftHipY,
-      rightHipX,
-      rightHipY,
-      leftKneeX,
-      leftKneeY,
-      rightKneeX,
-      rightKneeY,
-      leftAnkleX,
-      leftAnkleY,
-      rightAnkleX,
-      rightAnkleY;
+      rightWristY;
 
-  var leftEyePos = Vector(0, 0);
-  var rightEyePos = Vector(0, 0);
-  var leftEarPos = Vector(0, 0);
-  var rightEarPos = Vector(0, 0);
   var leftShoulderPos = Vector(0, 0);
   var rightShoulderPos = Vector(0, 0);
-  var leftHipPos = Vector(0, 0);
-  var rightHipPos = Vector(0, 0);
   var leftElbowPos = Vector(0, 0);
   var rightElbowPos = Vector(0, 0);
   var leftWristPos = Vector(0, 0);
   var rightWristPos = Vector(0, 0);
-  var leftKneePos = Vector(0, 0);
-  var rightKneePos = Vector(0, 0);
-  var leftAnklePos = Vector(0, 0);
-  var rightAnklePos = Vector(0, 0);
 
   List<String> bodyWeight = [
     'Coral test',
@@ -88,7 +55,9 @@ class _MoveNetState extends State<MoveNet> {
   int? _counter;
   double? lowerRange, upperRange;
   bool? midCount, isCorrectPosture;
-  late AudioPlayer player = AudioPlayer();
+  double leftStart = 0;
+
+  bool get isPlaying => _controller?.isActive ?? false;
 
   rive.Artboard? _riveArtboard;
   rive.StateMachineController? _controller;
@@ -98,7 +67,7 @@ class _MoveNetState extends State<MoveNet> {
   void initState() {
     super.initState();
     rootBundle.load('assets/rive/move_dumbbell.riv').then(
-      (data) async {
+          (data) async {
         // Load the RiveFile from the binary data.
         final file = rive.RiveFile.import(data);
 
@@ -128,12 +97,37 @@ class _MoveNetState extends State<MoveNet> {
     return jsonDynamic;
   }
 
+  void _countingLogic(double left_y){
+    if (left_y > leftStart) {
+      setState(() {
+        leftStart = left_y;
+
+        if (_progress!.value != 100) {
+          _progress!.value = (250 - leftStart) / 2;
+        }
+      });
+    }
+
+    if (left_y < leftStart) {
+      setState(() {
+        leftStart = left_y;
+
+        _progress!.value = (250 - leftStart) / 2;
+      });
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     String string_element = "";
     String key = "";
     double x = 0;
     double y = 0;
+    double left_x = 0;
+    double left_y = 0;
+    double right_x = 0;
+    double right_y = 0;
     var dictionary = new SplayTreeMap();
     var element1 = new SplayTreeMap();
 
@@ -155,6 +149,16 @@ class _MoveNetState extends State<MoveNet> {
             var temp = 320 - x;
             x = 320 + temp;
           }
+          if (key == '9') {
+            left_x = x;
+            left_y = y;
+          } else if (key == '10') {
+            right_x = x;
+            right_y = y;
+          }
+          print(
+              "left_x : $left_x left_y : $left_y right_x : $right_x right_y : $right_y");
+
           dictionary.addAll({
             key: {"x": x, "y": y}
           });
@@ -170,15 +174,15 @@ class _MoveNetState extends State<MoveNet> {
         var _x = value["x"];
         var _y = value["y"];
         Widget list = Positioned(
-          left: _x - 175,
-          top: _y - 50,
+          left: _x * 0.6,
+          top: (_y + 50) / 0.8,
           width: 100,
           height: 15,
           child: Container(
             child: Text(
               "●",
               style: TextStyle(
-                color: Color.fromRGBO(37, 213, 253, 1.0),
+                color: Colors.white,
                 fontSize: 12.0,
               ),
             ),
@@ -186,11 +190,29 @@ class _MoveNetState extends State<MoveNet> {
         );
         lists.add(list);
       });
+      _countingLogic(left_y);
+
       return lists;
     }
 
     return Stack(
-      children: _renderKeypoints(),
+      children: <Widget>[
+        Container(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              Expanded(
+                child: rive.Rive(
+                  artboard: _riveArtboard!,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Stack(
+          children: _renderKeypoints(),
+        )
+      ],
     );
   }
 }

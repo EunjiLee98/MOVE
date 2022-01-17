@@ -1,4 +1,3 @@
-
 import 'dart:isolate';
 
 import 'package:flutter/cupertino.dart';
@@ -6,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/exercise/armPress.dart';
+import 'package:move/coral/dumbbellRive.dart';
+import 'package:move/coral/webSocket.dart';
 import 'package:move/exercise/crossJack.dart';
 import 'package:move/exercise/jumpingJack.dart';
 import 'package:move/exercise/squatRive.dart';
@@ -18,6 +18,7 @@ import 'package:rive/rive.dart';
 class Training extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
   final List<CameraDescription>? cameras;
+
   Training({this.bluetoothServices, this.cameras});
 
   @override
@@ -57,10 +58,7 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('background.png'),
-                    fit: BoxFit.fill
-                )
-            ),
+                    image: AssetImage('background.png'), fit: BoxFit.fill)),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 50, 0, 60),
               child: Column(
@@ -162,8 +160,7 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                                      ArmPress(cameras: widget.cameras!, title: 'MOVE! - Arm Press',)));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => WebSocket()));
                                 },
                                 child: Image.asset('dumbbellButton.png', width: MediaQuery.of(context).size.width*0.9,),
                               ),
@@ -201,8 +198,6 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
               ),
             ),
           );
-        }
-        )
-    );
+        }));
   }
 }
