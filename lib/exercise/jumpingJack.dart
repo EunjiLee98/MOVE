@@ -17,6 +17,7 @@ class _JumpingjackState extends State<Jumpingjack> {
   String gesture = "";
   // ignore: non_constant_identifier_names
   int gesture_num = 0;
+  int cnt = 0;
 
   late rive.RiveAnimationController _controller;
   late rive.RiveAnimationController _openController;
@@ -30,6 +31,9 @@ class _JumpingjackState extends State<Jumpingjack> {
       'Jumpingjack',
       autoplay: false,
     );
+
+    cnt = 0;
+    _openController.isActive = false;
   }
 
   ListView _buildConnectDeviceView() {
@@ -84,8 +88,13 @@ class _JumpingjackState extends State<Jumpingjack> {
 
     if(gesture_num == 3 || gesture_num == 1) {
       setState(() {
-        _openController.isActive = true;
-        gesture_num = 0;
+        cnt++;
+
+        if(cnt == 4) {
+          _openController.isActive = true;
+          gesture_num = 0;
+          cnt = 0;
+        }
       });
     }
 

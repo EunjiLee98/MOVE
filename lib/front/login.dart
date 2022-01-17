@@ -91,7 +91,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin{
       body: Stack(
           fit: StackFit.expand,
           children:<Widget>[
-            Image( image: AssetImage("background.png"), fit: BoxFit.cover, colorBlendMode: BlendMode.darken, ),
+            Image( image: AssetImage("background(login).png"), fit: BoxFit.cover, colorBlendMode: BlendMode.darken, ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -119,7 +119,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin{
                     ),
                     onPressed: () {
                       signInWithGoogle();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(cameras: widget.cameras)));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(cameras: widget.cameras)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Temp(cameras: widget.cameras, index: 0)));
                     },
                   ),
                 ),

@@ -40,6 +40,8 @@ dependencies:
   url_launcher: ^6.0.10
   web_socket_channel: ^2.1.0
   queue: ^3.1.0+1
+  carousel_slider: ^4.0.0
+  smooth_page_indicator: ^0.3.0-nullsafety.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -66,12 +68,9 @@ flutter:
     - squat_3.gif
     - shoulder.png
     - background.png
-    - jumping_1.png
-    - jumping_2.png
-    - jumping_3.png
-    - jumping_4.png
-    - jumping_5.png
+    - background(login).png
     - correct.png
+    - character.png
     - wrong.png
     - skip.png
     - next.png
@@ -81,7 +80,13 @@ flutter:
     - 3.png
     - 4.png
     - 5.png
+    - 6.png
+    - 7.png
+    - 8.png
+    - 9.png
+    - 10.png
     - moveButton.png
+    - myMove.png
     - connect.png
     - logo.png
     - boxButton.png
@@ -92,6 +97,7 @@ flutter:
     - reabButton.png
     - jumpingButton.png
     - crossButton.png
+    - dumbbellButton.png
     - squatButton.png
     - cross_1.png
     - cross_2.png
@@ -112,39 +118,16 @@ flutter:
     - uppercut.png
     - bridge.png
     - crunch.png
-    - dumbbell.png
     - plank.png
     - pushUp.png
     - fishing.png
     - tutorial1_background.png
     - tutorial2_background.png
     - ok.png
-    - jumping.gif
     - cross.gif
-    - num1.png
-    - num2.png
-    - num3.png
-    - num4.png
-    - num5.png
     - boxing_clear.png
     - feet.png
     - dino_back.png
-    - dance_back.png
-    - danceButton.png
-    - up.png
-    - down.png
-    - left.png
-    - right.png
-    - up(motion).png
-    - down(motion).png
-    - left(motion).png
-    - right(motion).png
-    - up(grey).png
-    - down(grey).png
-    - left(grey).png
-    - right(grey).png
-    - dance_back.png
-    - danceButton.png
     - assets/images/cloud.png
     - assets/images/cloud1.png
     - assets/images/cloud2.png
@@ -157,17 +140,14 @@ flutter:
     - finish.json
     - super_great.png
     - bluetooth.png
-    - user.png
     - buffett.png
     - hurdle.png
     - badminton.png
-    - cheerup.png
     - rollin.png
     - jumprope.png
     - kick.png
     - taekwondo.png
     - tabletennis.png
-    - papapa.png
     - dino_Exit.png
     - dino_Restart.png
     - dinoHungry.png
@@ -175,7 +155,6 @@ flutter:
     - image1.png
     - image2.png
     - posenet_mv1_075_float_from_checkpoints.tflite
-    - tree.png
     - danceButton_comingSoon.png
     - stretchingButton.png
     - treeButton.png
@@ -186,6 +165,15 @@ flutter:
     - assets/rive/move_jumpingjack.riv
     - assets/rive/move_dumbbell.riv
     - assets/rive/jumpingjack_short.riv
+    - point.png
+    - home_line.png
+    - home_fill.png
+    - training_line.png
+    - training_fill.png
+    - game_line.png
+    - game_fill.png
+    - setting_line.png
+    - setting_fill.png
 
 
   # To add assets to your application, add an assets section, like this:
