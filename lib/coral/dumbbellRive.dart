@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class _DumbbellState extends State<Dumbbell> {
   double leftStart = 0;
 
   bool get isPlaying => _controller?.isActive ?? false;
-
+  bool ? flag;
   rive.Artboard? _riveArtboard;
   rive.StateMachineController? _controller;
   rive.SMIInput<double>? _progress;
@@ -107,6 +108,7 @@ class _DumbbellState extends State<Dumbbell> {
 
 
   void _countingLogic(double left_y){
+
     if (left_y > leftStart) {
       setState(() {
         leftStart = left_y;
@@ -116,9 +118,15 @@ class _DumbbellState extends State<Dumbbell> {
           print("progress value : " + _progress!.value.toString());
         }
 
-        if (_progress!.value > 90) {
-          incrementCounter();
+        if (_progress!.value > 80) {
+          flag = true;
         }
+
+        if (_progress!.value < 60 && flag == true) {
+          incrementCounter();
+          flag = false;
+        }
+
       });
     }
 
@@ -129,7 +137,6 @@ class _DumbbellState extends State<Dumbbell> {
         print("progress value : " + _progress!.value.toString());
       });
     }
-
   }
 
   void resetCounter() {
