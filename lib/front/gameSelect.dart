@@ -4,6 +4,7 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/front/bluetooth.dart';
 import 'package:flutter/services.dart';
 import 'package:move/game/trex/trex_tutorial.dart';
+import 'package:move/theme/font.dart';
 import '../game/boxing.dart';
 import '../game/fishing.dart';
 
@@ -39,14 +40,15 @@ class _GameSelectState extends State<GameSelect> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('Game', style: TextStyle(color: Colors.white),),
+        title: whiteRusso('Game', 25, false),
         centerTitle: true,
         elevation: 0.0,
-        leading: BackButton(
-          color: Colors.white,
-          onPressed: () {Navigator.pop(context);},
-        ),
+        // leading: BackButton(
+        //   color: Colors.white,
+        //   onPressed: () {Navigator.pop(context);},
+        // ),
         backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
       ),
       body: LayoutBuilder(builder: (context, constraints) {
         return Container(
