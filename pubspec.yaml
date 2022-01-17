@@ -165,7 +165,6 @@ flutter:
     - assets/rive/move_jumpingjack.riv
     - assets/rive/move_dumbbell.riv
     - assets/rive/jumpingjack_short.riv
-<<<<<<< HEAD
     - point.png
     - home_line.png
     - home_fill.png
@@ -175,8 +174,6 @@ flutter:
     - game_fill.png
     - setting_line.png
     - setting_fill.png
-=======
->>>>>>> 431e9cfdd463fa8120931cc66333e21c8fd7e7bb
 
 
   # To add assets to your application, add an assets section, like this:
