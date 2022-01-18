@@ -92,9 +92,6 @@ flutter:
     - boxButton.png
     - dinoButton.png
     - dinoExit.png
-    - gameButton.png
-    - hwButton.png
-    - reabButton.png
     - jumpingButton.png
     - crossButton.png
     - dumbbellButton.png
@@ -142,21 +139,12 @@ flutter:
     - bluetooth.png
     - buffett.png
     - hurdle.png
-    - badminton.png
-    - rollin.png
     - jumprope.png
-    - kick.png
-    - taekwondo.png
-    - tabletennis.png
     - dino_Exit.png
     - dino_Restart.png
     - dinoHungry.png
     - move_icon.png
-    - image1.png
-    - image2.png
     - posenet_mv1_075_float_from_checkpoints.tflite
-    - danceButton_comingSoon.png
-    - stretchingButton.png
     - treeButton.png
     - warriorButton.png
     - bowButton.png
@@ -165,6 +153,8 @@ flutter:
     - assets/rive/move_jumpingjack.riv
     - assets/rive/move_dumbbell.riv
     - assets/rive/jumpingjack_short.riv
+    - assets/rive/boxing.riv
+    - assets/rive/home.riv
     - point.png
     - home_line.png
     - home_fill.png
@@ -174,6 +164,7 @@ flutter:
     - game_fill.png
     - setting_line.png
     - setting_fill.png
+    - score.png
 
 
   # To add assets to your application, add an assets section, like this:
