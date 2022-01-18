@@ -9,6 +9,7 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/front/select.dart';
 import 'package:move/theme/font.dart';
 import 'package:flutter/services.dart';
+import 'package:rive/rive.dart';
 import 'gameSelect.dart';
 import 'training.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -169,6 +170,7 @@ class _HomeState extends State<Homepage> {
 
   final controller = PageController(viewportFraction: 0.8);
   bool showRanking = false;
+  late RiveAnimationController _controller;
 
   @override
   void initState() {
@@ -194,6 +196,11 @@ class _HomeState extends State<Homepage> {
         });
       });
     });
+
+    _controller = OneShotAnimation(
+      'Animation 1',
+      autoplay: true,
+    );
   }
 
   // @override
@@ -301,7 +308,7 @@ class _HomeState extends State<Homepage> {
                       ),
                       SizedBox(height: 20,),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 00, 20, 0),
+                        padding: const EdgeInsets.fromLTRB(10, 00, 20, 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -314,7 +321,11 @@ class _HomeState extends State<Homepage> {
                                   ],
                                 ),
                                 SizedBox(height: 10,),
-                                Image.asset('character.png', width: MediaQuery.of(context).size.width*0.45,)
+                                Container(
+                                    width: MediaQuery.of(context).size.width*0.5,
+                                    height: MediaQuery.of(context).size.height*0.5,
+                                    child: RiveAnimation.asset('assets/rive/home.riv', fit: BoxFit.fitHeight,)
+                                ),
                               ],
                             ),
                             SizedBox(width: 20,),
@@ -505,10 +516,10 @@ class _HomeState extends State<Homepage> {
                                                           )
                                                         ]),
                                                     child: ListTile(
-                                                      title: whiteNoto(name[0], 15, true),
+                                                      title: name.isEmpty ? whiteNoto('', 15, true) : whiteNoto(name[0], 15, true),
                                                       subtitle: Padding(
                                                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                                                        child: whiteRusso(total[0], 20, true),
+                                                        child: total.isEmpty ? whiteRusso('', 15, true) : whiteRusso(total[0], 20, true),
                                                       ),
                                                       leading: Container(
                                                         width: 120,
@@ -525,7 +536,7 @@ class _HomeState extends State<Homepage> {
                                                               width: 50,
                                                               child: CircleAvatar(
                                                                 radius: 30,
-                                                                backgroundImage: NetworkImage(photo[0]),
+                                                                backgroundImage: NetworkImage(photo.isEmpty ? '' : photo[0]),
                                                                 backgroundColor: Colors.transparent,
                                                               ),
                                                             ),
@@ -678,8 +689,8 @@ class _RankingState extends State<Ranking> {
                                                 child: Row(
                                                   children: [
                                                     Image.asset('$num.png', width: 40),
+                                                    SizedBox(width: 10,),
                                                     Container(
-                                                      width: 50,
                                                       child: CircleAvatar(
                                                         radius: 25,
                                                         backgroundImage: NetworkImage(photo[index]),

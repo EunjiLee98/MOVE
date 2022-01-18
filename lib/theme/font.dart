@@ -17,6 +17,19 @@ Widget whiteRusso(String str, double num, bool bold) {
   );
 }
 
+Widget navyRusso(String str, double num, bool bold) {
+  return Text(
+      str,
+      style: GoogleFonts.getFont(
+        'Russo One',
+        textStyle: TextStyle(
+            fontSize: num,
+            color: const Color(0xff290055),
+            fontWeight: bold ? FontWeight.bold : null
+        ),)
+  );
+}
+
 Widget whiteNoto(String str, double num, bool bold) {
   return Text(
       str,

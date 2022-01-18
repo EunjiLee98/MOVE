@@ -1,10 +1,12 @@
 import 'dart:math';
 
 import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:move/reabilitation/camera.dart';
+import 'package:move/theme/font.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:tflite/tflite.dart';
 
@@ -52,19 +54,9 @@ class _SquatState extends State<Squat> {
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'MOVE! - Squat Rive',
-          style: GoogleFonts.russoOne(
-            fontSize: 25,
-            color: Colors.deepPurple,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
+      extendBodyBehindAppBar: true,
       body: Stack(
         children: <Widget>[
           SquatData(
@@ -75,8 +67,24 @@ class _SquatState extends State<Squat> {
             screenW: screen.width,
           ),
           Positioned(
-            right: 0,
-            top: 0,
+            child: Column(
+              children: [
+                AppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 15, 15, 0),
+                      child: whiteRusso('Squat', 20, false),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            left: 0,
+            bottom: 0,
             child: Container(
               width: MediaQuery.of(context).size.width * 0.25,
               height: MediaQuery.of(context).size.height * 0.25,
@@ -169,15 +177,10 @@ class _SquatDataState extends State<SquatData> {
     isCorrectPosture = false;
     setRangeBasedOnModel();
 
-    // Load the animation file from the bundle, note that you could also
-    // download this. The RiveFile just expects a list of bytes.
     rootBundle.load('assets/rive/move_squat.riv').then(
       (data) async {
-        // Load the RiveFile from the binary data.
         final file = rive.RiveFile.import(data);
 
-        // The artboard is the root of the animation and gets drawn in the
-        // Rive widget.
         final artboard = file.mainArtboard;
         var controller = rive.StateMachineController.fromArtboard(
             artboard, 'Squat_Controller');
@@ -307,8 +310,6 @@ class _SquatDataState extends State<SquatData> {
     }
   }
 
-  //endregion
-
   @override
   Widget build(BuildContext context) {
     List<Widget> _renderKeypoints() {
@@ -385,29 +386,84 @@ class _SquatDataState extends State<SquatData> {
             ),
           ),
         ),
-        Container(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            children: [
-              Expanded(
-                child: rive.Rive(
-                  artboard: _riveArtboard!,
+        Padding(
+          padding: const EdgeInsets.only(top: 50),
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                Expanded(
+                  child: rive.Rive(
+                    artboard: _riveArtboard!,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
+        ),
+        Column(
+          children: [
+            SizedBox(height: 60,),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xff290055),
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                whiteNoto('진행시간', 12, true),
+                              ],
+                            ),
+                          )
+                      )
+                    ],
+                  ),
+                  SizedBox(width: 20,),
+                  Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('score.png')
+                          )
+                        ),
+                      ),
+                      Image.asset('score.png'),
+                      Positioned(
+                        left: 50,
+                        top: 30,
+                        child: navyRusso('${_counter.toString()}', 60, true)
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 20,),
+                  whiteRusso('/ 20', 30, false)
+                ],
+              ),
+            ),
+          ],
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Align(
-              alignment: Alignment.center,
+              alignment: Alignment.bottomRight,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                 child: Container(
-                  height: 100,
-                  width: 100,
+                  height: 80,
+                  width: 80,
                   child: FittedBox(
                     child: FloatingActionButton(
                       backgroundColor: getCounterColor(),
