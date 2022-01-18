@@ -50,6 +50,7 @@ class _TempState extends State<Temp> {
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           canvasColor: Colors.transparent,
+          primaryColor: Colors.transparent
         ),
         child: BottomNavigationBar(
           currentIndex: widget.index,
@@ -172,7 +173,7 @@ class _HomeState extends State<Homepage> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); //screen vertically
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]); //screen vertically
     showRanking = false;
 
     FirebaseFirestore.instance
@@ -195,16 +196,16 @@ class _HomeState extends State<Homepage> {
     });
   }
 
-  @override
-  void dispose(){
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
-  }
+  // @override
+  // void dispose(){
+  //   SystemChrome.setPreferredOrientations([
+  //     DeviceOrientation.landscapeRight,
+  //     DeviceOrientation.landscapeLeft,
+  //     DeviceOrientation.portraitUp,
+  //     DeviceOrientation.portraitDown,
+  //   ]);
+  //   super.dispose();
+  // }
 
 
   @override
@@ -678,7 +679,7 @@ class _RankingState extends State<Ranking> {
                                                   children: [
                                                     Image.asset('$num.png', width: 40),
                                                     Container(
-                                                      width: 0,
+                                                      width: 50,
                                                       child: CircleAvatar(
                                                         radius: 25,
                                                         backgroundImage: NetworkImage(photo[index]),

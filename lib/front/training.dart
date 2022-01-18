@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/coral/dumbbellRive.dart';
 import 'package:move/coral/webSocket.dart';
@@ -168,6 +169,7 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                               TextButton(
                                 onPressed: () {
                                   // if(widget.bluetoothServices != null)
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => TempDual(cameras: widget.cameras!)));
                                 },
                                 child: Image.asset('crunch.png', width: MediaQuery.of(context).size.width*0.9,),
                               ),

@@ -21,7 +21,7 @@ class _GameSelectState extends State<GameSelect> {
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp]); //screen vertically
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]); //screen vertically
   }
 
   @override
@@ -104,7 +104,7 @@ class _GameSelectState extends State<GameSelect> {
                       if (widget.bluetoothServices == null)
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           Navigator.pop(context);
-                          Navigator.pop(context);
+                          // Navigator.pop(context);
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
                         });
                     },
