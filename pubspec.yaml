@@ -161,6 +161,11 @@ flutter:
     - dumbbellRive_bg.png
     - dumbbellRive_vs.png
     - dumbbellRive_line.png
+    - dumbbellRiveButton.png
+    - dumbbellRive_home.png
+    - dumbbellRive_restart.png
+    - dumbbellRive_1pwin.png
+    - dumbbellRive_2pwin.png
     - assets/rive/boxing.riv
     - assets/rive/home.riv
     - point.png

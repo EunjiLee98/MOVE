@@ -2,6 +2,8 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:move/coral/dumbbellRive_1pwin.dart';
 import 'package:move/theme/font.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:flutter/services.dart';
@@ -52,7 +54,7 @@ class _DumbbellState extends State<Dumbbell> {
   List<dynamic>? dynamicList;
   List? dataList;
   Map<String, List<double>>? inputArr;
-  int _counter1 = 0;
+  int _counter1 = 9;
   int _counter2 = 0;
   double? lowerRange, upperRange;
   bool? midCount, isCorrectPosture;
@@ -118,8 +120,6 @@ class _DumbbellState extends State<Dumbbell> {
   @override
   void dispose() {
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
@@ -213,12 +213,25 @@ class _DumbbellState extends State<Dumbbell> {
   void incrementCounter1() {
     setState(() {
       _counter1 = _counter1 + 1;
+      if (_counter1 == 1)
+        {
+          SchedulerBinding.instance!.addPostFrameCallback((_) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => DumbbellRive_1pwin(score_1p: _counter1, score_2p : _counter2)));
+          });
+        }
+
     });
   }
 
   void incrementCounter2() {
     setState(() {
       _counter2 = _counter2 + 1;
+      if (_counter2 == 10)
+      {
+        SchedulerBinding.instance!.addPostFrameCallback((_) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => DumbbellRive_1pwin(score_1p: _counter1, score_2p : _counter2)));
+        });
+      }
     });
   }
 
