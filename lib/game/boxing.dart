@@ -190,6 +190,7 @@ class _BoxingState extends State<Boxing> {
     super.initState();
     startBGM();
     //1 Animation
+    jar = 0;
     _controller = OneShotAnimation(
       '1',
       autoplay: false,
@@ -280,12 +281,15 @@ class _BoxingState extends State<Boxing> {
     if (jar == 1 || jar == 2) {
       _controller.isActive = true;
     } else if (jar == 3 || jar == 4) {
+      _controller.isActive = false;
       _controller2.isActive = true;
     } else if (jar == 5 || jar == 6) {
+      _controller2.isActive = false;
       _controller3.isActive = true;
     }
 
     if (jar == 7) {
+      _controller3.isActive = false;
       finish_controller.isActive = true;
       Future.delayed((Duration(milliseconds: 200)), () {
         SchedulerBinding.instance!.addPostFrameCallback((_) {
@@ -320,7 +324,11 @@ class _BoxingState extends State<Boxing> {
             children: [
               IconButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  SchedulerBinding.instance!.addPostFrameCallback((_) {
+                    // Navigator.pop(context);
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+                        Temp(bluetoothServices: widget.bluetoothServices, index: 0)), (route) => false);
+                  });
                 },
                 icon: Icon(Icons.arrow_back),
                 color: Colors.white,
@@ -328,7 +336,7 @@ class _BoxingState extends State<Boxing> {
             ],
           ),
           Container(height: 1, child: _buildConnectDeviceView()),
-          SizedBox(height: 40),
+          // SizedBox(height: 40),
           FutureBuilder(
             future: Future.delayed(
                 Duration(milliseconds: Random().nextInt(800) + 500)),
@@ -343,13 +351,14 @@ class _BoxingState extends State<Boxing> {
               );
             },
           ),
-          SizedBox(height: 20),
+          // SizedBox(height: 20),
           // Boxing Progress Rectangle
           Container(
-              width: MediaQuery.of(context).size.width * 0.45,
-              height: MediaQuery.of(context).size.height * 0.3 + 4,
+              width: MediaQuery.of(context).size.width * 0.75,
+              height: MediaQuery.of(context).size.height * 0.4,
               child: RiveAnimation.asset(
                 'assets/rive/move_boxing.riv',
+                fit: BoxFit.fill,
                 animations: const ['Idle'],
                 controllers: [
                   _controller,
