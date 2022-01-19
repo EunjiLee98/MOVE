@@ -442,7 +442,7 @@ class _SquatDataState extends State<SquatData> {
                     ],
                   ),
                   SizedBox(width: 10,),
-                  whiteRusso('/ 20', 30, false)
+                  whiteRusso('/ 5', 30, false)
                 ],
               ),
             ),

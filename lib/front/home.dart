@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:move/exercise/finish_exercise.dart';
 import 'package:move/front/select.dart';
 import 'package:move/theme/font.dart';
 import 'package:flutter/services.dart';
@@ -245,7 +246,9 @@ class _HomeState extends State<Homepage> {
                             child: TextButton(
                               onPressed: () {
                                 SchedulerBinding.instance!.addPostFrameCallback((_) {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth(cameras: widget.cameras)));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                                      FinishExercise(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)));
+                                  // Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth(cameras: widget.cameras)));
                                 });
                               },
                               child: Image.asset('bluetooth.png', width: MediaQuery.of(context).size.width*0.08,),

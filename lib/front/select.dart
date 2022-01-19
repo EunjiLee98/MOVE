@@ -5,7 +5,6 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/front/gameSelect.dart';
 import 'package:move/front/training.dart';
 import '../reabilitation/reabilitation.dart';
-import '../dance/dance.dart';
 
 class Select extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
@@ -78,17 +77,6 @@ class _SelectState extends State<Select> {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => GameSelect(bluetoothServices: widget.bluetoothServices)));
                   },
                   child: Image.asset('gameButton.png', width: MediaQuery.of(context).size.width*0.7,),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Flexible(
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Dance(bluetoothServices: widget.bluetoothServices)));
-                    },
-                    child: Image.asset('danceButton.png', width: MediaQuery.of(context).size.width*0.7,)
                 ),
               ),
               SizedBox(
