@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:move/reabilitation/reabilitation.dart';
 import 'package:move/theme/font.dart';
 import 'package:rive/rive.dart';
 import 'gameSelect.dart';
@@ -35,8 +36,8 @@ class _TempState extends State<Temp> {
   List<Widget> _children() => [
     Homepage(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras),
     Training(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras),
-    GameSelect(bluetoothServices: widget.bluetoothServices),
-    GameSelect(bluetoothServices: widget.bluetoothServices)
+    GameSelect(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras),
+    ReabSelect(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)
   ];
 
   @override
@@ -126,18 +127,18 @@ class _TempState extends State<Temp> {
                 title: Column(
                   children: [
                     SizedBox(height: 1,),
-                    whiteNoto('설정', 14, false),
+                    whiteNoto('재활', 14, false),
                   ],
                 ),
                 icon: _currentIndex == 3
                     ? Column(
                       children: [
-                        Image.asset('setting_fill.png', width: 37,),
+                        Image.asset('reab_fill.png', width: 37,),
                       ],
                     )
                     : Column(
                       children: [
-                        Image.asset('setting_line.png', width: 37,),
+                        Image.asset('reab_line.png', width: 37,),
                       ],
                     )
             ),

@@ -112,7 +112,6 @@ class _BluetoothState extends State<Bluetooth> {
                           } catch (e) {
                             if (e != 'already_connected') {
                               Navigator.pop(context);
-                              Navigator.pop(context);
                               throw e;
                             }
                           } finally {

@@ -1,14 +1,20 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/theme/font.dart';
 import 'package:move/tutorial/tutorial2.dart';
 import 'package:rive/rive.dart' as rive;
 
+import 'finish_exercise.dart';
+
 class Jumpingjack extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
-  Jumpingjack({this.bluetoothServices});
+  final List<CameraDescription>? cameras;
+
+  Jumpingjack({this.bluetoothServices, this.cameras});
 
   @override
   _JumpingjackState createState() => _JumpingjackState();
@@ -114,7 +120,7 @@ class _JumpingjackState extends State<Jumpingjack> {
                     ],
                   ),
                   SizedBox(width: 10,),
-                  whiteRusso('/ 20', 30, false)
+                  whiteRusso('/ 5', 30, false)
                 ],
               ),
             ),
@@ -146,6 +152,17 @@ class _JumpingjackState extends State<Jumpingjack> {
 
         if(cnt == 1 || cnt == 5) {
           score++;
+          if(score == 5) {
+            SchedulerBinding.instance!.addPostFrameCallback((_) {
+              // Navigator.pop(context);
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+                  FinishExercise(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras,)), (route) => false);
+            });
+            // Navigator.pop(context);
+            // Navigator.push(context, MaterialPageRoute(builder: (context) =>
+            //     FinishExercise(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)));
+          }
+
           _openController.isActive = true;
           gesture_num = 0;
           cnt = 1;
