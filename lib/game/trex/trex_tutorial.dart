@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -5,7 +6,8 @@ import 'package:move/game/trex/trex_main.dart';
 
 class TrexTutorial extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
-  TrexTutorial({this.bluetoothServices});
+
+  TrexTutorial({this.bluetoothServices,});
 
   @override
   _TrexTutorialState createState() => _TrexTutorialState();

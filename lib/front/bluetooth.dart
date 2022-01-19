@@ -186,6 +186,9 @@ class _BluetoothState extends State<Bluetooth> {
       _bleServices();
       if(bluetoothServices != null) {
         SchedulerBinding.instance!.addPostFrameCallback((_) {
+          // Navigator.pop(context);
+          // Navigator.pop(context);
+          // Navigator.pop(context);
           // Navigator.push(context, MaterialPageRoute(builder: (context) => Temp(bluetoothServices: bluetoothServices, cameras: widget.cameras, index: 0,)));
             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                 builder: (BuildContext context) =>

@@ -13,7 +13,6 @@ import 'package:move/exercise/jumpingJack.dart';
 import 'package:move/exercise/squatRive.dart';
 import 'package:move/front/bluetooth.dart';
 import 'package:camera/camera.dart';
-import 'package:move/front/temp.dart';
 import 'package:move/theme/font.dart';
 import 'package:rive/rive.dart';
 
@@ -165,7 +164,6 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                               TextButton(
                                 onPressed: () {
                                   // if(widget.bluetoothServices != null)
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => TempDual(cameras: widget.cameras!)));
                                 },
                                 child: Image.asset('crunch.png', width: MediaQuery.of(context).size.width*0.9,),
                               ),

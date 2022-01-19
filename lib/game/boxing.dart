@@ -9,6 +9,7 @@ import 'package:just_audio/just_audio.dart';
 import 'dart:math';
 
 import 'package:move/front/home.dart';
+import 'package:move/game/finish_game.dart';
 import 'package:rive/rive.dart';
 
 class BoxingStart extends StatefulWidget {
@@ -180,19 +181,38 @@ class _BoxingState extends State<Boxing> {
 
   // Rive animataion
   late RiveAnimationController _controller;
-  // late RiveAnimationController _controller2;
-  // late RiveAnimationController _controller3;
-  // late RiveAnimationController finish_controller;
+  late RiveAnimationController _controller2;
+  late RiveAnimationController _controller3;
+  late RiveAnimationController finish_controller;
 
   @override
   void initState() {
     super.initState();
     startBGM();
+    //1 Animation
     _controller = OneShotAnimation(
       '1',
       autoplay: false,
     );
     _controller.isActive = false;
+    //2 Animation
+    _controller2 = OneShotAnimation(
+      '2',
+      autoplay: false,
+    );
+    _controller2.isActive = false;
+    //3 Animation
+    _controller3 = OneShotAnimation(
+      '3',
+      autoplay: false,
+    );
+    _controller3.isActive = false;
+    //Finish Animation
+    finish_controller = OneShotAnimation(
+      '날라가기',
+      autoplay: false,
+    );
+    finish_controller.isActive = false;
   }
 
   @override
@@ -243,9 +263,7 @@ class _BoxingState extends State<Boxing> {
         correct += 1;
         jar++;
         lottieCorrect = true;
-        _controller.isActive = true;
         playPunch();
-
       }
     } else if (ran_gesture == 'Uppercut') {
       if (gesture_num == 4) {
@@ -258,15 +276,29 @@ class _BoxingState extends State<Boxing> {
     }
     lottieCorrect = false;
 
-    if (jar == 15) {
-      SchedulerBinding.instance!.addPostFrameCallback((_) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => BoxingClear(
-                      bluetoothServices: widget.bluetoothServices,
-                      score: (correct / count) * 100,
-                    )));
+    //Rive Animation
+    if (jar == 1 || jar == 2) {
+      _controller.isActive = true;
+    } else if (jar == 3 || jar == 4) {
+      _controller2.isActive = true;
+    } else if (jar == 5 || jar == 6) {
+      _controller3.isActive = true;
+    }
+
+    if (jar == 7) {
+      finish_controller.isActive = true;
+      Future.delayed((Duration(milliseconds: 200)), () {
+        SchedulerBinding.instance!.addPostFrameCallback((_) {
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => BoxingClear(
+          //               bluetoothServices: widget.bluetoothServices,
+          //               score: (correct / count) * 100,
+          //             )));
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+              FinishGame(bluetoothServices: widget.bluetoothServices, name: 'Boxing',)), (route) => false);
+        });
       });
     }
 
@@ -319,7 +351,12 @@ class _BoxingState extends State<Boxing> {
               child: RiveAnimation.asset(
                 'assets/rive/move_boxing.riv',
                 animations: const ['Idle'],
-                controllers: [_controller],
+                controllers: [
+                  _controller,
+                  _controller2,
+                  _controller3,
+                  finish_controller
+                ],
               )),
           // Container(
           //   width: MediaQuery.of(context).size.width*0.45,
