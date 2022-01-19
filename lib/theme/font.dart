@@ -6,14 +6,14 @@ import 'package:move/front/training.dart';
 
 Widget whiteRusso(String str, double num, bool bold) {
   return Text(
-      str,
-      style: GoogleFonts.getFont(
-        'Russo One',
-        textStyle: TextStyle(
-            fontSize: num,
-            color: Colors.white,
-            fontWeight: bold ? FontWeight.bold : null
-        ),)
+    str,
+    style: GoogleFonts.getFont(
+      'Russo One',
+    textStyle: TextStyle(
+        fontSize: num,
+        color: Colors.white,
+        fontWeight: bold ? FontWeight.bold : null
+    ),)
   );
 }
 

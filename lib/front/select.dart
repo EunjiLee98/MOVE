@@ -5,7 +5,6 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/front/gameSelect.dart';
 import 'package:move/front/training.dart';
 import '../reabilitation/reabilitation.dart';
-import '../dance/dance.dart';
 
 class Select extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
@@ -34,7 +33,6 @@ class _SelectState extends State<Select> {
     super.dispose();
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -56,7 +54,7 @@ class _SelectState extends State<Select> {
             )
         ),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+          padding: const EdgeInsets.fromLTRB(0, 50, 0, 60),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -85,7 +83,7 @@ class _SelectState extends State<Select> {
               Flexible(
                 child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Dance(bluetoothServices: widget.bluetoothServices)));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => Dance(bluetoothServices: widget.bluetoothServices)));
                     },
                     child: Image.asset('danceButton.png', width: MediaQuery.of(context).size.width*0.7,)
                 ),

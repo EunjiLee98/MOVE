@@ -26,16 +26,6 @@ class _DinoConditionState extends State<DinoCondition> {
   }
 
   @override
-  void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
-  }
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body:

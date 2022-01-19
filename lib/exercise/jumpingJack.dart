@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:move/theme/font.dart';
 import 'package:move/tutorial/tutorial2.dart';
 import 'package:rive/rive.dart' as rive;
 
@@ -17,6 +19,8 @@ class _JumpingjackState extends State<Jumpingjack> {
   String gesture = "";
   // ignore: non_constant_identifier_names
   int gesture_num = 0;
+  int cnt = 1;
+  int score = 0;
 
   late rive.RiveAnimationController _controller;
   late rive.RiveAnimationController _openController;
@@ -30,6 +34,9 @@ class _JumpingjackState extends State<Jumpingjack> {
       'Jumpingjack',
       autoplay: false,
     );
+
+    cnt = 1;
+    _openController.isActive = false;
   }
 
   ListView _buildConnectDeviceView() {
@@ -62,12 +69,63 @@ class _JumpingjackState extends State<Jumpingjack> {
     return ListView(
       padding: const EdgeInsets.all(8),
       children: <Widget>[
-        Container(
-          height: MediaQuery.of(context).size.height,
-          child: rive.RiveAnimation.asset(
-            'assets/rive/jumpingjack_short.riv',
-            controllers: [_controller, _openController],
-          ),
+        Column(
+          children: [
+            Positioned(
+              child: Column(
+                children: [
+                  AppBar(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    actions: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 15, 15, 0),
+                        child: whiteRusso('Jumping Jack', 20, false),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10,),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      // timer
+                    ],
+                  ),
+                  SizedBox(width: 10,),
+                  Stack(
+                    children: [
+                      Container(
+                        width: 150,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('score.png')
+                            )
+                        ),
+                        child: Center(child: navyRusso('${score.toString()}', 60, true)),
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 10,),
+                  whiteRusso('/ 20', 30, false)
+                ],
+              ),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height*2/3,
+              child: rive.RiveAnimation.asset(
+                'assets/rive/jumpingjack_short.riv',
+                controllers: [_controller, _openController],
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -84,8 +142,14 @@ class _JumpingjackState extends State<Jumpingjack> {
 
     if(gesture_num == 3 || gesture_num == 1) {
       setState(() {
-        _openController.isActive = true;
-        gesture_num = 0;
+        cnt++;
+
+        if(cnt == 1 || cnt == 5) {
+          score++;
+          _openController.isActive = true;
+          gesture_num = 0;
+          cnt = 1;
+        }
       });
     }
 
@@ -95,6 +159,7 @@ class _JumpingjackState extends State<Jumpingjack> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
       body: Container(
           height: MediaQuery.of(context).size.height,
