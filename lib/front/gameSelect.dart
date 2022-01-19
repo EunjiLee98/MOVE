@@ -22,18 +22,11 @@ class _GameSelectState extends State<GameSelect> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp]); //screen vertically
+ //screen vertically
   }
 
   @override
   void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
     super.dispose();
   }
 
@@ -85,8 +78,6 @@ class _GameSelectState extends State<GameSelect> {
                                     .bluetoothServices!)));
                       if (widget.bluetoothServices == null)
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
                         });
                     },
@@ -105,8 +96,6 @@ class _GameSelectState extends State<GameSelect> {
                                     .bluetoothServices)));
                       if (widget.bluetoothServices == null)
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
                         });
                     },

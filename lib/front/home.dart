@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/exercise/finish_exercise.dart';
 import 'package:move/front/select.dart';
+import 'package:move/reabilitation/reabilitation.dart';
 import 'package:move/theme/font.dart';
 import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
@@ -39,8 +40,8 @@ class _TempState extends State<Temp> {
   List<Widget> _children() => [
     Homepage(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras),
     Training(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras),
-    GameSelect(bluetoothServices: widget.bluetoothServices),
-    GameSelect(bluetoothServices: widget.bluetoothServices)
+    GameSelect(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras),
+    ReabSelect(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)
   ];
 
   @override
@@ -52,6 +53,7 @@ class _TempState extends State<Temp> {
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           canvasColor: Colors.transparent,
+          primaryColor: Colors.transparent
         ),
         child: BottomNavigationBar(
           currentIndex: widget.index,
@@ -129,18 +131,18 @@ class _TempState extends State<Temp> {
                 title: Column(
                   children: [
                     SizedBox(height: 1,),
-                    whiteNoto('설정', 14, false),
+                    whiteNoto('재활', 14, false),
                   ],
                 ),
                 icon: _currentIndex == 3
                     ? Column(
                       children: [
-                        Image.asset('setting_fill.png', width: 37,),
+                        Image.asset('reab_fill.png', width: 37,),
                       ],
                     )
                     : Column(
                       children: [
-                        Image.asset('setting_line.png', width: 37,),
+                        Image.asset('reab_line.png', width: 37,),
                       ],
                     )
             ),
@@ -175,7 +177,6 @@ class _HomeState extends State<Homepage> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); //screen vertically
     showRanking = false;
 
     FirebaseFirestore.instance
@@ -203,16 +204,16 @@ class _HomeState extends State<Homepage> {
     );
   }
 
-  @override
-  void dispose(){
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
-  }
+  // @override
+  // void dispose(){
+  //   SystemChrome.setPreferredOrientations([
+  //     DeviceOrientation.landscapeRight,
+  //     DeviceOrientation.landscapeLeft,
+  //     DeviceOrientation.portraitUp,
+  //     DeviceOrientation.portraitDown,
+  //   ]);
+  //   super.dispose();
+  // }
 
 
   @override
@@ -246,9 +247,7 @@ class _HomeState extends State<Homepage> {
                             child: TextButton(
                               onPressed: () {
                                 SchedulerBinding.instance!.addPostFrameCallback((_) {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                                      FinishExercise(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)));
-                                  // Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth(cameras: widget.cameras)));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth(cameras: widget.cameras)));
                                 });
                               },
                               child: Image.asset('bluetooth.png', width: MediaQuery.of(context).size.width*0.08,),

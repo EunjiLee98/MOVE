@@ -164,6 +164,11 @@ flutter:
     - game_fill.png
     - setting_line.png
     - setting_fill.png
+    - reab_line.png
+    - reab_fill.png
+    - treeButton.png
+    - bowButton.png
+    - warriorButton.png
     - score.png
 
 

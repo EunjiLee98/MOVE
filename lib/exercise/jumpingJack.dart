@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/theme/font.dart';
@@ -151,14 +152,20 @@ class _JumpingjackState extends State<Jumpingjack> {
 
         if(cnt == 1 || cnt == 5) {
           score++;
+          if(score == 5) {
+            SchedulerBinding.instance!.addPostFrameCallback((_) {
+              // Navigator.pop(context);
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+                  FinishExercise(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras,)), (route) => false);
+            });
+            // Navigator.pop(context);
+            // Navigator.push(context, MaterialPageRoute(builder: (context) =>
+            //     FinishExercise(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)));
+          }
+
           _openController.isActive = true;
           gesture_num = 0;
           cnt = 1;
-        }
-
-        if(score == 5) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>
-              FinishExercise(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)));
         }
       });
     }

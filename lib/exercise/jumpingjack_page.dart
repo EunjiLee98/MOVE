@@ -200,7 +200,7 @@ class _JumpingstartState extends State<Jumpingstart> {
                                           addScore(score);
                                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                                               builder: (BuildContext context) =>
-                                                  Homepage(bluetoothServices: widget.bluetoothServices)), (route) => false);
+                                                  Temp(bluetoothServices: widget.bluetoothServices, index: 0,)), (route) => false);
                                         },
                                         child: Image.asset('exit.png',height: 72,),
                                       ),

@@ -401,7 +401,7 @@ class _BoxingClearState extends State<BoxingClear> {
             SchedulerBinding.instance!.addPostFrameCallback((_) {
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                   builder: (BuildContext context) =>
-                      Homepage(bluetoothServices: widget.bluetoothServices,)), (route) => false);
+                      Temp(bluetoothServices: widget.bluetoothServices, index: 0,)), (route) => false);
               // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
             });
           },
@@ -433,7 +433,7 @@ class _BoxingClearState extends State<BoxingClear> {
                           addScore();
                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  Homepage(bluetoothServices: widget.bluetoothServices,)), (route) => false);
+                                  Temp(bluetoothServices: widget.bluetoothServices, index: 0,)), (route) => false);
                           // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
                         });
                       },

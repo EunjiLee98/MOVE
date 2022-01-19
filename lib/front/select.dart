@@ -17,24 +17,6 @@ class Select extends StatefulWidget {
 
 class _SelectState extends State<Select> {
   @override
-  void initState() {
-    super.initState();
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp]); //screen vertically
-  }
-
-  @override
-  void dispose(){
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,

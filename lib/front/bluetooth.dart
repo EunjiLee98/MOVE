@@ -46,8 +46,6 @@ class _BluetoothState extends State<Bluetooth> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); //screen vertically
-
     flutterBlue.connectedDevices
         .asStream()
         .listen((List<BluetoothDevice> devices) {
@@ -61,17 +59,6 @@ class _BluetoothState extends State<Bluetooth> {
       }
     });
     flutterBlue.startScan();
-  }
-
-  @override
-  void dispose(){
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
   }
 
   ListView _buildListViewOfDevices() {
@@ -124,7 +111,6 @@ class _BluetoothState extends State<Bluetooth> {
                             await device.connect(autoConnect: false);
                           } catch (e) {
                             if (e != 'already_connected') {
-                              Navigator.pop(context);
                               Navigator.pop(context);
                               throw e;
                             }
@@ -200,12 +186,12 @@ class _BluetoothState extends State<Bluetooth> {
       _bleServices();
       if(bluetoothServices != null) {
         SchedulerBinding.instance!.addPostFrameCallback((_) {
-          Navigator.pop(context);
-          Navigator.pop(context);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Temp(bluetoothServices: bluetoothServices, cameras: widget.cameras, index: 0,)));
-          //   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-          //       builder: (BuildContext context) =>
-          //           Homepage(bluetoothServices: bluetoothServices, cameras: widget.cameras,)), (route) => false);
+          // Navigator.pop(context);
+          // Navigator.pop(context);
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => Temp(bluetoothServices: bluetoothServices, cameras: widget.cameras, index: 0,)));
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    Temp(bluetoothServices: bluetoothServices, cameras: widget.cameras, index: 0,)), (route) => false);
         });
       }
     }
