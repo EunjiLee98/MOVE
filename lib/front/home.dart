@@ -216,7 +216,7 @@ class _HomeState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+    // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Column(
@@ -232,7 +232,7 @@ class _HomeState extends State<Homepage> {
               ),
               child: SingleChildScrollView(
                 child: Container(
-                  margin: const EdgeInsets.fromLTRB(0, 30, 0, 80),
+                  margin: const EdgeInsets.fromLTRB(0, 10, 0, 80),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.baseline, //line alignment
                     textBaseline: TextBaseline.alphabetic, //line alignment
