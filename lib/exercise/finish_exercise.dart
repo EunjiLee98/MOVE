@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:lottie/lottie.dart';
+import 'package:move/exercise/squatRive.dart';
 import 'package:move/front/home.dart';
 import 'package:move/theme/font.dart';
 import 'jumpingJack.dart';
@@ -10,7 +11,8 @@ import 'jumpingJack.dart';
 class FinishExercise extends StatelessWidget {
   final List<BluetoothService>? bluetoothServices;
   final List<CameraDescription>? cameras;
-  FinishExercise({this.bluetoothServices, this.cameras});
+  final String? name;
+  FinishExercise({this.bluetoothServices, this.cameras, this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +98,7 @@ class FinishExercise extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                navyRusso('Jumping Jack', 20, false),
+                                navyRusso(name!, 20, false),
                                 navyNoto('초급세트', 17, true),
                               ],
                             ),
@@ -194,8 +196,12 @@ class FinishExercise extends StatelessWidget {
                         // addScore(score);
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           // Navigator.pop(context);
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                              Jumpingjack(bluetoothServices: bluetoothServices, cameras: cameras)), (route) => false);
+                          if(name == 'Jumping Jack')
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+                                Jumpingjack(bluetoothServices: bluetoothServices, cameras: cameras)), (route) => false);
+                          else if(name == 'Squat')
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+                                Squat(bluetoothServices: bluetoothServices, cameras: cameras, title: 'MOVE! - Squat Rive',)), (route) => false);
                         });
                       },
                       child: Image.asset('restart.png', width: MediaQuery.of(context).size.width*0.43,),
