@@ -103,6 +103,7 @@ class _JumpingjackState extends State<Jumpingjack> {
                   Column(
                     children: [
                       // timer
+                      Image.asset('time.png', width: 70,),
                     ],
                   ),
                   SizedBox(width: 10,),
@@ -156,7 +157,7 @@ class _JumpingjackState extends State<Jumpingjack> {
             SchedulerBinding.instance!.addPostFrameCallback((_) {
               // Navigator.pop(context);
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                  FinishExercise(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras,)), (route) => false);
+                  FinishExercise(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras, name: 'Jumping Jack',)), (route) => false);
             });
             // Navigator.pop(context);
             // Navigator.push(context, MaterialPageRoute(builder: (context) =>

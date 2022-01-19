@@ -3,19 +3,24 @@ import 'dart:math';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/reabilitation/camera.dart';
 import 'package:move/theme/font.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:tflite/tflite.dart';
 
+import 'finish_exercise.dart';
+
 /// An example showing how to drive a StateMachine via a trigger and number
 /// input.
 class Squat extends StatefulWidget {
-  final List<CameraDescription> cameras;
+  final List<BluetoothService>? bluetoothServices;
+  final List<CameraDescription>? cameras;
   final String title;
 
-  Squat({required this.cameras, required this.title});
+  Squat({required this.cameras, this.bluetoothServices, required this.title});
 
   @override
   _SquatState createState() => _SquatState();
@@ -64,6 +69,8 @@ class _SquatState extends State<Squat> {
             previewW: min(_imageHeight, _imageWidth),
             screenH: screen.height,
             screenW: screen.width,
+            bluetoothServices: widget.bluetoothServices,
+            cameras: widget.cameras,
           ),
           Positioned(
             child: Column(
@@ -88,7 +95,7 @@ class _SquatState extends State<Squat> {
               width: MediaQuery.of(context).size.width * 0.25,
               height: MediaQuery.of(context).size.height * 0.25,
               child: Camera(
-                cameras: widget.cameras,
+                cameras: widget.cameras!,
                 setRecognitions: _setRecognitions,
               ),
             ),
@@ -105,6 +112,8 @@ class SquatData extends StatefulWidget {
   final int previewW;
   final double screenH;
   final double screenW;
+  final List<BluetoothService>? bluetoothServices;
+  final List<CameraDescription>? cameras;
 
   SquatData({
     required this.data,
@@ -112,6 +121,8 @@ class SquatData extends StatefulWidget {
     required this.previewW,
     required this.screenH,
     required this.screenW,
+    this.bluetoothServices,
+    this.cameras
   });
 
   @override
@@ -200,7 +211,16 @@ class _SquatDataState extends State<SquatData> {
 
   void incrementCounter() {
     setState(() {
-      if (_counter != null) _counter = _counter! + 1;
+      if (_counter != null) {
+        _counter = _counter! + 1;
+
+        if(_counter == 3) {
+          SchedulerBinding.instance!.addPostFrameCallback((_) {
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+                FinishExercise(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras, name: 'Squat',)), (route) => false);
+          });
+        }
+      }
     });
   }
 
@@ -411,6 +431,7 @@ class _SquatDataState extends State<SquatData> {
                 children: [
                   Column(
                     children: [
+                      Image.asset('time.png', width: 70,),
                       // Container(
                       //     decoration: BoxDecoration(
                       //         color: Color(0xff290055),
@@ -442,7 +463,7 @@ class _SquatDataState extends State<SquatData> {
                     ],
                   ),
                   SizedBox(width: 10,),
-                  whiteRusso('/ 5', 30, false)
+                  whiteRusso('/ 3', 30, false)
                 ],
               ),
             ),
@@ -455,21 +476,28 @@ class _SquatDataState extends State<SquatData> {
             Align(
               alignment: Alignment.bottomRight,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
                 child: Container(
-                  height: 80,
-                  width: 80,
-                  child: FittedBox(
-                    child: FloatingActionButton(
-                      backgroundColor: getCounterColor(),
-                      onPressed: resetCounter,
-                      child: Text(
-                        '${_counter.toString()}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                        child: whiteNoto(isCorrectPosture! ? '준비완료!' : '몸을 카메라에 맞게 다시', 14, true),
                       ),
-                    ),
-                  ),
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 5,
+                            color: Colors.white.withOpacity(0.5)
+                          ),
+                          borderRadius: BorderRadius.circular(78),
+                          color: getCounterColor()
+                        ),
+                      )
+                    ],
+                  )
                 ),
               ),
             ),
