@@ -4,7 +4,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:move/reabilitation/camera.dart';
 import 'package:move/theme/font.dart';
 import 'package:rive/rive.dart' as rive;
@@ -412,41 +411,37 @@ class _SquatDataState extends State<SquatData> {
                 children: [
                   Column(
                     children: [
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Color(0xff290055),
-                              borderRadius: BorderRadius.circular(8)
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                whiteNoto('진행시간', 12, true),
-                              ],
-                            ),
-                          )
-                      )
+                      // Container(
+                      //     decoration: BoxDecoration(
+                      //         color: Color(0xff290055),
+                      //         borderRadius: BorderRadius.circular(8)
+                      //     ),
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.all(8.0),
+                      //       child: Column(
+                      //         children: [
+                      //           whiteNoto('진행시간', 12, true),
+                      //         ],
+                      //       ),
+                      //     )
+                      // )
                     ],
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 10,),
                   Stack(
                     children: [
                       Container(
+                        width: 150,
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage('score.png')
                           )
                         ),
-                      ),
-                      Image.asset('score.png'),
-                      Positioned(
-                        left: 50,
-                        top: 30,
-                        child: navyRusso('${_counter.toString()}', 60, true)
+                        child: Center(child: navyRusso('${_counter.toString()}', 60, true)),
                       ),
                     ],
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(width: 10,),
                   whiteRusso('/ 20', 30, false)
                 ],
               ),

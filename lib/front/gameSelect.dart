@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -10,7 +11,8 @@ import '../game/fishing.dart';
 
 class GameSelect extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
-  GameSelect({this.bluetoothServices});
+  final List<CameraDescription>? cameras;
+  GameSelect({this.bluetoothServices, this.cameras});
 
   @override
   _GameSelectState createState() => _GameSelectState();
