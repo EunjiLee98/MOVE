@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:move/coral/dumbbellRive_1pwin.dart';
+import 'package:move/coral/dumbbellRive_2pwin.dart';
 import 'package:move/theme/font.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:flutter/services.dart';
@@ -213,7 +214,7 @@ class _DumbbellState extends State<Dumbbell> {
   void incrementCounter1() {
     setState(() {
       _counter1 = _counter1 + 1;
-      if (_counter1 == 1)
+      if (_counter1 == 10)
         {
           SchedulerBinding.instance!.addPostFrameCallback((_) {
             Navigator.push(context, MaterialPageRoute(builder: (context) => DumbbellRive_1pwin(score_1p: _counter1, score_2p : _counter2)));
@@ -229,7 +230,7 @@ class _DumbbellState extends State<Dumbbell> {
       if (_counter2 == 10)
       {
         SchedulerBinding.instance!.addPostFrameCallback((_) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => DumbbellRive_1pwin(score_1p: _counter1, score_2p : _counter2)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => DumbbellRive_2pwin(score_1p: _counter1, score_2p : _counter2)));
         });
       }
     });

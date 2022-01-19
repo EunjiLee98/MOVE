@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
 
 class DumbbellRive_1pwin extends StatefulWidget {
 
@@ -48,16 +49,18 @@ class _DumbbellRive_1pwinState extends State<DumbbellRive_1pwin> {
             child: Column(
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height/3,),
-
-                SizedBox(height: 10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(
                       children: [
-                        Text(widget.score_1p.toString(), style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),),
+                        Padding(
+                          padding:  const EdgeInsets.only(left: 100),
+                          child: Text(widget.score_1p.toString(), style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),),
+                        ),
+                        SizedBox(height: 20,),
                         TextButton(
-                          child: Image.asset('dumbbellRive_home.png', width: MediaQuery.of(context).size.width/3,),
+                          child: Image.asset('dumbbellRive_home.png', width: MediaQuery.of(context).size.width/4,),
                           onPressed: () {
                             // SchedulerBinding.instance!.addPostFrameCallback((_) {
                             //   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
@@ -71,13 +74,20 @@ class _DumbbellRive_1pwinState extends State<DumbbellRive_1pwin> {
                     ),
                     Column(
                       children: [
-                        Text(widget.score_2p.toString(), style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 150),
+                          child: Text(widget.score_2p.toString(), style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),),
+                        ),
+                        SizedBox(height: 20,),
                         TextButton(
-                          child: Image.asset('dumbbellRive_restart.png', width: MediaQuery.of(context).size.width/3,),
+                          child: Image.asset('dumbbellRive_restart.png', width: MediaQuery.of(context).size.width/4,),
                           onPressed: () {
-                            SchedulerBinding.instance!.addPostFrameCallback((_) {
-                              Navigator.pop(context);
-                            });
+                            // SchedulerBinding.instance!.addPostFrameCallback((_) {
+                            //   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                            //       builder: (BuildContext context) =>
+                            //           );
+                            //   // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
+                            // });
                           },
                         ),
                       ],
