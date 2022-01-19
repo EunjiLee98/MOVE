@@ -2,12 +2,15 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:move/coral/dumbbellRive_2pwin.dart';
+import 'package:move/coral/webSocket.dart';
 import 'package:move/front/bluetooth.dart';
 import 'package:flutter/services.dart';
 import 'package:move/game/trex/trex_tutorial.dart';
 import 'package:move/theme/font.dart';
 import '../game/boxing.dart';
 import '../game/fishing.dart';
+import 'package:move/coral/dumbbellRive_1pwin.dart';
 
 class GameSelect extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
@@ -38,10 +41,6 @@ class _GameSelectState extends State<GameSelect> {
         title: whiteRusso('Game', 25, false),
         centerTitle: true,
         elevation: 0.0,
-        // leading: BackButton(
-        //   color: Colors.white,
-        //   onPressed: () {Navigator.pop(context);},
-        // ),
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
       ),
@@ -105,6 +104,17 @@ class _GameSelectState extends State<GameSelect> {
                         .width * 0.9,),
                   ),
                   // SizedBox(height: 5,),
+                  TextButton(
+                    onPressed: () {
+                      SchedulerBinding.instance!.addPostFrameCallback((_) {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => WebSocket()));
+                      });
+                    },
+                    child: Image.asset('dumbbellRiveButton.png', width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.8,),
+                  ),
                   TextButton(
                     onPressed: () {
                       if(widget.bluetoothServices != null)

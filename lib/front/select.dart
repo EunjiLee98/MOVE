@@ -17,6 +17,22 @@ class Select extends StatefulWidget {
 
 class _SelectState extends State<Select> {
   @override
+  void initState() {
+    super.initState();
+   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);//screen vertically
+  }
+
+  @override
+  void dispose(){
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -59,17 +75,6 @@ class _SelectState extends State<Select> {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => GameSelect(bluetoothServices: widget.bluetoothServices)));
                   },
                   child: Image.asset('gameButton.png', width: MediaQuery.of(context).size.width*0.7,),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Flexible(
-                child: TextButton(
-                    onPressed: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => Dance(bluetoothServices: widget.bluetoothServices)));
-                    },
-                    child: Image.asset('danceButton.png', width: MediaQuery.of(context).size.width*0.7,)
                 ),
               ),
               SizedBox(

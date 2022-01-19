@@ -111,7 +111,7 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                               TextButton(
                                 onPressed: () {
                                   if(widget.bluetoothServices != null)
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Jumpingjack(bluetoothServices: widget.bluetoothServices)));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Jumpingjack(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras,)));
                                   if (widget.bluetoothServices == null)
                                     SchedulerBinding.instance!.addPostFrameCallback((_) {
                                       Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
