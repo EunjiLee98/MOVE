@@ -28,6 +28,7 @@ class WebSocket extends StatelessWidget {
     final title = 'Dumbbell using Coral';
     return MaterialApp(
       title: title,
+      debugShowCheckedModeBanner: false,
       home: WebSocketPage(
         title: title,
         channel: IOWebSocketChannel.connect('ws://192.168.0.13:9998'),
@@ -56,9 +57,9 @@ class _WebSocketPageState extends State<WebSocketPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      // appBar: AppBar(
+      //   title: Text(widget.title),
+      // ),
       body: Stack(
         children: <Widget>[
           StreamBuilder(

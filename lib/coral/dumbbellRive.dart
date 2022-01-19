@@ -23,8 +23,7 @@ class Vector {
 }
 
 class _DumbbellState extends State<Dumbbell> {
-  double?
-      leftShoulderX,
+  double? leftShoulderX,
       leftShoulderY,
       rightShoulderX,
       rightShoulderY,
@@ -52,12 +51,21 @@ class _DumbbellState extends State<Dumbbell> {
   List<dynamic>? dynamicList;
   List? dataList;
   Map<String, List<double>>? inputArr;
-  int _counter = 0;
+  int _counter1 = 0;
+  int _counter2 = 0;
   double? lowerRange, upperRange;
   bool? midCount, isCorrectPosture;
   double leftStart = 0;
 
   bool get isPlaying => _controller?.isActive ?? false;
+
+  bool get isPlaying1 => _controller1?.isActive ?? false;
+
+  bool? flag;
+
+  rive.Artboard? _riveArtboard1;
+  rive.StateMachineController? _controller1;
+  rive.SMIInput<double>? _progress1;
 
   rive.Artboard? _riveArtboard;
   rive.StateMachineController? _controller;
@@ -67,17 +75,18 @@ class _DumbbellState extends State<Dumbbell> {
   void initState() {
     super.initState();
     resetCounter();
-    //SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+   SystemChrome.setPreferredOrientations(
+       [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     rootBundle.load('assets/rive/move_dumbbell.riv').then(
-          (data) async {
+      (data) async {
         // Load the RiveFile from the binary data.
         final file = rive.RiveFile.import(data);
 
         // The artboard is the root of the animation and gets drawn in the
         // Rive widget.
-        final artboard = file.mainArtboard;
+        final artboard = file.artboardByName('Dumbbell');
         var controller = rive.StateMachineController.fromArtboard(
-            artboard, 'Dumbbell_Controller');
+            artboard!, 'Dumbbell_Controller');
         if (controller != null) {
           artboard.addController(controller);
           _progress = controller.findInput('Progress');
@@ -85,8 +94,36 @@ class _DumbbellState extends State<Dumbbell> {
         setState(() => _riveArtboard = artboard);
       },
     );
+
+    rootBundle.load('assets/rive/move_dumbbell.riv').then(
+      (data) async {
+        // Load the RiveFile from the binary data.
+        final file1 = rive.RiveFile.import(data);
+
+        // The artboard is the root of the animation and gets drawn in the
+        // Rive widget.
+        final artboard1 = file1.artboardByName('Dumbbell2');
+        var controller1 = rive.StateMachineController.fromArtboard(
+            artboard1!, 'Dumbbell_Controller');
+        if (controller1 != null) {
+          artboard1.addController(controller1);
+          _progress1 = controller1.findInput('Progress');
+        }
+        setState(() => _riveArtboard1 = artboard1);
+      },
+    );
   }
 
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
+  }
 
   List makeList(String data) {
     List temp;
@@ -105,19 +142,23 @@ class _DumbbellState extends State<Dumbbell> {
     lowerRange = 500;
   }
 
-
-  void _countingLogic(double left_y){
+  void _countingLogic1(double left_y) {
     if (left_y > leftStart) {
       setState(() {
         leftStart = left_y;
 
         if (_progress!.value != 100) {
-          _progress!.value = (250 - leftStart) * 0.6;
+          _progress!.value = (250 * 9 / 16 - leftStart) * 0.6;
           print("progress value : " + _progress!.value.toString());
         }
 
-        if (_progress!.value > 90) {
-          incrementCounter();
+        if (_progress!.value > 80 * 9 / 16) {
+          flag = true;
+        }
+
+        if (_progress!.value < 60 * 9 / 16 && flag == true) {
+          incrementCounter1();
+          flag = false;
         }
       });
     }
@@ -125,25 +166,60 @@ class _DumbbellState extends State<Dumbbell> {
     if (left_y < leftStart) {
       setState(() {
         leftStart = left_y;
-        _progress!.value = (250 - leftStart) * 0.6;
+        _progress!.value = (250 * 9 / 16 - leftStart) * 0.6;
         print("progress value : " + _progress!.value.toString());
       });
     }
+  }
 
+  void _countingLogic2(double left_y) {
+    if (left_y > leftStart) {
+      setState(() {
+        leftStart = left_y;
+
+        if (_progress1!.value != 100) {
+          _progress1!.value = (250 * 9 / 16 - leftStart) * 0.6;
+          print("progress1 value : " + _progress1!.value.toString());
+        }
+
+        if (_progress1!.value > 80 * 9 / 16) {
+          flag = true;
+        }
+
+        if (_progress1!.value < 60 * 9 / 16 && flag == true) {
+          incrementCounter2();
+          flag = false;
+        }
+      });
+    }
+
+    if (left_y < leftStart) {
+      setState(() {
+        leftStart = left_y;
+        _progress1!.value = (250 * 9 / 16 - leftStart) * 0.6;
+        print("progress value : " + _progress1!.value.toString());
+      });
+    }
   }
 
   void resetCounter() {
     setState(() {
-      _counter = 0;
+      _counter1 = 0;
+      _counter2 = 0;
     });
   }
 
-  void incrementCounter() {
+  void incrementCounter1() {
     setState(() {
-      _counter = _counter + 1;
+      _counter1 = _counter1 + 1;
     });
   }
 
+  void incrementCounter2() {
+    setState(() {
+      _counter2 = _counter2 + 1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,10 +227,14 @@ class _DumbbellState extends State<Dumbbell> {
     String key = "";
     double x = 0;
     double y = 0;
-    double left_x = 0;
-    double left_y = 0;
-    double right_x = 0;
-    double right_y = 0;
+    double left_x1 = 0;
+    double left_y1 = 0;
+    double right_x1 = 0;
+    double right_y1 = 0;
+    double left_x2 = 0;
+    double left_y2 = 0;
+    double right_x2 = 0;
+    double right_y2 = 0;
     var dictionary = new SplayTreeMap();
     var element1 = new SplayTreeMap();
 
@@ -176,15 +256,26 @@ class _DumbbellState extends State<Dumbbell> {
             var temp = 320 - x;
             x = 320 + temp;
           }
-          if (key == '9') {
-            left_x = x;
-            left_y = y;
-          } else if (key == '10') {
-            right_x = x;
-            right_y = y;
+          if (key == '9' && x <= (MediaQuery.of(context).size.width / 4)) {
+            left_x1 = x;
+            left_y1 = y;
+          } else if (key == '10' &&
+              x <= (MediaQuery.of(context).size.width / 4)) {
+            right_x1 = x;
+            right_y1 = y;
+          } else if (key == '9' &&
+              x > (MediaQuery.of(context).size.width / 4)) {
+            left_x2 = x;
+            left_y2 = y;
+          } else if (key == '10' &&
+              x > (MediaQuery.of(context).size.width / 4)) {
+            right_x2 = x;
+            right_y2 = y;
           }
           print(
-              "left_x : $left_x left_y : $left_y right_x : $right_x right_y : $right_y");
+              "left_x1 : $left_x1 left_y1 : $left_y1 right_x1 : $right_x1 right_y1 : $right_y1");
+          print(
+              "left_x2 : $left_x2 left_y2 : $left_y2 right_x2 : $right_x2 right_y2 : $right_y2");
 
           dictionary.addAll({
             key: {"x": x, "y": y}
@@ -195,7 +286,6 @@ class _DumbbellState extends State<Dumbbell> {
     print('dictionary: $dictionary');
 
     List<Widget> lists = <Widget>[];
-    // Widget ? list;
     List<Widget> _renderKeypoints() {
       dictionary.forEach((key, value) {
         var _x = value["x"];
@@ -217,67 +307,121 @@ class _DumbbellState extends State<Dumbbell> {
         );
         lists.add(list);
       });
-      _countingLogic(left_y);
+      _countingLogic1(left_y1);
+      _countingLogic2(left_y2);
 
       return lists;
     }
 
-    return Stack(
-      children: <Widget>[
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [const Color(0xff37384E), const Color(0xff53304C)],
-            ),
-          ),
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            children: [
-              Expanded(
-                child: rive.Rive(
-                  artboard: _riveArtboard!,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
+    return Scaffold(
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('dumbbellRive_bg.png'), fit: BoxFit.fill)),
+        child: Stack(
           children: <Widget>[
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  child: FittedBox(
-                    child: FloatingActionButton(
-                      //backgroundColor: getCounterColor(),
-                      onPressed: resetCounter,
-                      child: Text(
-                        '$_counter',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
+            Container(
+              alignment: Alignment.bottomCenter,
+              //height: MediaQuery.of(context).size.height,
+              child: Row(
+                children: [
+                  //Player 1
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Stack(
+                          children: [
+                            Container(
+                              height: 100,
+                              width: double.infinity,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                image: AssetImage('dumbbellRive_count.png'),
+                              )),
+                            ),
+                            //backgroundColor: getCounterColor(),
+                            Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.only(top: 38),
+                              child: Text(
+                                '${_counter1.toString()}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 20),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: rive.Rive(
+                            artboard: _riveArtboard!,
+                          ),
+                        ),
+                        Container(
+                          child: SizedBox(
+                              height: 50,
+                              width: 50,
+                              child: Image.asset('dumbbellRive_1p.png')),
+                        ),
+                      ],
                     ),
                   ),
-                ),
+                  //Player 2
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Stack(
+                          children: [
+                            Container(
+                              height: 100,
+                              width: double.infinity,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                image: AssetImage('dumbbellRive_count.png'),
+                              )),
+                            ),
+                            //backgroundColor: getCounterColor(),
+                            Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.only(top: 38),
+                              child: Text(
+                                '${_counter2.toString()}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 20),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: rive.Rive(
+                            artboard: _riveArtboard1!,
+                          ),
+                        ),
+                        Container(
+                          child: SizedBox(
+                              height: 50,
+                              width: 50,
+                              child: Image.asset('dumbbellRive_2p.png')),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
+            Stack(
+              children: _renderKeypoints(),
+            )
           ],
         ),
-        Stack(
-          children: _renderKeypoints(),
-        )
-      ],
+      ),
     );
   }
 }
