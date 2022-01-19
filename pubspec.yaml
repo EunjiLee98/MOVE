@@ -191,6 +191,8 @@ flutter:
     - dumbbellRive_count.png
     - dumbbellRive_timer.png
     - dumbbellRive_bg.png
+    - dumbbellRive_vs.png
+    - dumbbellRive_line.png
 
 
   # To add assets to your application, add an assets section, like this:

@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:move/theme/font.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:flutter/services.dart';
 
@@ -75,8 +76,8 @@ class _DumbbellState extends State<Dumbbell> {
   void initState() {
     super.initState();
     resetCounter();
-   SystemChrome.setPreferredOrientations(
-       [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     rootBundle.load('assets/rive/move_dumbbell.riv').then(
       (data) async {
         // Load the RiveFile from the binary data.
@@ -346,13 +347,8 @@ class _DumbbellState extends State<Dumbbell> {
                             Container(
                               alignment: Alignment.center,
                               padding: EdgeInsets.only(top: 38),
-                              child: Text(
-                                '${_counter1.toString()}',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 20),
-                              ),
+                              child: navyRusso(
+                                  '${_counter1.toString()}', 20, true),
                             ),
                           ],
                         ),
@@ -368,6 +364,18 @@ class _DumbbellState extends State<Dumbbell> {
                               child: Image.asset('dumbbellRive_1p.png')),
                         ),
                       ],
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('dumbbellRive_line.png'),
+                            fit: BoxFit.fill)),
+                    child: SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: Image.asset('dumbbellRive_vs.png'),
                     ),
                   ),
                   //Player 2
@@ -389,13 +397,8 @@ class _DumbbellState extends State<Dumbbell> {
                             Container(
                               alignment: Alignment.center,
                               padding: EdgeInsets.only(top: 38),
-                              child: Text(
-                                '${_counter2.toString()}',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 20),
-                              ),
+                              child: navyRusso(
+                                  '${_counter1.toString()}', 20, true),
                             ),
                           ],
                         ),
@@ -406,9 +409,10 @@ class _DumbbellState extends State<Dumbbell> {
                         ),
                         Container(
                           child: SizedBox(
-                              height: 50,
-                              width: 50,
-                              child: Image.asset('dumbbellRive_2p.png')),
+                            height: 50,
+                            width: 50,
+                            child: Image.asset('dumbbellRive_2p.png'),
+                          ),
                         ),
                       ],
                     ),
