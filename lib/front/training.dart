@@ -114,8 +114,6 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => Jumpingjack(bluetoothServices: widget.bluetoothServices)));
                                   if (widget.bluetoothServices == null)
                                     SchedulerBinding.instance!.addPostFrameCallback((_) {
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
                                       Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
                                     });
                                 },
@@ -127,8 +125,6 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => Crossjack(bluetoothServices: widget.bluetoothServices)));
                                   if (widget.bluetoothServices == null)
                                     SchedulerBinding.instance!.addPostFrameCallback((_) {
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
                                       Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
                                     });
                                 },

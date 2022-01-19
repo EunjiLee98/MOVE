@@ -175,7 +175,6 @@ class _HomeState extends State<Homepage> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]); //screen vertically
     showRanking = false;
 
     FirebaseFirestore.instance
