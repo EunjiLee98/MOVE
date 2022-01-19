@@ -149,10 +149,10 @@ flutter:
     - warriorButton.png
     - bowButton.png
     - assets/rive/squat_test.riv
+    - assets/rive/move_boxing.riv
     - assets/rive/move_squat.riv
     - assets/rive/move_jumpingjack.riv
     - assets/rive/move_dumbbell.riv
-    - assets/rive/move_boxing.riv
     - assets/rive/jumpingjack_short.riv
     - assets/rive/boxing.riv
     - assets/rive/home.riv

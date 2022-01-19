@@ -9,9 +9,11 @@ import 'package:just_audio/just_audio.dart';
 import 'dart:math';
 
 import 'package:move/front/home.dart';
+import 'package:rive/rive.dart';
 
 class BoxingStart extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
+
   BoxingStart({this.bluetoothServices});
 
   @override
@@ -20,64 +22,100 @@ class BoxingStart extends StatefulWidget {
 
 class _BoxingStartState extends State<BoxingStart> {
   final Map<Guid, List<int>> readValues = new Map<Guid, List<int>>();
-  final Stream<int> stream = Stream.periodic(Duration(milliseconds: 1500),  (int x) => x);
+  final Stream<int> stream =
+      Stream.periodic(Duration(milliseconds: 1500), (int x) => x);
   var timeRan = Random().nextInt(1500) + 900;
 
   String gesture = "";
+
   // ignore: non_constant_identifier_names
   String ran_gesture = "";
+
   // ignore: non_constant_identifier_names
   int gesture_num = 0;
 
-
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
-
 
   ListView _buildConnectDeviceView() {
     return ListView(
       padding: const EdgeInsets.all(8),
       children: <Widget>[
         Container(
-            child:Column(
+            child: Column(
+          children: [
+            SizedBox(
+              height: 30,
+            ),
+            Center(
+                child: Column(
               children: [
-                SizedBox(height: 30,),
-                Center(
-                    child:Column(
-                      children: [
-                        Row(children: [
-                          IconButton(onPressed:(){Navigator.pop(context);}, icon: Icon(Icons.arrow_back,color: Colors.white,))
-                        ],),
-                        SizedBox(height: 60,),
-                        Image.asset('snap.png',height: 200,),
-                        //Text("값:" + gesture_num.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                        SizedBox(height: 30,),
-                        Text("Please attach the chip",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.white),),
-                        Text("to your wrist",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.white),),
-                        Row(
-                          children: [
-                            SizedBox(width: 70,),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                primary: Colors.black,
-                                // foreground
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Boxing(bluetoothServices: widget.bluetoothServices)));
-                              },
-                              child: Image.asset('ok.png'),
-                            ),
-                          ],
-                        )
-                      ],
-                    )
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ))
+                  ],
                 ),
+                SizedBox(
+                  height: 60,
+                ),
+                Image.asset(
+                  'snap.png',
+                  height: 200,
+                ),
+                //Text("값:" + gesture_num.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  "Please attach the chip",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white),
+                ),
+                Text(
+                  "to your wrist",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white),
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 70,
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        primary: Colors.black,
+                        // foreground
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Boxing(
+                                    bluetoothServices:
+                                        widget.bluetoothServices)));
+                      },
+                      child: Image.asset('ok.png'),
+                    ),
+                  ],
+                )
               ],
-            )
-        ),
+            )),
+          ],
+        )),
       ],
     );
   }
@@ -89,12 +127,8 @@ class _BoxingStartState extends State<BoxingStart> {
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('boxing_back.png'),
-                  fit: BoxFit.fill
-              )
-          ),
-          child: _buildConnectDeviceView()
-      ),
+                  image: AssetImage('boxing_back.png'), fit: BoxFit.fill)),
+          child: _buildConnectDeviceView()),
     );
   }
 }
@@ -110,14 +144,18 @@ class Boxing extends StatefulWidget {
 
 class _BoxingState extends State<Boxing> {
   final Map<Guid, List<int>> readValues = new Map<Guid, List<int>>();
-  final Stream<int> stream = Stream.periodic(Duration(milliseconds: 1500),  (int x) => x);
-  final Stream<int> stream2 = Stream.periodic(Duration(milliseconds: 1500),  (int x) => x);
+  final Stream<int> stream =
+      Stream.periodic(Duration(milliseconds: 1500), (int x) => x);
+  final Stream<int> stream2 =
+      Stream.periodic(Duration(milliseconds: 1500), (int x) => x);
 
   List<String> random = ['Punch', 'Uppercut'];
   List<String> image = ['punch.png', 'uppercut.png'];
   String gesture = "";
+
   // ignore: non_constant_identifier_names
   String ran_gesture = "";
+
   // ignore: non_constant_identifier_names
   int gesture_num = 0;
   int count = -1;
@@ -140,14 +178,25 @@ class _BoxingState extends State<Boxing> {
     bgmSound.play();
   }
 
+  // Rive animataion
+  late RiveAnimationController _controller;
+  // late RiveAnimationController _controller2;
+  // late RiveAnimationController _controller3;
+  // late RiveAnimationController finish_controller;
+
   @override
   void initState() {
     super.initState();
     startBGM();
+    _controller = OneShotAnimation(
+      '1',
+      autoplay: false,
+    );
+    _controller.isActive = false;
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
     punchSound.dispose();
     bgmSound.dispose();
@@ -156,7 +205,6 @@ class _BoxingState extends State<Boxing> {
 
   ListView _buildConnectDeviceView() {
     for (BluetoothService service in widget.bluetoothServices!) {
-
       for (BluetoothCharacteristic characteristic in service.characteristics) {
         if (characteristic.properties.notify) {
           characteristic.value.listen((value) {
@@ -164,7 +212,8 @@ class _BoxingState extends State<Boxing> {
           });
           characteristic.setNotifyValue(true);
         }
-        if (characteristic.properties.read && characteristic.properties.notify) {
+        if (characteristic.properties.read &&
+            characteristic.properties.notify) {
           setnum(characteristic);
         }
       }
@@ -188,16 +237,18 @@ class _BoxingState extends State<Boxing> {
     });
     count++;
 
-    if(ran_gesture == 'Punch') {
-      if(gesture_num == 2 || gesture_num == 1) {
+    if (ran_gesture == 'Punch') {
+      if (gesture_num == 2 || gesture_num == 1) {
         gesture_num = 0;
         correct += 1;
         jar++;
         lottieCorrect = true;
+        _controller.isActive = true;
         playPunch();
+
       }
-    }else if(ran_gesture == 'Uppercut') {
-      if(gesture_num == 4) {
+    } else if (ran_gesture == 'Uppercut') {
+      if (gesture_num == 4) {
         gesture_num = 0;
         correct += 1;
         jar++;
@@ -207,12 +258,15 @@ class _BoxingState extends State<Boxing> {
     }
     lottieCorrect = false;
 
-    if(jar == 15) {
+    if (jar == 15) {
       SchedulerBinding.instance!.addPostFrameCallback((_) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => BoxingClear(
-          bluetoothServices: widget.bluetoothServices,
-          score: (correct / count) * 100,
-        )));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => BoxingClear(
+                      bluetoothServices: widget.bluetoothServices,
+                      score: (correct / count) * 100,
+                    )));
       });
     }
 
@@ -224,106 +278,116 @@ class _BoxingState extends State<Boxing> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('boxing_back.png'),
-                  fit: BoxFit.fill
-              )
-          ),
-          child: Column(
+      height: MediaQuery.of(context).size.height,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('boxing_back.png'), fit: BoxFit.fill)),
+      child: Column(
+        children: [
+          Row(
             children: [
-              Row(children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back), color: Colors.white,)
-              ],),
-              Container(
-                  height: 1,
-                  child: _buildConnectDeviceView()
-              ),
-              SizedBox(height: 40),
-              FutureBuilder(
-                future: Future.delayed(Duration(milliseconds: Random().nextInt(800) + 500)),
-                builder: (c, s) {
-                  if(s.connectionState == ConnectionState.done) {
-                    var ran = Random().nextInt(2);
-                    ran_gesture = random[ran];
-                    return Image.asset(image[ran]);
-                  }
-                  return Container(
-                    height: MediaQuery.of(context).size.height*0.193,
-                  );
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
                 },
-              ),
-              SizedBox(height: 20),
-              Container(
-                width: MediaQuery.of(context).size.width*0.45,
-                height: MediaQuery.of(context).size.height*0.3 + 4,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(10) // POINT
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.transparent
-                      ),
-                      height: MediaQuery.of(context).size.height*0.3 / 15 * (15-jar),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [const Color(0xffEA592B), const Color(0xffF6EA13)],
-                        ),
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(10) // POINT
-                        ),
-                      ),
-                      height: MediaQuery.of(context).size.height*0.3 / 15 * jar,
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                height: 200,
-                width: MediaQuery.of(context).size.width,
-                child:
-                StreamBuilder<int>(
-                    stream: stream2,
-                    builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-                      if(ran_gesture == 'Punch')
-                        return Align(
-                            alignment: FractionalOffset(0.8, 1.0),
-                            child: Image.asset('dino_n.png', width: MediaQuery.of(context).size.width/2.8,)
-                        );
-                      return Align(
-                        alignment: FractionalOffset(0.8, 1.0),
-                        child: Transform.rotate(
-                          angle: 0.5,
-                          child: Image.asset('dino_j.png', width: MediaQuery.of(context).size.width/2.8,),
-                        ),
-                      );
-                    }
-                ),
-              ),
+                icon: Icon(Icons.arrow_back),
+                color: Colors.white,
+              )
             ],
           ),
-        )
-    );
+          Container(height: 1, child: _buildConnectDeviceView()),
+          SizedBox(height: 40),
+          FutureBuilder(
+            future: Future.delayed(
+                Duration(milliseconds: Random().nextInt(800) + 500)),
+            builder: (c, s) {
+              if (s.connectionState == ConnectionState.done) {
+                var ran = Random().nextInt(2);
+                ran_gesture = random[ran];
+                return Image.asset(image[ran]);
+              }
+              return Container(
+                height: MediaQuery.of(context).size.height * 0.193,
+              );
+            },
+          ),
+          SizedBox(height: 20),
+          // Boxing Progress Rectangle
+          Container(
+              width: MediaQuery.of(context).size.width * 0.45,
+              height: MediaQuery.of(context).size.height * 0.3 + 4,
+              child: RiveAnimation.asset(
+                'assets/rive/move_boxing.riv',
+                animations: const ['Idle'],
+                controllers: [_controller],
+              )),
+          // Container(
+          //   width: MediaQuery.of(context).size.width*0.45,
+          //   height: MediaQuery.of(context).size.height*0.3 + 4,
+          //   decoration: BoxDecoration(
+          //     border: Border.all(
+          //       color: Colors.white,
+          //       width: 2,
+          //     ),
+          //     borderRadius: BorderRadius.all(
+          //         Radius.circular(10) // POINT
+          //     ),
+          //   ),
+          //   child: Column(
+          //     children: [
+          //       Container(
+          //         decoration: BoxDecoration(
+          //             color: Colors.transparent
+          //         ),
+          //         height: MediaQuery.of(context).size.height*0.3 / 15 * (15-jar),
+          //       ),
+          //       Container(
+          //         decoration: BoxDecoration(
+          //           gradient: LinearGradient(
+          //             begin: Alignment.topCenter,
+          //             end: Alignment.bottomCenter,
+          //             colors: [const Color(0xffEA592B), const Color(0xffF6EA13)],
+          //           ),
+          //           borderRadius: BorderRadius.all(
+          //               Radius.circular(10) // POINT
+          //           ),
+          //         ),
+          //         height: MediaQuery.of(context).size.height*0.3 / 15 * jar,
+          //       )
+          //     ],
+          //   ),
+          // ),
+
+          Container(
+            height: 200,
+            width: MediaQuery.of(context).size.width,
+            child: StreamBuilder<int>(
+                stream: stream2,
+                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                  if (ran_gesture == 'Punch')
+                    return Align(
+                        alignment: FractionalOffset(0.8, 1.0),
+                        child: Image.asset(
+                          'dino_n.png',
+                          width: MediaQuery.of(context).size.width / 2.8,
+                        ));
+                  return Align(
+                    alignment: FractionalOffset(0.8, 1.0),
+                    child: Transform.rotate(
+                      angle: 0.5,
+                      child: Image.asset(
+                        'dino_j.png',
+                        width: MediaQuery.of(context).size.width / 2.8,
+                      ),
+                    ),
+                  );
+                }),
+          ),
+        ],
+      ),
+    ));
   }
 }
-
 
 class BoxingClear extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
@@ -339,8 +403,10 @@ class _BoxingClearState extends State<BoxingClear> {
   final Map<Guid, List<int>> readValues = new Map<Guid, List<int>>();
 
   String gesture = "";
+
   // ignore: non_constant_identifier_names
   String ran_gesture = "";
+
   // ignore: non_constant_identifier_names
   int gesture_num = 0;
   num dino = 0;
@@ -368,13 +434,13 @@ class _BoxingClearState extends State<BoxingClear> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
-  Future<void> addScore() async{
-    if(widget.score > boxing) {
-      avg = (dino + widget.score + jumpingJack + crossJack)/4;
+  Future<void> addScore() async {
+    if (widget.score > boxing) {
+      avg = (dino + widget.score + jumpingJack + crossJack) / 4;
 
       FirebaseFirestore.instance
           .collection('user')
@@ -396,12 +462,20 @@ class _BoxingClearState extends State<BoxingClear> {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white,),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             SchedulerBinding.instance!.addPostFrameCallback((_) {
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      Temp(bluetoothServices: widget.bluetoothServices, index: 0,)), (route) => false);
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Temp(
+                            bluetoothServices: widget.bluetoothServices,
+                            index: 0,
+                          )),
+                  (route) => false);
               // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
             });
           },
@@ -412,48 +486,72 @@ class _BoxingClearState extends State<BoxingClear> {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('boxing_clear.png'),
-                fit: BoxFit.fill
-            )
-        ),
+                image: AssetImage('boxing_clear.png'), fit: BoxFit.fill)),
         child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
             child: Column(
               children: [
-                SizedBox(height: MediaQuery.of(context).size.height/3,),
-                Text('Score: $score', style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 3,
+                ),
+                Text(
+                  'Score: $score',
+                  style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextButton(
-                      child: Image.asset('exit.png', width: MediaQuery.of(context).size.width/2.2,),
+                      child: Image.asset(
+                        'exit.png',
+                        width: MediaQuery.of(context).size.width / 2.2,
+                      ),
                       onPressed: () {
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           addScore();
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  Temp(bluetoothServices: widget.bluetoothServices, index: 0,)), (route) => false);
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => Temp(
+                                        bluetoothServices:
+                                            widget.bluetoothServices,
+                                        index: 0,
+                                      )),
+                              (route) => false);
                           // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
                         });
                       },
                     ),
                     TextButton(
-                      child: Image.asset('restart.png', width: MediaQuery.of(context).size.width/2.2,),
+                      child: Image.asset(
+                        'restart.png',
+                        width: MediaQuery.of(context).size.width / 2.2,
+                      ),
                       onPressed: () {
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           addScore();
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  BoxingStart(bluetoothServices: widget.bluetoothServices,)), (route) => false);
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      BoxingStart(
+                                        bluetoothServices:
+                                            widget.bluetoothServices,
+                                      )),
+                              (route) => false);
                         });
                       },
                     ),
                   ],
                 ),
               ],
-            )
-        ),
+            )),
       ),
     );
   }
