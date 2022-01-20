@@ -158,7 +158,7 @@ class _DumbbellState extends State<Dumbbell> {
           flag = true;
         }
 
-        if (_progress!.value < 60 * 9 / 16 && flag == true) {
+        if (_progress!.value < 70 * 9 / 16 && flag == true) {
           incrementCounter1();
           flag = false;
         }
@@ -188,7 +188,7 @@ class _DumbbellState extends State<Dumbbell> {
           flag = true;
         }
 
-        if (_progress1!.value < 60 * 9 / 16 && flag == true) {
+        if (_progress1!.value < 70 * 9 / 16 && flag == true) {
           incrementCounter2();
           flag = false;
         }
