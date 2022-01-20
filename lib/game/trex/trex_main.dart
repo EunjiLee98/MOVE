@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:move/front/bluetooth.dart';
@@ -14,11 +16,13 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/services.dart';
 
+
 import 'game.dart';
 
 class TRexGameWrapper extends StatefulWidget {
 
   final List<BluetoothService>? bluetoothServices;
+
   TRexGameWrapper({this.bluetoothServices});
 
   @override
@@ -177,10 +181,20 @@ class _TRexGameWrapperState extends State<TRexGameWrapper> {
           child: TextButton(
             onPressed: () {
               addScore();
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      Temp(bluetoothServices: widget.bluetoothServices, index: 0,)), (route) => false);
-            },
+              SchedulerBinding.instance!.addPostFrameCallback((_) {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => Temp(
+                          bluetoothServices: widget.bluetoothServices,
+                          index: 0,
+                        )),
+                        (route) => false);
+            //   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+            //       builder: (BuildContext context) =>
+            //           Temp(bluetoothServices: widget.bluetoothServices, index: 0,)), (route) => false);
+            // },
+              });},
             child: Image.asset('dino_Exit.png', height: 30,),
           ),
         ),
