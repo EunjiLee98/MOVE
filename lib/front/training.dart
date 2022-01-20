@@ -114,7 +114,7 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => Jumpingjack(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras,)));
                                   if (widget.bluetoothServices == null)
                                     SchedulerBinding.instance!.addPostFrameCallback((_) {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)));
                                     });
                                 },
                                 child: Image.asset('jumpingButton.png', width: MediaQuery.of(context).size.width*0.9,),
@@ -125,7 +125,7 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => Crossjack(bluetoothServices: widget.bluetoothServices)));
                                   if (widget.bluetoothServices == null)
                                     SchedulerBinding.instance!.addPostFrameCallback((_) {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)));
                                     });
                                 },
                                 child: Image.asset('crossButton.png', width: MediaQuery.of(context).size.width*0.9,),
