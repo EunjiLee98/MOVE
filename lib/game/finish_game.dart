@@ -197,7 +197,7 @@ class FinishGame extends StatelessWidget {
                         // Navigator.pop(context);
                         if(name == 'Boxing')
                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                              BoxingStart(bluetoothServices: bluetoothServices)), (route) => false);
+                              BoxingStart(bluetoothServices: bluetoothServices, cameras: cameras,)), (route) => false);
                       });
                     },
                     child: Image.asset('restart.png', width: MediaQuery.of(context).size.width*0.43,),
