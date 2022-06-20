@@ -145,6 +145,7 @@ flutter:
     - dinoHungry.png
     - move_icon.png
     - posenet_mv1_075_float_from_checkpoints.tflite
+    - movenet.tflite
     - treeButton.png
     - warriorButton.png
     - bowButton.png
