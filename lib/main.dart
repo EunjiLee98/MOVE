@@ -85,3 +85,5 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     );
   }
 }
+
+//Working on google ml kit!!
