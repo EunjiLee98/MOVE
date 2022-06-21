@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:move/reabilitation/side.dart';
+import 'package:move/reabilitation/test.dart';
 import 'package:move/reabilitation/warrior.dart';
 import 'package:move/reabilitation/tree.dart';
 import 'package:move/reabilitation/bow.dart';
@@ -79,13 +80,14 @@ class _PushedPageState extends State<PushedPage> {
             ),
           ),
           if(widget.name == 'Warrior') ...[
-            Warrior(
-              data: _data == null ? [] : _data,
-              previewH: max(_imageHeight, _imageWidth),
-              previewW: min(_imageHeight, _imageWidth),
-              screenH: screen.height,
-              screenW: screen.width,
-            ),
+            // DumbellCurlHandler();
+            // Warrior(
+            //   data: _data == null ? [] : _data,
+            //   previewH: max(_imageHeight, _imageWidth),
+            //   previewW: min(_imageHeight, _imageWidth),
+            //   screenH: screen.height,
+            //   screenW: screen.width,
+            // ),
           ]else if(widget.name == 'Tree') ...[
             Tree(
               data: _data == null ? [] : _data,
