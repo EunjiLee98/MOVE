@@ -86,4 +86,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 }
 
-//Working on google ml kit!!
+// 22/06/22 Wed.
+// Downgraded project version and Android Studio to prevent errors!!
+// Working on code analysis on example fitness app that also uses pose detection!!
