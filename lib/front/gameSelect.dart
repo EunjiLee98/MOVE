@@ -117,8 +117,8 @@ class _GameSelectState extends State<GameSelect> {
                   ),
                   TextButton(
                     onPressed: () {
-                      // if(widget.bluetoothServices != null)
-                        // Navigator.push(context, MaterialPageRoute(builder: (context) => FishingStart(bluetoothServices: widget.bluetoothServices)));
+                      if(widget.bluetoothServices != null)
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => FishingStart(bluetoothServices: widget.bluetoothServices)));
                     },
                     child: Image.asset('fishing.png', width: MediaQuery
                         .of(context)
