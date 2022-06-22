@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'utility.dart';
 
 class ExerciseHandler {
@@ -42,6 +43,8 @@ class ExerciseHandler {
     }
   }
 }
+
+// Dumbell Curl Handler
 
 class DumbellCurlHandler extends ExerciseHandler {
   void init() {
