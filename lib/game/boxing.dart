@@ -26,7 +26,7 @@ class BoxingStart extends StatefulWidget {
 class _BoxingStartState extends State<BoxingStart> {
   final Map<Guid, List<int>> readValues = new Map<Guid, List<int>>();
   final Stream<int> stream =
-      Stream.periodic(Duration(milliseconds: 1500), (int x) => x);
+  Stream.periodic(Duration(milliseconds: 1500), (int x) => x);
   var timeRan = Random().nextInt(1500) + 900;
 
   String gesture = "";
@@ -48,77 +48,77 @@ class _BoxingStartState extends State<BoxingStart> {
       children: <Widget>[
         Container(
             child: Column(
-          children: [
-            SizedBox(
-              height: 30,
-            ),
-            Center(
-                child: Column(
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ))
-                  ],
-                ),
-                SizedBox(
-                  height: 60,
-                ),
-                Image.asset(
-                  'snap.png',
-                  height: 200,
-                ),
-                //Text("값:" + gesture_num.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                 SizedBox(
                   height: 30,
                 ),
-                Text(
-                  "Please attach the chip",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.white),
-                ),
-                Text(
-                  "to your wrist",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.white),
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 70,
-                    ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        primary: Colors.black,
-                        // foreground
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Boxing(
-                                    bluetoothServices:
-                                        widget.bluetoothServices, cameras: widget.cameras,)));
-                      },
-                      child: Image.asset('ok.png'),
-                    ),
-                  ],
-                )
+                Center(
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.white,
+                                ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 60,
+                        ),
+                        Image.asset(
+                          'snap.png',
+                          height: 200,
+                        ),
+                        //Text("값:" + gesture_num.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          "Please attach the chip",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white),
+                        ),
+                        Text(
+                          "to your wrist",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white),
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 70,
+                            ),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                primary: Colors.black,
+                                // foreground
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Boxing(
+                                          bluetoothServices:
+                                          widget.bluetoothServices, cameras: widget.cameras,)));
+                              },
+                              child: Image.asset('ok.png'),
+                            ),
+                          ],
+                        )
+                      ],
+                    )),
               ],
             )),
-          ],
-        )),
       ],
     );
   }
@@ -149,9 +149,9 @@ class Boxing extends StatefulWidget {
 class _BoxingState extends State<Boxing> {
   final Map<Guid, List<int>> readValues = new Map<Guid, List<int>>();
   final Stream<int> stream =
-      Stream.periodic(Duration(milliseconds: 1500), (int x) => x);
+  Stream.periodic(Duration(milliseconds: 1500), (int x) => x);
   final Stream<int> stream2 =
-      Stream.periodic(Duration(milliseconds: 1500), (int x) => x);
+  Stream.periodic(Duration(milliseconds: 1500), (int x) => x);
 
   List<String> random = ['Punch', 'Uppercut'];
   List<String> image = ['punch.png', 'uppercut.png'];
@@ -317,124 +317,124 @@ class _BoxingState extends State<Boxing> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      height: MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('boxing_back.png'), fit: BoxFit.fill)),
-      child: Column(
-        children: [
-          Row(
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('boxing_back.png'), fit: BoxFit.fill)),
+          child: Column(
             children: [
-              IconButton(
-                onPressed: () {
-                  SchedulerBinding.instance!.addPostFrameCallback((_) {
-                    // Navigator.pop(context);
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                        Temp(bluetoothServices: widget.bluetoothServices, index: 0)), (route) => false);
-                  });
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      SchedulerBinding.instance!.addPostFrameCallback((_) {
+                        // Navigator.pop(context);
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+                            Temp(bluetoothServices: widget.bluetoothServices, index: 0)), (route) => false);
+                      });
+                    },
+                    icon: Icon(Icons.arrow_back),
+                    color: Colors.white,
+                  )
+                ],
+              ),
+              Container(height: 1, child: _buildConnectDeviceView()),
+              // SizedBox(height: 40),
+              FutureBuilder(
+                future: Future.delayed(
+                    Duration(milliseconds: Random().nextInt(800) + 500)),
+                builder: (c, s) {
+                  if (s.connectionState == ConnectionState.done) {
+                    var ran = Random().nextInt(2);
+                    ran_gesture = random[ran];
+                    return Image.asset(image[ran]);
+                  }
+                  return Container(
+                    height: MediaQuery.of(context).size.height * 0.193,
+                  );
                 },
-                icon: Icon(Icons.arrow_back),
-                color: Colors.white,
-              )
+              ),
+              // SizedBox(height: 20),
+              // Boxing Progress Rectangle
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  child: RiveAnimation.asset(
+                    'assets/rive/move_boxing.riv',
+                    fit: BoxFit.fill,
+                    animations: const ['Idle'],
+                    controllers: [
+                      _controller,
+                      _controller2,
+                      _controller3,
+                      finish_controller
+                    ],
+                  )),
+              // Container(
+              //   width: MediaQuery.of(context).size.width*0.45,
+              //   height: MediaQuery.of(context).size.height*0.3 + 4,
+              //   decoration: BoxDecoration(
+              //     border: Border.all(
+              //       color: Colors.white,
+              //       width: 2,
+              //     ),
+              //     borderRadius: BorderRadius.all(
+              //         Radius.circular(10) // POINT
+              //     ),
+              //   ),
+              //   child: Column(
+              //     children: [
+              //       Container(
+              //         decoration: BoxDecoration(
+              //             color: Colors.transparent
+              //         ),
+              //         height: MediaQuery.of(context).size.height*0.3 / 15 * (15-jar),
+              //       ),
+              //       Container(
+              //         decoration: BoxDecoration(
+              //           gradient: LinearGradient(
+              //             begin: Alignment.topCenter,
+              //             end: Alignment.bottomCenter,
+              //             colors: [const Color(0xffEA592B), const Color(0xffF6EA13)],
+              //           ),
+              //           borderRadius: BorderRadius.all(
+              //               Radius.circular(10) // POINT
+              //           ),
+              //         ),
+              //         height: MediaQuery.of(context).size.height*0.3 / 15 * jar,
+              //       )
+              //     ],
+              //   ),
+              // ),
+
+              Container(
+                height: 200,
+                width: MediaQuery.of(context).size.width,
+                child: StreamBuilder<int>(
+                    stream: stream2,
+                    builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                      if (ran_gesture == 'Punch')
+                        return Align(
+                            alignment: FractionalOffset(0.8, 1.0),
+                            child: Image.asset(
+                              'dino_n.png',
+                              width: MediaQuery.of(context).size.width / 2.8,
+                            ));
+                      return Align(
+                        alignment: FractionalOffset(0.8, 1.0),
+                        child: Transform.rotate(
+                          angle: 0.5,
+                          child: Image.asset(
+                            'dino_j.png',
+                            width: MediaQuery.of(context).size.width / 2.8,
+                          ),
+                        ),
+                      );
+                    }),
+              ),
             ],
           ),
-          Container(height: 1, child: _buildConnectDeviceView()),
-          // SizedBox(height: 40),
-          FutureBuilder(
-            future: Future.delayed(
-                Duration(milliseconds: Random().nextInt(800) + 500)),
-            builder: (c, s) {
-              if (s.connectionState == ConnectionState.done) {
-                var ran = Random().nextInt(2);
-                ran_gesture = random[ran];
-                return Image.asset(image[ran]);
-              }
-              return Container(
-                height: MediaQuery.of(context).size.height * 0.193,
-              );
-            },
-          ),
-          // SizedBox(height: 20),
-          // Boxing Progress Rectangle
-          Container(
-              width: MediaQuery.of(context).size.width * 0.75,
-              height: MediaQuery.of(context).size.height * 0.4,
-              child: RiveAnimation.asset(
-                'assets/rive/move_boxing.riv',
-                fit: BoxFit.fill,
-                animations: const ['Idle'],
-                controllers: [
-                  _controller,
-                  _controller2,
-                  _controller3,
-                  finish_controller
-                ],
-              )),
-          // Container(
-          //   width: MediaQuery.of(context).size.width*0.45,
-          //   height: MediaQuery.of(context).size.height*0.3 + 4,
-          //   decoration: BoxDecoration(
-          //     border: Border.all(
-          //       color: Colors.white,
-          //       width: 2,
-          //     ),
-          //     borderRadius: BorderRadius.all(
-          //         Radius.circular(10) // POINT
-          //     ),
-          //   ),
-          //   child: Column(
-          //     children: [
-          //       Container(
-          //         decoration: BoxDecoration(
-          //             color: Colors.transparent
-          //         ),
-          //         height: MediaQuery.of(context).size.height*0.3 / 15 * (15-jar),
-          //       ),
-          //       Container(
-          //         decoration: BoxDecoration(
-          //           gradient: LinearGradient(
-          //             begin: Alignment.topCenter,
-          //             end: Alignment.bottomCenter,
-          //             colors: [const Color(0xffEA592B), const Color(0xffF6EA13)],
-          //           ),
-          //           borderRadius: BorderRadius.all(
-          //               Radius.circular(10) // POINT
-          //           ),
-          //         ),
-          //         height: MediaQuery.of(context).size.height*0.3 / 15 * jar,
-          //       )
-          //     ],
-          //   ),
-          // ),
-
-          Container(
-            height: 200,
-            width: MediaQuery.of(context).size.width,
-            child: StreamBuilder<int>(
-                stream: stream2,
-                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-                  if (ran_gesture == 'Punch')
-                    return Align(
-                        alignment: FractionalOffset(0.8, 1.0),
-                        child: Image.asset(
-                          'dino_n.png',
-                          width: MediaQuery.of(context).size.width / 2.8,
-                        ));
-                  return Align(
-                    alignment: FractionalOffset(0.8, 1.0),
-                    child: Transform.rotate(
-                      angle: 0.5,
-                      child: Image.asset(
-                        'dino_j.png',
-                        width: MediaQuery.of(context).size.width / 2.8,
-                      ),
-                    ),
-                  );
-                }),
-          ),
-        ],
-      ),
-    ));
+        ));
   }
 }
 
@@ -521,10 +521,10 @@ class _BoxingClearState extends State<BoxingClear> {
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context) => Temp(
-                            bluetoothServices: widget.bluetoothServices,
-                            index: 0,
-                          )),
-                  (route) => false);
+                        bluetoothServices: widget.bluetoothServices,
+                        index: 0,
+                      )),
+                      (route) => false);
               // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
             });
           },
@@ -568,11 +568,11 @@ class _BoxingClearState extends State<BoxingClear> {
                               context,
                               MaterialPageRoute(
                                   builder: (BuildContext context) => Temp(
-                                        bluetoothServices:
-                                            widget.bluetoothServices,
-                                        index: 0,
-                                      )),
-                              (route) => false);
+                                    bluetoothServices:
+                                    widget.bluetoothServices,
+                                    index: 0,
+                                  )),
+                                  (route) => false);
                           // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(bluetoothServices: widget.bluetoothServices)));
                         });
                       },
@@ -591,9 +591,9 @@ class _BoxingClearState extends State<BoxingClear> {
                                   builder: (BuildContext context) =>
                                       BoxingStart(
                                         bluetoothServices:
-                                            widget.bluetoothServices,
+                                        widget.bluetoothServices,
                                       )),
-                              (route) => false);
+                                  (route) => false);
                         });
                       },
                     ),

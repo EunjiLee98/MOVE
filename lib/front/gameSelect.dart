@@ -92,7 +92,7 @@ class _GameSelectState extends State<GameSelect> {
                         Navigator.push(context, MaterialPageRoute(
                             builder: (context) =>
                                 BoxingStart(bluetoothServices: widget
-                                    .bluetoothServices, cameras: widget.cameras,)));
+                                    .bluetoothServices)));
                       if (widget.bluetoothServices == null)
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));

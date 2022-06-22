@@ -15,8 +15,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/services.dart';
-
-
 import 'game.dart';
 
 class TRexGameWrapper extends StatefulWidget {
