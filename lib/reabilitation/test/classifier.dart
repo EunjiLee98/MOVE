@@ -125,7 +125,7 @@ class Classifier {
     try {
       _interpreter = interpreter ??
           await Interpreter.fromAsset(
-            "movenet.tflite",
+            "lite-model_movenet_singlepose_lightning_3.tflite",
             options: InterpreterOptions()..threads = 4,
           );
     } catch (e) {

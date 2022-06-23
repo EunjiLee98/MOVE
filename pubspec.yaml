@@ -146,6 +146,7 @@ flutter:
     - move_icon.png
     - posenet_mv1_075_float_from_checkpoints.tflite
     - movenet.tflite
+    - lite-model_movenet_singlepose_lightning_3.tflite
     - treeButton.png
     - warriorButton.png
     - bowButton.png
