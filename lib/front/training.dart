@@ -159,7 +159,7 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Test()));
+                                  // if(widget.bluetoothServices != null)
                                 },
                                 child: Image.asset('crunch.png', width: MediaQuery.of(context).size.width*0.9,),
                               ),

@@ -25,7 +25,7 @@ class _GameSelectState extends State<GameSelect> {
   @override
   void initState() {
     super.initState();
- //screen vertically
+    //screen vertically
   }
 
   @override
@@ -92,7 +92,7 @@ class _GameSelectState extends State<GameSelect> {
                         Navigator.push(context, MaterialPageRoute(
                             builder: (context) =>
                                 BoxingStart(bluetoothServices: widget
-                                    .bluetoothServices)));
+                                    .bluetoothServices, cameras: widget.cameras,)));
                       if (widget.bluetoothServices == null)
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Bluetooth()));
@@ -117,8 +117,8 @@ class _GameSelectState extends State<GameSelect> {
                   ),
                   TextButton(
                     onPressed: () {
-                      if(widget.bluetoothServices != null)
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => FishingStart(bluetoothServices: widget.bluetoothServices)));
+                      // if(widget.bluetoothServices != null)
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => FishingStart(bluetoothServices: widget.bluetoothServices)));
                     },
                     child: Image.asset('fishing.png', width: MediaQuery
                         .of(context)
