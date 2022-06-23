@@ -9,9 +9,8 @@ import 'dart:isolate';
 import '../../main.dart';
 import 'classifier.dart';
 import 'exerciseList.dart';
+import 'exercise_handler.dart';
 import 'isolate.dart';
-
-import 'json_handler.dart';
 
 class Test extends StatefulWidget {
   Test({Key? key}) : super(key: key);
@@ -36,7 +35,6 @@ class _TestState extends State<Test> {
   double test_angle2 = 0;
 
   // WORKOUT AND WEEK DATA
-  late JsonHandler jsonHandler;
   late List<dynamic> exercise;
   late String workout;
   late var dayToday;
@@ -61,9 +59,6 @@ class _TestState extends State<Test> {
   List<dynamic> limbs = [];
   List<dynamic> targets = [];
 
-  // HAS WORKOUTS TODAY
-  bool hasWorkoutsToday = false;
-
   @override
   void initState() {
     super.initState();
@@ -71,64 +66,28 @@ class _TestState extends State<Test> {
   }
 
   void initAsync() async {
-    jsonHandler = JsonHandler();
-    await jsonHandler.init();
-
-    jsonHandler.workoutfileExists ? jsonHandler.fetchWorkouts() : null;
-    jsonHandler.weekFileExists ? fetchDayWorkout() : null;
-
-    // if (jsonHandler.weekSchedule[jsonHandler.dayToday] == "") {
-    //   hasWorkoutsToday = false;
-    // } else {
-      hasWorkoutsToday = true;
-
       isolate = IsolateUtils();
       await isolate.start();
       classifier = Classifier();
       classifier.loadModel();
       loadCamera();
-    // }
+      getExerciseData(); //추가
 
     setState(() {
-      limbs = handler!.limbs;
-      targets = handler!.targets;
+      limbs = handler.limbs;
+      targets = handler.targets;
     });
-  }
-
-  void fetchDayWorkout() {
-    // dayToday = jsonHandler.fetchDayToday();
-    // jsonHandler.fetchWeekSchedule();
-    //
-    // print(dayToday);
-    // for (var day in jsonHandler.weekSchedule.keys) {
-    //   print(dayToday.toString() +
-    //       " " +
-    //       day +
-    //       " " +
-    //       jsonHandler.weekSchedule[day]);
-    //   if (dayToday == day) {
-    //     setState(() {
-    //       workout = jsonHandler.weekSchedule[day];
-    //     });
-    //   }
-    // }
-    //
-    // int index = int.parse(workout.substring(workout.length - 1)) - 1;
-    // exercise = jsonHandler.workouts[index]["workout_list"];
-
-    // print("\n \n \nWORKOUT TODAY:" + workout);
-    // print(exercise);
-    getExerciseData();
   }
 
   void getExerciseData() {
     setState(() {
-      exerciseName = exercise[workoutIndex]["exercise_name"];
-      exerciseDisplayName = exercise[workoutIndex]["exercise_displayName"];
-      // reps = exercise[workoutIndex]["reps"];
-      // sets = exercise[workoutIndex]["sets"];
+      exerciseName = "dumbell_curl";
+      exerciseDisplayName = "Dumbell curl";
+      reps = 3;
+      sets = 3;
       handler = Exercises["dumbell_curl"]!.handler;
-      print(handler);
+      print("check");
+      print(handler.runtimeType);
       handler.init();
       limbs = handler.limbs;
       targets = handler.targets;
@@ -280,11 +239,6 @@ class _TestState extends State<Test> {
                         Text(" / " + sets.toString())
                       ],
                     ),
-                    Text(stage == "start"
-                        ? "Starting pose."
-                        : stage == "up"
-                        ? "Flexion"
-                        : "Extension")
                   ],
                 ),
               )
@@ -304,27 +258,33 @@ class RenderLandmarks extends CustomPainter {
   // COLOR PROFILES
 
   // CORRECT POSTURE COLOR PROFILE
+  // ignore: non_constant_identifier_names
   var point_green = Paint()
     ..color = Colors.green
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 8;
 
+  // ignore: non_constant_identifier_names
   var edge_green = Paint()
     ..color = Colors.lightGreen
     ..strokeWidth = 5;
 
   // INCORRECT POSTURE COLOR PROFILE
 
+  // ignore: non_constant_identifier_names
   var point_red = Paint()
     ..color = Colors.red
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 8;
 
+  // ignore: non_constant_identifier_names
   var edge_red = Paint()
     ..color = Colors.orange
     ..strokeWidth = 5;
 
+  // ignore: non_constant_identifier_names
   List<Offset> points_green = [];
+  // ignore: non_constant_identifier_names
   List<Offset> points_red = [];
 
   List<dynamic> edges = [
