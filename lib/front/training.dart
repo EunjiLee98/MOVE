@@ -6,7 +6,6 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:move/coral/webSocket.dart';
 import 'package:move/exercise/crossJack.dart';
 import 'package:move/exercise/jumpingJack.dart';
-import 'package:move/exercise/moveNet_dumbbell.dart';
 import 'package:move/exercise/squatRive.dart';
 import 'package:move/front/bluetooth.dart';
 import 'package:camera/camera.dart';

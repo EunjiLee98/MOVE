@@ -7,6 +7,7 @@ import 'package:move/reabilitation/test/utility.dart';
 import 'dart:isolate';
 
 import '../../main.dart';
+import '../camera.dart';
 import 'classifier.dart';
 import 'exerciseList.dart';
 import 'exercise_handler.dart';
@@ -66,12 +67,12 @@ class _TestState extends State<Test> {
   }
 
   void initAsync() async {
-      isolate = IsolateUtils();
-      await isolate.start();
-      classifier = Classifier();
-      classifier.loadModel();
-      loadCamera();
-      getExerciseData(); //추가
+    isolate = IsolateUtils();
+    await isolate.start();
+    classifier = Classifier();
+    classifier.loadModel();
+    loadCamera();
+    getExerciseData(); //추가
 
     setState(() {
       limbs = handler.limbs;
@@ -86,8 +87,6 @@ class _TestState extends State<Test> {
       reps = 3;
       sets = 3;
       handler = Exercises["dumbell_curl"]!.handler;
-      print("check");
-      print(handler.runtimeType);
       handler.init();
       limbs = handler.limbs;
       targets = handler.targets;
@@ -191,37 +190,42 @@ class _TestState extends State<Test> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(5),
-            child:
-            initialized ?
-            Container(
-              height: MediaQuery.of(context).size.height * 0.7,
-              width: MediaQuery.of(context).size.width,
-              child: CustomPaint(
-                foregroundPainter:
-                RenderLandmarks(inferences, limbs),
-                child: !cameraController!.value.isInitialized
-                    ? Container()
-                    : AspectRatio(
-                  aspectRatio:
-                  cameraController!.value.aspectRatio,
-                  child: CameraPreview(cameraController!),
+        body: Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(5),
+              child:
+              initialized ?
+              Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: CustomPaint(
+                  foregroundPainter:
+                  RenderLandmarks(inferences, limbs),
+                  child: !cameraController!.value.isInitialized
+                      ? Container()
+                      : Transform.scale(
+                    scale: 1 / (cameraController!.value.aspectRatio * MediaQuery.of(context).size.aspectRatio),
+                    child: Center(
+                      child: CameraPreview(cameraController!),
+                    ),
+                    // child: AspectRatio(
+                    //   aspectRatio: cameraController!.value.aspectRatio,
+                    //   child: CameraPreview(cameraController!),
+                    // ),
+                  ),
                 ),
-              ),
-            )
-                : Container(),
-          ),
-          Row(
-            children: [
-              DefaultTextStyle(
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 25, color: Colors.black),
-                child: Row(
-                  children: [
-                    Column(
+              )
+                  : Container(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  DefaultTextStyle(
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 25, color: Colors.black),
+                    child: Column(
                       children: [
                         Row(
                           children: [
@@ -241,17 +245,22 @@ class _TestState extends State<Test> {
                             Text(" / " + sets.toString())
                           ],
                         ),
-                        Text("angle: " + test_angle2.toStringAsFixed(0)),
-                        Text("angle: " + test_angle1.toStringAsFixed(0)),
+                        Row(
+                          children: [
+                            Text("Angles: " + test_angle1.toStringAsFixed(0)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                  ],
-                ),
-              )
-            ],
-          )
-        ],
-      )
+                  )
+                ],
+              ),
+            )
+          ],
+        )
     );
   }
 }

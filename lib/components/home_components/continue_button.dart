@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:move/exercise/moveNet_dumbbell.dart';
+import 'package:move/reabilitation/test/test.dart';
 import '../shared/json_handler.dart';
 
 class continue_button extends StatefulWidget {
