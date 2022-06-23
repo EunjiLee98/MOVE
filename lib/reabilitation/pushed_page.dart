@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:move/reabilitation/side.dart';
+import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
+import 'test/test.dart';
 import 'package:move/reabilitation/warrior.dart';
 import 'package:move/reabilitation/tree.dart';
 import 'package:move/reabilitation/bow.dart';
@@ -32,8 +34,8 @@ class _PushedPageState extends State<PushedPage> {
   @override
   void initState() {
     super.initState();
-    var res = loadModel();
-    print('Model Response: ' + res.toString());
+    // var res = loadModel();
+    // print('Model Response: ' + res.toString());
   }
 
   _setRecognitions(data, imageHeight, imageWidth) {
@@ -51,12 +53,29 @@ class _PushedPageState extends State<PushedPage> {
   //   return await Interpreter.fromAsset("lite-model_movenet_singlepose_lightning_3.tflite");
   // }
 
-  loadModel() async {
-    return await Tflite.loadModel(
-        model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
-        // model: "assets/lite-model_movenet_singlepose_lightning_3.tflite");
-        // model: "assets/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite");
-  }
+  // loadModel() async {
+  //   return await Tflite.loadModel(
+  //       model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
+  //       // model: "assets/lite-model_movenet_singlepose_lightning_3.tflite");
+  //       // model: "assets/lite-model_movenet_multipose_lightning_tflite_float16_1.tflite");
+  // }
+
+  // late Interpreter _interpreter;
+  // TensorBuffer outputLocations = TensorBufferFloat([]);
+  //
+  // loadModel({Interpreter? interpreter}) async {
+  //   try {
+  //     _interpreter = interpreter ??
+  //         await Interpreter.fromAsset(
+  //           "model.tflite",
+  //           options: InterpreterOptions()..threads = 4,
+  //         );
+  //   } catch (e) {
+  //     print("Error while creating interpreter: $e");
+  //   }
+  //
+  //   outputLocations = TensorBufferFloat([1, 1, 17, 3]);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +84,10 @@ class _PushedPageState extends State<PushedPage> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Camera(
-            cameras: widget.cameras,
-            setRecognitions: _setRecognitions,
-          ),
+          // Camera(
+          //   cameras: widget.cameras,
+          //   setRecognitions: _setRecognitions,
+          // ),
           Align(
             alignment: Alignment.topLeft,
             child: Row(
@@ -79,13 +98,14 @@ class _PushedPageState extends State<PushedPage> {
             ),
           ),
           if(widget.name == 'Warrior') ...[
-            Warrior(
-              data: _data == null ? [] : _data,
-              previewH: max(_imageHeight, _imageWidth),
-              previewW: min(_imageHeight, _imageWidth),
-              screenH: screen.height,
-              screenW: screen.width,
-            ),
+            Test()
+            // Warrior(
+            //   data: _data == null ? [] : _data,
+            //   previewH: max(_imageHeight, _imageWidth),
+            //   previewW: min(_imageHeight, _imageWidth),
+            //   screenH: screen.height,
+            //   screenW: screen.width,
+            // ),
           ]else if(widget.name == 'Tree') ...[
             Tree(
               data: _data == null ? [] : _data,

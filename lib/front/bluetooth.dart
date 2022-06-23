@@ -16,9 +16,10 @@ final StreamController<int> streamController = StreamController<int>();
 String gesture_name = "";
 
 class Bluetooth extends StatefulWidget {
+  final List<BluetoothService>? bluetoothServices;
   final List<CameraDescription>? cameras;
 
-  Bluetooth({this.cameras});
+  Bluetooth({this.bluetoothServices, this.cameras});
 
   @override
   _BluetoothState createState() => _BluetoothState();

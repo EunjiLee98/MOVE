@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,9 @@ import 'package:rive/rive.dart';
 
 class BoxingStart extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
+  final List<CameraDescription>? cameras;
 
-  BoxingStart({this.bluetoothServices});
+  BoxingStart({this.bluetoothServices, this.cameras});
 
   @override
   _BoxingStartState createState() => _BoxingStartState();
@@ -107,7 +109,7 @@ class _BoxingStartState extends State<BoxingStart> {
                             MaterialPageRoute(
                                 builder: (context) => Boxing(
                                     bluetoothServices:
-                                        widget.bluetoothServices)));
+                                        widget.bluetoothServices, cameras: widget.cameras,)));
                       },
                       child: Image.asset('ok.png'),
                     ),
@@ -136,8 +138,9 @@ class _BoxingStartState extends State<BoxingStart> {
 
 class Boxing extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
+  final List<CameraDescription>? cameras;
 
-  Boxing({this.bluetoothServices});
+  Boxing({this.bluetoothServices, this.cameras});
 
   @override
   _BoxingState createState() => _BoxingState();
@@ -301,7 +304,7 @@ class _BoxingState extends State<Boxing> {
           //               score: (correct / count) * 100,
           //             )));
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-              FinishGame(bluetoothServices: widget.bluetoothServices, name: 'Boxing',)), (route) => false);
+              FinishGame(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras, name: 'Boxing',)), (route) => false);
         });
       });
     }

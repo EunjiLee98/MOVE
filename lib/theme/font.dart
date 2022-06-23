@@ -55,3 +55,4 @@ Widget navyNoto(String str, double num, bool bold) {
         ),)
   );
 }
+

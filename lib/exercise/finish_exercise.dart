@@ -8,12 +8,17 @@ import 'package:move/front/home.dart';
 import 'package:move/theme/font.dart';
 import 'jumpingJack.dart';
 
-class FinishExercise extends StatelessWidget {
+class FinishExercise extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
   final List<CameraDescription>? cameras;
   final String? name;
   FinishExercise({this.bluetoothServices, this.cameras, this.name});
 
+  @override
+  _FinishExerciseState createState() => _FinishExerciseState();
+}
+
+class _FinishExerciseState extends State<FinishExercise> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +103,7 @@ class FinishExercise extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                navyRusso(name!, 20, false),
+                                navyRusso(widget.name!, 20, false),
                                 navyNoto('초급세트', 17, true),
                               ],
                             ),
@@ -160,7 +165,7 @@ class FinishExercise extends StatelessWidget {
                       SchedulerBinding.instance!.addPostFrameCallback((_) {
                         // Navigator.pop(context);
                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                            Temp(bluetoothServices: bluetoothServices, cameras: cameras, index: 1)), (route) => false);
+                            Temp(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras, index: 1)), (route) => false);
                       });
                     },
                     child: Container(
@@ -186,7 +191,7 @@ class FinishExercise extends StatelessWidget {
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           // Navigator.pop(context);
                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                              Temp(bluetoothServices: bluetoothServices, cameras: cameras, index: 0)), (route) => false);
+                              Temp(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras, index: 0)), (route) => false);
                         });
                       },
                       child: Image.asset('homeButton.png', width: MediaQuery.of(context).size.width*0.43,),
@@ -196,12 +201,12 @@ class FinishExercise extends StatelessWidget {
                         // addScore(score);
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
                           // Navigator.pop(context);
-                          if(name == 'Jumping Jack')
+                          if(widget.name == 'Jumping Jack')
                             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                                Jumpingjack(bluetoothServices: bluetoothServices, cameras: cameras)), (route) => false);
-                          else if(name == 'Squat')
+                                Jumpingjack(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)), (route) => false);
+                          else if(widget.name == 'Squat')
                             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                                Squat(bluetoothServices: bluetoothServices, cameras: cameras, title: 'MOVE! - Squat Rive',)), (route) => false);
+                                Squat(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras, title: 'MOVE! - Squat Rive',)), (route) => false);
                         });
                       },
                       child: Image.asset('restart.png', width: MediaQuery.of(context).size.width*0.43,),

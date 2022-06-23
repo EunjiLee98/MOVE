@@ -150,6 +150,7 @@ class _JumpingjackState extends State<Jumpingjack> {
     if(gesture_num == 3 || gesture_num == 1) {
       setState(() {
         cnt++;
+        _openController.isActive = true;
 
         if(cnt == 1 || cnt == 5) {
           score++;
@@ -164,7 +165,6 @@ class _JumpingjackState extends State<Jumpingjack> {
             //     FinishExercise(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)));
           }
 
-          _openController.isActive = true;
           gesture_num = 0;
           cnt = 1;
         }
