@@ -1,12 +1,8 @@
-import 'dart:isolate';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:move/coral/dumbbellRive.dart';
 import 'package:move/coral/webSocket.dart';
 import 'package:move/exercise/crossJack.dart';
 import 'package:move/exercise/jumpingJack.dart';
@@ -15,7 +11,6 @@ import 'package:move/exercise/squatRive.dart';
 import 'package:move/front/bluetooth.dart';
 import 'package:camera/camera.dart';
 import 'package:move/theme/font.dart';
-import 'package:rive/rive.dart';
 
 class Training extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;

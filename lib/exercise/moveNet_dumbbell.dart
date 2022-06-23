@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:move/main.dart';
 import 'dart:isolate';
 
 import 'package:move/utility/classifier.dart';
@@ -18,9 +19,8 @@ class Test extends StatefulWidget {
   @override
   _TestState createState() => _TestState();
 }
-List<CameraDescription>? cameras;
+
 class _TestState extends State<Test> {
-  List<CameraDescription>? cameras;
   CameraImage? cameraImage;
   CameraController? cameraController;
   late Classifier classifier;
@@ -36,10 +36,8 @@ class _TestState extends State<Test> {
   double test_angle2 = 0;
 
   // WORKOUT AND WEEK DATA
-  late JsonHandler jsonHandler;
   late List<dynamic> exercise;
   late String workout;
-  late var dayToday;
 
   // DAY WORKOUT VARIABLES
   late var handler;
@@ -72,23 +70,11 @@ class _TestState extends State<Test> {
   }
 
   void initAsync() async {
-    jsonHandler = JsonHandler();
-    await jsonHandler.init();
-
-    jsonHandler.workoutfileExists ? jsonHandler.fetchWorkouts() : null;
-    jsonHandler.weekFileExists ? fetchDayWorkout() : null;
-
-    if (jsonHandler.weekSchedule[jsonHandler.dayToday] == "") {
-      hasWorkoutsToday = false;
-    } else {
-      hasWorkoutsToday = true;
-
-      isolate = IsolateUtils();
-      await isolate.start();
-      classifier = Classifier();
-      classifier.loadModel();
-      loadCamera();
-    }
+    isolate = IsolateUtils();
+    await isolate.start();
+    classifier = Classifier();
+    classifier.loadModel();
+    loadCamera();
 
     setState(() {
       limbs = handler.limbs;
@@ -96,40 +82,10 @@ class _TestState extends State<Test> {
     });
   }
 
-  void fetchDayWorkout() {
-    dayToday = jsonHandler.fetchDayToday();
-    jsonHandler.fetchWeekSchedule();
-
-    print(dayToday);
-    for (var day in jsonHandler.weekSchedule.keys) {
-      print(dayToday.toString() +
-          " " +
-          day +
-          " " +
-          jsonHandler.weekSchedule[day]);
-      if (dayToday == day) {
-        setState(() {
-          workout = jsonHandler.weekSchedule[day];
-        });
-      }
-    }
-
-    int index = int.parse(workout.substring(workout.length - 1)) - 1;
-    exercise = jsonHandler.workouts[index]["workout_list"];
-
-    // print("\n \n \nWORKOUT TODAY:" + workout);
-    // print(exercise);
-    getExerciseData();
-  }
 
   void getExerciseData() {
     setState(() {
-      exerciseName = exercise[workoutIndex]["exercise_name"];
-      imgUrl = exercise[workoutIndex]["exercise_image"];
-      exerciseDisplayName = exercise[workoutIndex]["exercise_displayName"];
-      reps = exercise[workoutIndex]["reps"];
-      sets = exercise[workoutIndex]["sets"];
-      handler = Exercises[exerciseName]!.handler;
+      handler = Exercises[ "dumbell_curl"]!.handler;
       print(handler);
       handler.init();
       limbs = handler.limbs;
@@ -183,37 +139,6 @@ class _TestState extends State<Test> {
 
       int limbsIndex = 0;
 
-      //   if (!rest) {
-      //     if (doneSets < sets) {
-      //       if (doneReps < reps) {
-      //         checkLimbs(inferenceResults, limbsIndex);
-      //         isProperForm = isPostureCorrect();
-      //         doReps(inferenceResults);
-      //       } else {
-      //         setState(() {
-      //           doneReps = 0;
-      //           doneSets++;
-      //           rest = true;
-      //           restTime = 30;
-      //         });
-      //       }
-      //     } else {
-      //       setState(() {
-      //         doneSets = 0;
-      //         doneReps = 0;
-      //         nextWorkout();
-      //         rest = true;
-      //         restTime = 60;
-      //       });
-      //     }
-      //   } else {
-      //     setState(() {
-      //       restTime = 0;
-      //       rest = false;
-      //     });
-      //   }
-      // });
-
       if (!rest) {
         if (handler.doneSets < sets) {
           if (handler.doneReps < reps) {
@@ -265,89 +190,71 @@ class _TestState extends State<Test> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(),
-            Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
-                child: Text('Perform workouts')),
-            Image.asset('assets/img/shoulder_press_icon.png',
-                width: 35, height: 35)
-          ],
-        ),
-        backgroundColor: Colors.black,
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(5),
-            child: initialized
-                ? Container(
-              height: MediaQuery.of(context).size.height * 0.7,
-              width: MediaQuery.of(context).size.width,
-              child: CustomPaint(
-                foregroundPainter:
-                RenderLandmarks(inferences, limbs),
-                child: !cameraController!.value.isInitialized
-                    ? Container()
-                    : AspectRatio(
-                  aspectRatio:
-                  cameraController!.value.aspectRatio,
-                  child: CameraPreview(cameraController!),
-                ),
-              ),
-            )
-                : Container(),
-
-            // RotatedBox(
-            //     quarterTurns: 3,
-            //     child: Image.memory(imageLib.encodeJpg(holder) as Uint8List))
-          ),
-          Row(
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Center(
-                  child: Image.asset(
-                    imgUrl,
-                    height: 100,
-                    width: 150,
-                  )),
-              DefaultTextStyle(
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 25, color: Colors.black),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text("Reps: " + doneReps.toString()),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(" / " + reps.toString())
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text("Sets: " + doneSets.toString()),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(" / " + sets.toString())
-                      ],
-                    ),
-                    Text(stage == "start"
-                        ? "Starting pose."
-                        : stage == "up"
-                        ? "Flexion"
-                        : "Extension")
-                  ],
+              Container(),
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
+                  child: Text('Perform workouts')),
+              Image.asset('assets/img/shoulder_press_icon.png',
+                  width: 35, height: 35)
+            ],
+          ),
+          backgroundColor: Colors.black,
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: initialized
+                  ? Container(
+                height: MediaQuery.of(context).size.height * 0.7,
+                width: MediaQuery.of(context).size.width,
+                child: CustomPaint(
+                  foregroundPainter:
+                  RenderLandmarks(inferences, limbs),
+                  child: !cameraController!.value.isInitialized
+                      ? Container()
+                      : AspectRatio(
+                    aspectRatio:
+                    cameraController!.value.aspectRatio,
+                    child: CameraPreview(cameraController!),
+                  ),
                 ),
               )
-            ],
-          )
-        ],
-      )
+                  : Container(),
+
+              // RotatedBox(
+              //     quarterTurns: 3,
+              //     child: Image.memory(imageLib.encodeJpg(holder) as Uint8List))
+            ),
+            Row(
+              children: [
+                Center(
+                    child: Image.asset(
+                      imgUrl,
+                      height: 100,
+                      width: 150,
+                    )),
+                DefaultTextStyle(
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 25, color: Colors.black),
+                  child: Column(
+                    children: [
+                      Text(stage == "start"
+                          ? "Starting pose."
+                          : stage == "up"
+                          ? "Flexion"
+                          : "Extension")
+                    ],
+                  ),
+                )
+              ],
+            )
+          ],
+        )
     );
   }
 }
