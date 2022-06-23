@@ -1,4 +1,5 @@
 import 'exerciseItem.dart';
+import 'exercise_handler(dumbbell).dart';
 import 'exercise_handler.dart';
 
 Map<String, Exercise> Exercises = {
@@ -9,4 +10,12 @@ Map<String, Exercise> Exercises = {
       reps: 1,
       sets: 1,
       handler: DumbellCurlHandler()),
+
+  "dumbell_curl2": Exercise(
+      exercise_image: 'assets/img/card_dumbellcurl.png',
+      exercise_name: "dumbell_curl2",
+      exercise_displayName: "Dumbell curl2",
+      reps: 1,
+      sets: 1,
+      handler: DumbellCurlHandler2()),
 };

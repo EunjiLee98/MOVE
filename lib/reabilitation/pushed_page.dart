@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:move/reabilitation/side.dart';
+import 'package:move/reabilitation/test/test2(dumbbell).dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 import 'test/test.dart';
 import 'package:move/reabilitation/warrior.dart';
@@ -107,13 +108,14 @@ class _PushedPageState extends State<PushedPage> {
             //   screenW: screen.width,
             // ),
           ]else if(widget.name == 'Tree') ...[
-            Tree(
-              data: _data == null ? [] : _data,
-              previewH: max(_imageHeight, _imageWidth),
-              previewW: min(_imageHeight, _imageWidth),
-              screenH: screen.height,
-              screenW: screen.width,
-            ),
+            Test2()
+            // Tree(
+            //   data: _data == null ? [] : _data,
+            //   previewH: max(_imageHeight, _imageWidth),
+            //   previewW: min(_imageHeight, _imageWidth),
+            //   screenH: screen.height,
+            //   screenW: screen.width,
+            // ),
             // Center(
             //   child: Container(
             //     // width: MediaQuery.of(context).size.width,
