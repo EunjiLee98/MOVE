@@ -7,6 +7,7 @@ import 'package:move/reabilitation/test/utility.dart';
 import 'dart:isolate';
 
 import '../../main.dart';
+import '../camera.dart';
 import 'classifier.dart';
 import 'exerciseList.dart';
 import 'exercise_handler.dart';
@@ -86,8 +87,6 @@ class _TestState extends State<Test> {
       reps = 3;
       sets = 3;
       handler = Exercises["dumbell_curl"]!.handler;
-      print("check");
-      print(handler.runtimeType);
       handler.init();
       limbs = handler.limbs;
       targets = handler.targets;
@@ -191,58 +190,74 @@ class _TestState extends State<Test> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
           Padding(
             padding: EdgeInsets.all(5),
             child:
             initialized ?
             Container(
-              height: MediaQuery.of(context).size.height * 0.7,
+              height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: CustomPaint(
                 foregroundPainter:
                 RenderLandmarks(inferences, limbs),
                 child: !cameraController!.value.isInitialized
                     ? Container()
-                    : AspectRatio(
-                  aspectRatio:
-                  cameraController!.value.aspectRatio,
-                  child: CameraPreview(cameraController!),
-                ),
+                    : Transform.scale(
+                      scale: 1 / (cameraController!.value.aspectRatio * MediaQuery.of(context).size.aspectRatio),
+                      child: Center(
+                        child: CameraPreview(cameraController!),
+                      ),
+                      // child: AspectRatio(
+                      //   aspectRatio: cameraController!.value.aspectRatio,
+                      //   child: CameraPreview(cameraController!),
+                      // ),
+                    ),
               ),
             )
                 : Container(),
           ),
-          Row(
-            children: [
-              DefaultTextStyle(
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 25, color: Colors.black),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text("Reps: " + doneReps.toString()),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(" / " + reps.toString())
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text("Sets: " + doneSets.toString()),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(" / " + sets.toString())
-                      ],
-                    ),
-                  ],
-                ),
-              )
-            ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                DefaultTextStyle(
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 25, color: Colors.black),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text("Reps: " + doneReps.toString()),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(" / " + reps.toString())
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text("Sets: " + doneSets.toString()),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(" / " + sets.toString())
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text("Angles: " + test_angle1.toStringAsFixed(0)),
+                          SizedBox(
+                            width: 5,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           )
         ],
       )
@@ -260,13 +275,13 @@ class RenderLandmarks extends CustomPainter {
   // CORRECT POSTURE COLOR PROFILE
   // ignore: non_constant_identifier_names
   var point_green = Paint()
-    ..color = Colors.green
+    ..color = Colors.blue
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 8;
 
   // ignore: non_constant_identifier_names
   var edge_green = Paint()
-    ..color = Colors.lightGreen
+    ..color = Colors.blue
     ..strokeWidth = 5;
 
   // INCORRECT POSTURE COLOR PROFILE
@@ -279,7 +294,7 @@ class RenderLandmarks extends CustomPainter {
 
   // ignore: non_constant_identifier_names
   var edge_red = Paint()
-    ..color = Colors.orange
+    ..color = Colors.red
     ..strokeWidth = 5;
 
   // ignore: non_constant_identifier_names
