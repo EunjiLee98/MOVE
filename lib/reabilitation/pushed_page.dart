@@ -116,13 +116,6 @@ class _PushedPageState extends State<PushedPage> {
             //   screenH: screen.height,
             //   screenW: screen.width,
             // ),
-            // Center(
-            //   child: Container(
-            //     // width: MediaQuery.of(context).size.width,
-            //     height: MediaQuery.of(context).size.height*0.8,
-            //     child: Image.asset('tree.png'),
-            //   ),
-            // )
           ]else if(widget.name == 'Bow') ...[
             Bow(
               data: _data == null ? [] : _data,
