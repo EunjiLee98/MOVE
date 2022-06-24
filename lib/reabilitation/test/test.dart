@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -7,11 +6,10 @@ import 'package:move/reabilitation/test/utility.dart';
 import 'dart:isolate';
 
 import '../../main.dart';
-import '../camera.dart';
 import 'classifier.dart';
 import 'exerciseList.dart';
-import 'exercise_handler.dart';
 import 'isolate.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class Test extends StatefulWidget {
   Test({Key? key}) : super(key: key);
@@ -48,6 +46,7 @@ class _TestState extends State<Test> {
   String exerciseDisplayName = "";
   int reps = 0;
   int sets = 0;
+  final FlutterTts tts = FlutterTts();
 
   int doneReps = 0;
   int doneSets = 0;
@@ -63,6 +62,9 @@ class _TestState extends State<Test> {
   @override
   void initState() {
     super.initState();
+    tts.setLanguage('en');
+    tts.setSpeechRate(0.4);
+    tts.speak("Stand vertically with your legs shoulder width apart");
     initAsync();
   }
 
@@ -132,10 +134,10 @@ class _TestState extends State<Test> {
       predicting = false;
       initialized = true;
 
-      List<int> pointA = [inferenceResults[7][0], inferenceResults[7][1]];
-      List<int> pointB = [inferenceResults[5][0], inferenceResults[5][1]];
-      List<int> pointC = [inferenceResults[11][0], inferenceResults[11][1]];
-      test_angle2 = getAngle(pointA, pointB, pointC);
+      List<int> pointA = [inferenceResults[11][0], inferenceResults[11][1]];
+      List<int> pointB = [inferenceResults[13][0], inferenceResults[13][1]];
+      List<int> pointC = [inferenceResults[15][0], inferenceResults[15][1]];
+      test_angle2 = getAngle(pointA, pointB,pointC);
 
       int limbsIndex = 0;
 
@@ -201,7 +203,7 @@ class _TestState extends State<Test> {
                 width: MediaQuery.of(context).size.width,
                 child: CustomPaint(
                   foregroundPainter:
-                  RenderLandmarks(inferences, limbs),
+                  RenderLandmarks(inferences, targets),
                   child: !cameraController!.value.isInitialized
                       ? Container()
                       : Transform.scale(
@@ -247,7 +249,8 @@ class _TestState extends State<Test> {
                         ),
                         Row(
                           children: [
-                            Text("Angles: " + test_angle1.toStringAsFixed(0)),
+                            Text("Angles: " + test_angle1.toStringAsFixed(0),
+                                style: TextStyle(fontWeight: FontWeight.bold)),
                             SizedBox(
                               width: 5,
                             ),
@@ -337,11 +340,11 @@ class RenderLandmarks extends CustomPainter {
     //       Offset(vertex1X, vertex1Y), Offset(vertex2X, vertex2Y), edge_paint);
     // }
 
-    for (var limb in selectedLandmarks) {
-      renderEdge(canvas, limb[0], limb[1]);
+    for (var target in selectedLandmarks) {
+      renderEdge(canvas, target[0], target[1]);
     }
     canvas.drawPoints(PointMode.points, points_green, point_green);
-    canvas.drawPoints(PointMode.points, points_red, point_red);
+    canvas.drawPoints(PointMode.points, points_green, point_green);
   }
 
   @override
@@ -353,7 +356,7 @@ class RenderLandmarks extends CustomPainter {
         isCorrect
             ? points_green
             .add(Offset(point[0].toDouble() - 70, point[1].toDouble() - 30))
-            : points_red.add(
+            : points_green.add(
             Offset(point[0].toDouble() - 70, point[1].toDouble() - 30));
       }
     }
@@ -365,7 +368,7 @@ class RenderLandmarks extends CustomPainter {
         double vertex2X = inferenceList[edge[1]][0].toDouble() - 70;
         double vertex2Y = inferenceList[edge[1]][1].toDouble() - 30;
         canvas.drawLine(Offset(vertex1X, vertex1Y), Offset(vertex2X, vertex2Y),
-            isCorrect ? edge_green : edge_red);
+            isCorrect ? edge_green : edge_green);
       }
     }
   }
