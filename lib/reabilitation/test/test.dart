@@ -181,12 +181,6 @@ class _TestState extends State<Test> {
 
               _progress!.value = ((test_angle1 - 90) * 100 / 180);
 
-              if(test_angle1 > 110) {
-
-              }else if(test_angle1 < 85) {
-
-              }
-
             });
           } else {
             handler.doneReps = 0;
