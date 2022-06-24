@@ -6,7 +6,6 @@ import 'package:move/game/trex/trex_main.dart';
 
 class TrexTutorial extends StatefulWidget {
   final List<BluetoothService>? bluetoothServices;
-
   TrexTutorial({this.bluetoothServices,});
 
   @override

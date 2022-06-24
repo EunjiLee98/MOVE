@@ -210,6 +210,8 @@ class DumbellCurlHandler extends ExerciseHandler {
 
   void doReps(var inferenceResults) {
     if (isPostureCorrect()) {
+      double foot = 0;
+
       var a = 11;
       var b = 13;
       var c = 15;
@@ -228,16 +230,28 @@ class DumbellCurlHandler extends ExerciseHandler {
       pointC = [inferenceResults[c][0], inferenceResults[c][1]];
       angle2 = getAngle(pointA, pointB, pointC);
 
+      foot = getDistance(
+          inferenceResults[9][0],
+          inferenceResults[7][1],
+          inferenceResults[9][0],
+          inferenceResults[7][1]
+      );
+
+      // print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
+      // print(foot);
+    // && inferenceResults[13][0] > inferenceResults[15][0] + foot
+    // && inferenceResults[13][0] > inferenceResults[15][0] + foot
+
       if (restart) {
         if (angle > 150) {
           stage = "up";
           restart = false;
         }
       } else {
-        if (angle < 130 && angle2 > 80 && angle2 < 110) {
+        if (angle < 130 && (angle < angle2)) {
           stage = "down";
         }
-        if (angle > 150 && stage == "down" && angle2 > 80 && angle2 < 110) {
+        if (angle > 150 && stage == "down" && (angle < angle2)) {
           stage = "up";
           doneReps += 1;
         }

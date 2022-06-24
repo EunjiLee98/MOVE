@@ -11,9 +11,3 @@ double getAngle(List<int> pointA, List<int> pointB, List<int> pointC) {
 
   return angle;
 }
-
-double getDistance(int x1, int x2, int y1, int y2) {
-  double distance = sqrt(pow(x2 - x1, 2) + pow(y2 - y2, 2));
-
-  return distance;
-}

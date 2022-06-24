@@ -24,142 +24,142 @@ class _FinishExerciseState extends State<FinishExercise> {
     return Scaffold(
       body: Center(
         child: Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('tutorial1_background.png'),
-                    fit: BoxFit.fill
-                )
-            ),
-            child: Column(
-              children: [
-                SizedBox(height: 30,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                      child: Stack(
-                        children: [
-                          Center(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width*0.3,
-                              child: Image.asset('point.png'),
-                            ),
-                          ),
-                          Positioned(
-                            left: 42,
-                            top:5,
-                            child: whiteRusso('12,000', 15, true),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Lottie.asset(
-                        'assets/finish.json',
-                        repeat: true,
-                        reverse: false,
-                        animate: true,
-                        width: MediaQuery.of(context).size.width*0.8,
-                      ),
-                    ),
-                    Positioned(
-                      top: 40,
-                      left: 30,
-                      child: Container(
-                        width: 300,
-                        child: Image.asset('finish1.png'),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width*0.7,
-                    child: Column(
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('tutorial1_background.png'),
+                  fit: BoxFit.fill
+              )
+          ),
+          child: Column(
+            children: [
+              SizedBox(height: 30,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    child: Stack(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            whiteNoto('1월 20일 운동', 15, true),
-                          ],
-                        ),
-                        SizedBox(height: 15,),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10)
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                navyRusso(widget.name!, 20, false),
-                                navyNoto('초급세트', 17, true),
-                              ],
-                            ),
+                        Center(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width*0.3,
+                            child: Image.asset('point.png'),
                           ),
                         ),
-                        SizedBox(height: 40,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                whiteNoto('감량 칼로리', 15, true),
-                                SizedBox(height: 5,),
-                                whiteNoto('운동 시간', 15, true),
-                                SizedBox(height: 5,),
-                                whiteNoto('얻은 포인트', 15, true),
-                              ],
-                            ),
-                            Center(
-                                child: Container(
-                                  width: 1,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white
-                                  ),
-                                )
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                whiteRusso('50', 20, false),
-                                // SizedBox(height: 5,),
-                                whiteRusso('05:00', 20, false),
-                                // SizedBox(height: 5,),
-                                whiteRusso('5', 20, false),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                whiteRusso('kcal', 12, false),
-                                SizedBox(height: 10,),
-                                whiteRusso('min', 12, false),
-                                SizedBox(height: 10,),
-                                whiteRusso('p', 12, false),
-                              ],
-                            )
-                          ],
+                        Positioned(
+                          left: 42,
+                          top:5,
+                          child: whiteRusso('12,000', 15, true),
                         )
                       ],
                     ),
                   ),
+                ],
+              ),
+              SizedBox(height: 10,),
+              Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Lottie.asset(
+                      'assets/finish.json',
+                      repeat: true,
+                      reverse: false,
+                      animate: true,
+                      width: MediaQuery.of(context).size.width*0.8,
+                    ),
+                  ),
+                  Positioned(
+                    top: 40,
+                    left: 30,
+                    child: Container(
+                      width: 300,
+                      child: Image.asset('finish1.png'),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10,),
+              Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width*0.7,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          whiteNoto('1월 20일 운동', 15, true),
+                        ],
+                      ),
+                      SizedBox(height: 15,),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              navyRusso(widget.name!, 20, false),
+                              navyNoto('초급세트', 17, true),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 40,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              whiteNoto('감량 칼로리', 15, true),
+                              SizedBox(height: 5,),
+                              whiteNoto('운동 시간', 15, true),
+                              SizedBox(height: 5,),
+                              whiteNoto('얻은 포인트', 15, true),
+                            ],
+                          ),
+                          Center(
+                              child: Container(
+                                width: 1,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    color: Colors.white
+                                ),
+                              )
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              whiteRusso('50', 20, false),
+                              // SizedBox(height: 5,),
+                              whiteRusso('05:00', 20, false),
+                              // SizedBox(height: 5,),
+                              whiteRusso('5', 20, false),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              whiteRusso('kcal', 12, false),
+                              SizedBox(height: 10,),
+                              whiteRusso('min', 12, false),
+                              SizedBox(height: 10,),
+                              whiteRusso('p', 12, false),
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-                SizedBox(height: 60,),
-                Center(
+              ),
+              SizedBox(height: 60,),
+              Center(
                   child: GestureDetector(
                     onTap: () {
                       SchedulerBinding.instance!.addPostFrameCallback((_) {
@@ -170,51 +170,51 @@ class _FinishExerciseState extends State<FinishExercise> {
                     },
                     child: Container(
                         decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(color: Colors.white)
-                          )
+                            border: Border(
+                                bottom: BorderSide(color: Colors.white)
+                            )
                         ),
                         child: whiteNoto('다른 운동 하러가기', 15, true)
                     ),
                   )
-                ),
-                SizedBox(height: 20,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        // addScore(score);
-                        // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                        //     builder: (BuildContext context) =>
-                        //         Homepage(bluetoothServices: widget.bluetoothServices)), (route) => false);
-                        SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          // Navigator.pop(context);
+              ),
+              SizedBox(height: 20,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // addScore(score);
+                      // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                      //     builder: (BuildContext context) =>
+                      //         Homepage(bluetoothServices: widget.bluetoothServices)), (route) => false);
+                      SchedulerBinding.instance!.addPostFrameCallback((_) {
+                        // Navigator.pop(context);
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+                            Temp(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras, index: 0)), (route) => false);
+                      });
+                    },
+                    child: Image.asset('homeButton.png', width: MediaQuery.of(context).size.width*0.43,),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // addScore(score);
+                      SchedulerBinding.instance!.addPostFrameCallback((_) {
+                        // Navigator.pop(context);
+                        if(widget.name == 'Jumping Jack')
                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                              Temp(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras, index: 0)), (route) => false);
-                        });
-                      },
-                      child: Image.asset('homeButton.png', width: MediaQuery.of(context).size.width*0.43,),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // addScore(score);
-                        SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          // Navigator.pop(context);
-                          if(widget.name == 'Jumping Jack')
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                                Jumpingjack(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)), (route) => false);
-                          else if(widget.name == 'Squat')
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
-                                Squat(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras, title: 'MOVE! - Squat Rive',)), (route) => false);
-                        });
-                      },
-                      child: Image.asset('restart.png', width: MediaQuery.of(context).size.width*0.43,),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                              Jumpingjack(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras)), (route) => false);
+                        else if(widget.name == 'Squat')
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
+                              Squat(bluetoothServices: widget.bluetoothServices, cameras: widget.cameras, title: 'MOVE! - Squat Rive',)), (route) => false);
+                      });
+                    },
+                    child: Image.asset('restart.png', width: MediaQuery.of(context).size.width*0.43,),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

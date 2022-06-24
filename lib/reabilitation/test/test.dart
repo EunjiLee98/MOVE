@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:move/reabilitation/test/utility.dart';
 import 'package:move/theme/font.dart';
 import 'dart:isolate';
@@ -58,6 +59,8 @@ class _TestState extends State<Test> {
   var stage = "up";
   bool rest = false;
   int restTime = 0;
+  FlutterTts tts = FlutterTts();
+  int check = 0;
 
   // POSE AND FORM VALIDATION
   bool isProperForm = false;
@@ -92,12 +95,12 @@ class _TestState extends State<Test> {
   }
 
   void initAsync() async {
-      isolate = IsolateUtils();
-      await isolate.start();
-      classifier = Classifier();
-      classifier.loadModel();
-      loadCamera();
-      getExerciseData(); //추가
+    isolate = IsolateUtils();
+    await isolate.start();
+    classifier = Classifier();
+    classifier.loadModel();
+    loadCamera();
+    getExerciseData(); //추가
 
     setState(() {
       limbs = handler.limbs;
@@ -168,7 +171,6 @@ class _TestState extends State<Test> {
       test_angle3 = getAngle(pointA, pointB, pointC);
 
       int limbsIndex = 0;
-
       if (!rest) {
         if (handler.doneSets < sets) {
           if (handler.doneReps < reps) {
@@ -182,10 +184,9 @@ class _TestState extends State<Test> {
 
               _progress!.value = (test_angle1 - 180) * -1;
 
-              if(test_angle1 > 110) {
-
-              }else if(test_angle1 < 85) {
-
+              if (test_angle3 > 150 && check == 0) {
+                _speak("Please straighten your back");
+                _stop();
               }
 
             });
@@ -219,6 +220,25 @@ class _TestState extends State<Test> {
     });
   }
 
+  Future _speak(String text) async {
+    await tts.setLanguage("en");
+    await tts.setSpeechRate(0.4);
+    await tts.speak(text);
+    check = 1;
+  }
+
+  Future _stop() async {
+    await tts.stop();
+    check = 0;
+  }
+
+  Future _silence(String text) async {
+    await tts.setLanguage("en");
+    await tts.setSpeechRate(0.4);
+    await tts.speak(text);
+    check = 1;
+  }
+
   Future<List<dynamic>> inference(IsolateData isolateData) async {
     ReceivePort responsePort = ReceivePort();
     isolate.sendPort.send(isolateData..responsePort = responsePort.sendPort);
@@ -229,164 +249,213 @@ class _TestState extends State<Test> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(5),
-            child:
-            initialized ?
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: CustomPaint(
-                foregroundPainter:
-                RenderLandmarks(inferences, limbs),
-                child: !cameraController!.value.isInitialized
-                    ? Container()
-                    : Transform.scale(
-                      scale: 1 / (cameraController!.value.aspectRatio * MediaQuery.of(context).size.aspectRatio),
-                      child: Center(
-                        child: CameraPreview(cameraController!),
-                      ),
-                      // child: AspectRatio(
-                      //   aspectRatio: cameraController!.value.aspectRatio,
-                      //   child: CameraPreview(cameraController!),
-                      // ),
+        body: Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(5),
+              child:
+              initialized ?
+              Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: CustomPaint(
+                  foregroundPainter:
+                  RenderLandmarks(inferences, limbs),
+                  child: !cameraController!.value.isInitialized
+                      ? Container()
+                      : Transform.scale(
+                    scale: 1 / (cameraController!.value.aspectRatio * MediaQuery.of(context).size.aspectRatio),
+                    child: Center(
+                      child: CameraPreview(cameraController!),
                     ),
-              ),
-            )
-                : Container(),
-          ),
-          //Background
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [const Color(0xff37384E), const Color(0xff53304C)],
-              ),
-            ),
-          ),
-          //App bar
-          Positioned(
-            child: Column(
-              children: [
-                AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  actions: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 15, 15, 0),
-                      child: whiteRusso('Squat', 20, false),
-                    ),
-                  ],
+                    // child: AspectRatio(
+                    //   aspectRatio: cameraController!.value.aspectRatio,
+                    //   child: CameraPreview(cameraController!),
+                    // ),
+                  ),
                 ),
-              ],
+              )
+                  : Container(),
             ),
-          ),
-          //Rive Artboard
-          Padding(
-            padding: const EdgeInsets.only(top: 50),
-            child: Container(
+            //Background
+            Container(
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [const Color(0xff37384E), const Color(0xff53304C)],
+                ),
+              ),
+            ),
+            //App bar
+            Positioned(
               child: Column(
                 children: [
-                  Expanded(
-                    child: rive.Rive(
-                      artboard: _riveArtboard!,
-                    ),
+                  AppBar(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    actions: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 15, 15, 0),
+                        child: whiteRusso('Squat', 20, false),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-          ),
-          //Count data
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Row(
-              children: [
-                DefaultTextStyle(
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 25, color: Colors.black),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          whiteRusso('Reps: ' + doneReps.toString(), 20, false),
-                          // Text("Reps: " + doneReps.toString()),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          // Text(" / " + reps.toString())
-                          whiteRusso(' / ' + reps.toString(), 20, false),
-                        ],
+            //Rive Artboard
+            Padding(
+              padding: const EdgeInsets.only(top: 50),
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: rive.Rive(
+                        artboard: _riveArtboard!,
                       ),
-                      Row(
-                        children: [
-                          whiteRusso('Sets: ' + doneSets.toString(), 20, false),
-                          // Text("Sets: " + doneSets.toString()),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          whiteRusso(' / ' + sets.toString(), 20, false),
-                          // Text(" / " + sets.toString())
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          whiteRusso('Angles: ' + test_angle1.toStringAsFixed(0), 20, false),
-                          // Text("Angles: " + test_angle1.toStringAsFixed(0)),
-                          // SizedBox(
-                          //   width: 5,
-                          // ),
-                        ],
-                      ),
-                      // Row(
-                      //   children: [
-                      //     Text("Angles(허리): " + test_angle3.toStringAsFixed(0)),
-                      //     SizedBox(
-                      //       width: 5,
-                      //     ),
-                      //   ],
-                      // ),
-                      Row(
-                        children: [
-                          whiteRusso('Progress ' + _progress!.value.toStringAsFixed(0), 20, false),
-                          // Text("Progress: " + _progress!.value.toStringAsFixed(0), style: TextStyle( color: Colors.white)),
-                          SizedBox(
-                            width: 5,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          //Camera
-          Positioned(
-            left: 0,
-            bottom: 0,
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.25,
-              height: MediaQuery.of(context).size.height * 0.25,
-              child: Transform.scale(
-                scale: 1 / (cameraController!.value.aspectRatio * MediaQuery.of(context).size.aspectRatio),
-                child: Center(
-                  child: CameraPreview(cameraController!),
+                    ),
+                  ],
                 ),
-                // child: AspectRatio(
-                //   aspectRatio: cameraController!.value.aspectRatio,
-                //   child: CameraPreview(cameraController!),
-                // ),
               ),
             ),
-          ),
-        ],
-      )
+            //Count data
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Row(
+                children: [
+                  DefaultTextStyle(
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 25, color: Colors.black),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            whiteRusso('Reps: ' + doneReps.toString(), 20, false),
+                            // Text("Reps: " + doneReps.toString()),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            // Text(" / " + reps.toString())
+                            whiteRusso(' / ' + reps.toString(), 20, false),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            whiteRusso('Sets: ' + doneSets.toString(), 20, false),
+                            // Text("Sets: " + doneSets.toString()),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            whiteRusso(' / ' + sets.toString(), 20, false),
+                            // Text(" / " + sets.toString())
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            whiteRusso('Angles: ' + test_angle1.toStringAsFixed(0), 20, false),
+                            // Text("Angles: " + test_angle1.toStringAsFixed(0)),
+                            // SizedBox(
+                            //   width: 5,
+                            // ),
+                          ],
+                        ),
+                        // Row(
+                        //   children: [
+                        //     Text("Angles(허리): " + test_angle3.toStringAsFixed(0)),
+                        //     SizedBox(
+                        //       width: 5,
+                        //     ),
+                        //   ],
+                        // ),
+                        Row(
+                          children: [
+                            whiteRusso('Progress ' + _progress!.value.toStringAsFixed(0), 20, false),
+                            // Text("Progress: " + _progress!.value.toStringAsFixed(0), style: TextStyle( color: Colors.white)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Row(
+            //     children: [
+            //       DefaultTextStyle(
+            //         textAlign: TextAlign.left,
+            //         style: TextStyle(fontSize: 25, color: Colors.black),
+            //         child: Column(
+            //           children: [
+            //             Row(
+            //               children: [
+            //                 Text("Reps: " + doneReps.toString()),
+            //                 SizedBox(
+            //                   width: 5,
+            //                 ),
+            //                 Text(" / " + reps.toString())
+            //               ],
+            //             ),
+            //             Row(
+            //               children: [
+            //                 Text("Sets: " + doneSets.toString()),
+            //                 SizedBox(
+            //                   width: 5,
+            //                 ),
+            //                 Text(" / " + sets.toString())
+            //               ],
+            //             ),
+            //             Row(
+            //               children: [
+            //                 Text("Angles: " + test_angle1.toStringAsFixed(0)),
+            //                 SizedBox(
+            //                   width: 5,
+            //                 ),
+            //               ],
+            //             ),
+            //             Row(
+            //               children: [
+            //                 Text("Angles(허리): " + test_angle3.toStringAsFixed(0)),
+            //                 SizedBox(
+            //                   width: 5,
+            //                 ),
+            //               ],
+            //             ),
+            //           ],
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // )
+            //Camera
+            Positioned(
+              left: 0,
+              bottom: 0,
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.25,
+                height: MediaQuery.of(context).size.height * 0.25,
+                child: Transform.scale(
+                  scale: 1 / (cameraController!.value.aspectRatio * MediaQuery.of(context).size.aspectRatio),
+                  child: Center(
+                    child: CameraPreview(cameraController!),
+                  ),
+                  // child: AspectRatio(
+                  //   aspectRatio: cameraController!.value.aspectRatio,
+                  //   child: CameraPreview(cameraController!),
+                  // ),
+                ),
+              ),
+            ),
+          ],
+        )
     );
   }
 }

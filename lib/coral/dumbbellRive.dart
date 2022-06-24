@@ -82,7 +82,7 @@ class _DumbbellState extends State<Dumbbell> {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     rootBundle.load('assets/rive/move_dumbbell.riv').then(
-      (data) async {
+          (data) async {
         // Load the RiveFile from the binary data.
         final file = rive.RiveFile.import(data);
 
@@ -100,7 +100,7 @@ class _DumbbellState extends State<Dumbbell> {
     );
 
     rootBundle.load('assets/rive/move_dumbbell.riv').then(
-      (data) async {
+          (data) async {
         // Load the RiveFile from the binary data.
         final file1 = rive.RiveFile.import(data);
 
@@ -215,11 +215,11 @@ class _DumbbellState extends State<Dumbbell> {
     setState(() {
       _counter1 = _counter1 + 1;
       if (_counter1 == 10)
-        {
-          SchedulerBinding.instance!.addPostFrameCallback((_) {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => DumbbellRive_1pwin(score_1p: _counter1, score_2p : _counter2)));
-          });
-        }
+      {
+        SchedulerBinding.instance!.addPostFrameCallback((_) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => DumbbellRive_1pwin(score_1p: _counter1, score_2p : _counter2)));
+        });
+      }
 
     });
   }
@@ -354,8 +354,8 @@ class _DumbbellState extends State<Dumbbell> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                image: AssetImage('dumbbellRive_count.png'),
-                              )),
+                                    image: AssetImage('dumbbellRive_count.png'),
+                                  )),
                             ),
                             //backgroundColor: getCounterColor(),
                             Container(
@@ -404,8 +404,8 @@ class _DumbbellState extends State<Dumbbell> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                image: AssetImage('dumbbellRive_count.png'),
-                              )),
+                                    image: AssetImage('dumbbellRive_count.png'),
+                                  )),
                             ),
                             //backgroundColor: getCounterColor(),
                             Container(
