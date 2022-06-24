@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:move/reabilitation/test/utility.dart';
 import 'dart:isolate';
 
@@ -57,6 +58,8 @@ class _TestState extends State<Test> {
   var stage = "up";
   bool rest = false;
   int restTime = 0;
+  FlutterTts tts = FlutterTts();
+  int check = 0;
 
   // POSE AND FORM VALIDATION
   bool isProperForm = false;
@@ -167,7 +170,6 @@ class _TestState extends State<Test> {
       test_angle3 = getAngle(pointA, pointB, pointC);
 
       int limbsIndex = 0;
-
       if (!rest) {
         if (handler.doneSets < sets) {
           if (handler.doneReps < reps) {
@@ -181,10 +183,9 @@ class _TestState extends State<Test> {
 
               _progress!.value = ((test_angle1 - 90) * 100 / 180);
 
-              if(test_angle1 > 110) {
-
-              }else if(test_angle1 < 85) {
-
+              if (test_angle3 > 150 && check == 0) {
+                _speak("Please straighten your back");
+                _stop();
               }
 
             });
@@ -216,6 +217,25 @@ class _TestState extends State<Test> {
         });
       }
     });
+  }
+
+  Future _speak(String text) async {
+    await tts.setLanguage("en");
+    await tts.setSpeechRate(0.4);
+    await tts.speak(text);
+    check = 1;
+  }
+
+  Future _stop() async {
+    await tts.stop();
+    check = 0;
+  }
+
+  Future _silence(String text) async {
+    await tts.setLanguage("en");
+    await tts.setSpeechRate(0.4);
+    await tts.speak(text);
+    check = 1;
   }
 
   Future<List<dynamic>> inference(IsolateData isolateData) async {
