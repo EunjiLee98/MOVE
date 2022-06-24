@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 import 'package:move/reabilitation/test/utility.dart';
 import 'dart:isolate';
 
@@ -12,6 +13,7 @@ import 'classifier.dart';
 import 'exerciseList.dart';
 import 'exercise_handler.dart';
 import 'isolate.dart';
+import 'package:rive/rive.dart' as rive;
 
 class Test extends StatefulWidget {
   Test({Key? key}) : super(key: key);
@@ -34,6 +36,7 @@ class _TestState extends State<Test> {
   // TEST VARIABLES
   double test_angle1 = 0;
   double test_angle2 = 0;
+  double test_angle3 = 0;
 
   // WORKOUT AND WEEK DATA
   late List<dynamic> exercise;
@@ -60,10 +63,31 @@ class _TestState extends State<Test> {
   List<dynamic> limbs = [];
   List<dynamic> targets = [];
 
+  bool get isPlaying => _controller?.isActive ?? false;
+
+  rive.Artboard? _riveArtboard;
+  rive.StateMachineController? _controller;
+  rive.SMIInput<double>? _progress;
+
   @override
   void initState() {
     super.initState();
     initAsync();
+
+    rootBundle.load('assets/rive/move_squat.riv').then(
+          (data) async {
+        final file = rive.RiveFile.import(data);
+
+        final artboard = file.mainArtboard;
+        var controller = rive.StateMachineController.fromArtboard(
+            artboard, 'Squat_Controller');
+        if (controller != null) {
+          artboard.addController(controller);
+          _progress = controller.findInput('Progress');
+        }
+        setState(() => _riveArtboard = artboard);
+      },
+    );
   }
 
   void initAsync() async {
@@ -137,6 +161,11 @@ class _TestState extends State<Test> {
       List<int> pointC = [inferenceResults[11][0], inferenceResults[11][1]];
       test_angle2 = getAngle(pointA, pointB, pointC);
 
+      pointA = [inferenceResults[5][0], inferenceResults[5][1]];
+      pointB = [inferenceResults[11][0], inferenceResults[11][1]];
+      pointC = [inferenceResults[13][0], inferenceResults[13][1]];
+      test_angle3 = getAngle(pointA, pointB, pointC);
+
       int limbsIndex = 0;
 
       if (!rest) {
@@ -149,6 +178,15 @@ class _TestState extends State<Test> {
               doneReps = handler.doneReps;
               stage = handler.stage;
               test_angle1 = handler.angle;
+
+              _progress!.value = ((test_angle1 - 90) * 100 / 180);
+
+              if(test_angle1 > 110) {
+
+              }else if(test_angle1 < 85) {
+
+              }
+
             });
           } else {
             handler.doneReps = 0;
@@ -218,6 +256,21 @@ class _TestState extends State<Test> {
             )
                 : Container(),
           ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 50),
+          //   child: Container(
+          //     height: MediaQuery.of(context).size.height,
+          //     child: Column(
+          //       children: [
+          //         Expanded(
+          //           child: rive.Rive(
+          //             artboard: _riveArtboard!,
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -248,6 +301,14 @@ class _TestState extends State<Test> {
                       Row(
                         children: [
                           Text("Angles: " + test_angle1.toStringAsFixed(0)),
+                          SizedBox(
+                            width: 5,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text("Angles(허리): " + test_angle3.toStringAsFixed(0)),
                           SizedBox(
                             width: 5,
                           ),
