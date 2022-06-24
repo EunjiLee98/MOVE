@@ -1,15 +1,19 @@
+import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 import 'package:move/reabilitation/test/utility.dart';
 import 'dart:isolate';
 
 import '../../main.dart';
+import '../camera.dart';
 import 'classifier.dart';
 import 'exerciseList.dart';
+import 'exercise_handler.dart';
 import 'isolate.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+import 'package:rive/rive.dart' as rive;
 
 class Test extends StatefulWidget {
   Test({Key? key}) : super(key: key);
@@ -32,6 +36,7 @@ class _TestState extends State<Test> {
   // TEST VARIABLES
   double test_angle1 = 0;
   double test_angle2 = 0;
+  double test_angle3 = 0;
 
   // WORKOUT AND WEEK DATA
   late List<dynamic> exercise;
@@ -46,7 +51,6 @@ class _TestState extends State<Test> {
   String exerciseDisplayName = "";
   int reps = 0;
   int sets = 0;
-  final FlutterTts tts = FlutterTts();
 
   int doneReps = 0;
   int doneSets = 0;
@@ -59,13 +63,31 @@ class _TestState extends State<Test> {
   List<dynamic> limbs = [];
   List<dynamic> targets = [];
 
+  bool get isPlaying => _controller?.isActive ?? false;
+
+  rive.Artboard? _riveArtboard;
+  rive.StateMachineController? _controller;
+  rive.SMIInput<double>? _progress;
+
   @override
   void initState() {
     super.initState();
-    tts.setLanguage('en');
-    tts.setSpeechRate(0.4);
-    tts.speak("Stand vertically with your legs shoulder width apart");
     initAsync();
+
+    rootBundle.load('assets/rive/move_squat.riv').then(
+          (data) async {
+        final file = rive.RiveFile.import(data);
+
+        final artboard = file.mainArtboard;
+        var controller = rive.StateMachineController.fromArtboard(
+            artboard, 'Squat_Controller');
+        if (controller != null) {
+          artboard.addController(controller);
+          _progress = controller.findInput('Progress');
+        }
+        setState(() => _riveArtboard = artboard);
+      },
+    );
   }
 
   void initAsync() async {
@@ -134,10 +156,15 @@ class _TestState extends State<Test> {
       predicting = false;
       initialized = true;
 
-      List<int> pointA = [inferenceResults[11][0], inferenceResults[11][1]];
-      List<int> pointB = [inferenceResults[13][0], inferenceResults[13][1]];
-      List<int> pointC = [inferenceResults[15][0], inferenceResults[15][1]];
-      test_angle2 = getAngle(pointA, pointB,pointC);
+      List<int> pointA = [inferenceResults[7][0], inferenceResults[7][1]];
+      List<int> pointB = [inferenceResults[5][0], inferenceResults[5][1]];
+      List<int> pointC = [inferenceResults[11][0], inferenceResults[11][1]];
+      test_angle2 = getAngle(pointA, pointB, pointC);
+
+      pointA = [inferenceResults[5][0], inferenceResults[5][1]];
+      pointB = [inferenceResults[11][0], inferenceResults[11][1]];
+      pointC = [inferenceResults[13][0], inferenceResults[13][1]];
+      test_angle3 = getAngle(pointA, pointB, pointC);
 
       int limbsIndex = 0;
 
@@ -151,6 +178,15 @@ class _TestState extends State<Test> {
               doneReps = handler.doneReps;
               stage = handler.stage;
               test_angle1 = handler.angle;
+
+              _progress!.value = ((test_angle1 - 90) * 100 / 180);
+
+              if(test_angle1 > 110) {
+
+              }else if(test_angle1 < 85) {
+
+              }
+
             });
           } else {
             handler.doneReps = 0;
@@ -203,7 +239,7 @@ class _TestState extends State<Test> {
                 width: MediaQuery.of(context).size.width,
                 child: CustomPaint(
                   foregroundPainter:
-                  RenderLandmarks(inferences, targets),
+                  RenderLandmarks(inferences, limbs),
                   child: !cameraController!.value.isInitialized
                       ? Container()
                       : Transform.scale(
@@ -220,6 +256,21 @@ class _TestState extends State<Test> {
               )
                   : Container(),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 50),
+            //   child: Container(
+            //     height: MediaQuery.of(context).size.height,
+            //     child: Column(
+            //       children: [
+            //         Expanded(
+            //           child: rive.Rive(
+            //             artboard: _riveArtboard!,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -249,8 +300,15 @@ class _TestState extends State<Test> {
                         ),
                         Row(
                           children: [
-                            Text("Angles: " + test_angle1.toStringAsFixed(0),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text("Angles: " + test_angle1.toStringAsFixed(0)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("Angles(허리): " + test_angle3.toStringAsFixed(0)),
                             SizedBox(
                               width: 5,
                             ),
@@ -340,11 +398,11 @@ class RenderLandmarks extends CustomPainter {
     //       Offset(vertex1X, vertex1Y), Offset(vertex2X, vertex2Y), edge_paint);
     // }
 
-    for (var target in selectedLandmarks) {
-      renderEdge(canvas, target[0], target[1]);
+    for (var limb in selectedLandmarks) {
+      renderEdge(canvas, limb[0], limb[1]);
     }
     canvas.drawPoints(PointMode.points, points_green, point_green);
-    canvas.drawPoints(PointMode.points, points_green, point_green);
+    canvas.drawPoints(PointMode.points, points_red, point_red);
   }
 
   @override
@@ -356,7 +414,7 @@ class RenderLandmarks extends CustomPainter {
         isCorrect
             ? points_green
             .add(Offset(point[0].toDouble() - 70, point[1].toDouble() - 30))
-            : points_green.add(
+            : points_red.add(
             Offset(point[0].toDouble() - 70, point[1].toDouble() - 30));
       }
     }
@@ -368,7 +426,7 @@ class RenderLandmarks extends CustomPainter {
         double vertex2X = inferenceList[edge[1]][0].toDouble() - 70;
         double vertex2Y = inferenceList[edge[1]][1].toDouble() - 30;
         canvas.drawLine(Offset(vertex1X, vertex1Y), Offset(vertex2X, vertex2Y),
-            isCorrect ? edge_green : edge_green);
+            isCorrect ? edge_green : edge_red);
       }
     }
   }
