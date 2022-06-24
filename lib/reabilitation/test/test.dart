@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:move/reabilitation/test/utility.dart';
 import 'dart:isolate';
 
@@ -57,6 +58,8 @@ class _TestState extends State<Test> {
   var stage = "up";
   bool rest = false;
   int restTime = 0;
+  FlutterTts tts = FlutterTts();
+  int check = 0;
 
   // POSE AND FORM VALIDATION
   bool isProperForm = false;
@@ -91,12 +94,12 @@ class _TestState extends State<Test> {
   }
 
   void initAsync() async {
-      isolate = IsolateUtils();
-      await isolate.start();
-      classifier = Classifier();
-      classifier.loadModel();
-      loadCamera();
-      getExerciseData(); //추가
+    isolate = IsolateUtils();
+    await isolate.start();
+    classifier = Classifier();
+    classifier.loadModel();
+    loadCamera();
+    getExerciseData(); //추가
 
     setState(() {
       limbs = handler.limbs;
@@ -167,7 +170,6 @@ class _TestState extends State<Test> {
       test_angle3 = getAngle(pointA, pointB, pointC);
 
       int limbsIndex = 0;
-
       if (!rest) {
         if (handler.doneSets < sets) {
           if (handler.doneReps < reps) {
@@ -180,6 +182,11 @@ class _TestState extends State<Test> {
               test_angle1 = handler.angle;
 
               _progress!.value = ((test_angle1 - 90) * 100 / 180);
+
+              if (test_angle3 > 150 && check == 0) {
+                _speak("Please straighten your back");
+                _stop();
+              }
 
             });
           } else {
@@ -212,6 +219,25 @@ class _TestState extends State<Test> {
     });
   }
 
+  Future _speak(String text) async {
+    await tts.setLanguage("en");
+    await tts.setSpeechRate(0.4);
+    await tts.speak(text);
+    check = 1;
+  }
+
+  Future _stop() async {
+    await tts.stop();
+    check = 0;
+  }
+
+  Future _silence(String text) async {
+    await tts.setLanguage("en");
+    await tts.setSpeechRate(0.4);
+    await tts.speak(text);
+    check = 1;
+  }
+
   Future<List<dynamic>> inference(IsolateData isolateData) async {
     ReceivePort responsePort = ReceivePort();
     isolate.sendPort.send(isolateData..responsePort = responsePort.sendPort);
@@ -222,100 +248,100 @@ class _TestState extends State<Test> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(5),
-            child:
-            initialized ?
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: CustomPaint(
-                foregroundPainter:
-                RenderLandmarks(inferences, limbs),
-                child: !cameraController!.value.isInitialized
-                    ? Container()
-                    : Transform.scale(
-                      scale: 1 / (cameraController!.value.aspectRatio * MediaQuery.of(context).size.aspectRatio),
-                      child: Center(
-                        child: CameraPreview(cameraController!),
-                      ),
-                      // child: AspectRatio(
-                      //   aspectRatio: cameraController!.value.aspectRatio,
-                      //   child: CameraPreview(cameraController!),
-                      // ),
+        body: Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(5),
+              child:
+              initialized ?
+              Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: CustomPaint(
+                  foregroundPainter:
+                  RenderLandmarks(inferences, limbs),
+                  child: !cameraController!.value.isInitialized
+                      ? Container()
+                      : Transform.scale(
+                    scale: 1 / (cameraController!.value.aspectRatio * MediaQuery.of(context).size.aspectRatio),
+                    child: Center(
+                      child: CameraPreview(cameraController!),
                     ),
+                    // child: AspectRatio(
+                    //   aspectRatio: cameraController!.value.aspectRatio,
+                    //   child: CameraPreview(cameraController!),
+                    // ),
+                  ),
+                ),
+              )
+                  : Container(),
+            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 50),
+            //   child: Container(
+            //     height: MediaQuery.of(context).size.height,
+            //     child: Column(
+            //       children: [
+            //         Expanded(
+            //           child: rive.Rive(
+            //             artboard: _riveArtboard!,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  DefaultTextStyle(
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 25, color: Colors.black),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text("Reps: " + doneReps.toString()),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(" / " + reps.toString())
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("Sets: " + doneSets.toString()),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(" / " + sets.toString())
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("Angles: " + test_angle1.toStringAsFixed(0)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("Angles(허리): " + test_angle3.toStringAsFixed(0)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
             )
-                : Container(),
-          ),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 50),
-          //   child: Container(
-          //     height: MediaQuery.of(context).size.height,
-          //     child: Column(
-          //       children: [
-          //         Expanded(
-          //           child: rive.Rive(
-          //             artboard: _riveArtboard!,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                DefaultTextStyle(
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 25, color: Colors.black),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text("Reps: " + doneReps.toString()),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(" / " + reps.toString())
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text("Sets: " + doneSets.toString()),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(" / " + sets.toString())
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text("Angles: " + test_angle1.toStringAsFixed(0)),
-                          SizedBox(
-                            width: 5,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text("Angles(허리): " + test_angle3.toStringAsFixed(0)),
-                          SizedBox(
-                            width: 5,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
-      )
+          ],
+        )
     );
   }
 }
