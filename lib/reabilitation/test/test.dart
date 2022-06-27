@@ -183,10 +183,11 @@ class _TestState extends State<Test> {
 
               _progress!.value = ((test_angle1 - 90) * 100 / 180);
 
-              if (test_angle3 > 150 && check == 0) {
-                _speak("Please straighten your back");
-                _stop();
-              }
+              // if (test_angle3 > 150 && check == 0) {
+              //   _speak("Please straighten your back");
+              //   _stop();
+              // }
+              //tts should be changed
 
             });
           } else {
