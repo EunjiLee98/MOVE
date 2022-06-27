@@ -15,7 +15,7 @@ import 'exerciseList.dart';
 import 'exercise_handler.dart';
 import 'isolate.dart';
 import 'package:rive/rive.dart' as rive;
-
+//아이코어
 class Test extends StatefulWidget {
   Test({Key? key}) : super(key: key);
 
