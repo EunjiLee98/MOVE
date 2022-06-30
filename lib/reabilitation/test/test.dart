@@ -15,14 +15,14 @@ import 'exerciseList.dart';
 import 'exercise_handler.dart';
 import 'isolate.dart';
 import 'package:rive/rive.dart' as rive;
-//아이코어
+
 class Test extends StatefulWidget {
   Test({Key? key}) : super(key: key);
 
   @override
   _TestState createState() => _TestState();
 }
-
+//BMC 작성
 class _TestState extends State<Test> {
   CameraImage? cameraImage;
   CameraController? cameraController;
