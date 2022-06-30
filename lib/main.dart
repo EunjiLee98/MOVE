@@ -86,6 +86,5 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 }
 
-// 22/06/22 Wed.
-// Downgraded project version and Android Studio to prevent errors!!
-// Working on code analysis on example fitness app that also uses pose detection!!
+// 22/06/30 Thursday.
+// I-corps BMC system modification & interview idea brainstorming!
