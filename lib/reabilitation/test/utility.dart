@@ -17,3 +17,7 @@ double getDistance(int x1, int x2, int y1, int y2) {
 
   return distance;
 }
+
+//7월 5일 아이코어 인터뷰 수행 2명
+//아이템 기능 검증
+//앱 시나리오를 보여주고 사용자의 경험 및 의견 듣기
