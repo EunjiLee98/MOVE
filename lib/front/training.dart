@@ -124,20 +124,20 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                                 },
                                 child: Image.asset('crossButton.png', width: MediaQuery.of(context).size.width*0.9,),
                               ),
-                              // TextButton(
-                              //   onPressed: () {
-                              //     // if(widget.bluetoothServices != null)
-                              //     //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
-                              //   },
-                              //   child: Image.asset('buffett.png', width: MediaQuery.of(context).size.width*0.9,),
-                              // ),
-                              // TextButton(
-                              //   onPressed: () {
-                              //     // if(widget.bluetoothServices != null)
-                              //     //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
-                              //   },
-                              //   child: Image.asset('hurdle.png', width: MediaQuery.of(context).size.width*0.9,),
-                              // ),
+                              TextButton(
+                                onPressed: () {
+                                  // if(widget.bluetoothServices != null)
+                                  //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
+                                },
+                                child: Image.asset('buffett.png', width: MediaQuery.of(context).size.width*0.9,),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  // if(widget.bluetoothServices != null)
+                                  //   Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(bluetoothServices: widget.bluetoothServices)));
+                                },
+                                child: Image.asset('hurdle.png', width: MediaQuery.of(context).size.width*0.9,),
+                              ),
                             ],
                           ),
                         ),
