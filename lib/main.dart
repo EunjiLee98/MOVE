@@ -86,5 +86,5 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 }
 
-// 22/07/05 Tuesday.
-// (part 3) I-corps customer interview conducted & BMC system modified!
+// 22/07/06 Wednesday.
+// 4 more I-corps customer interview conducted & BMC system modified!
