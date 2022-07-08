@@ -86,6 +86,5 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 }
 
-// 22/07/07 Thursday.
-// 2 more I-corps customer interview conducted & BMC system modified!
-// 내일 아이코어 최종발표 (7/8 동국대) 자료 회의 및 제작
+// 22/07/08 Friday.
+// I-corps 최종발표 (동국대학교 서울캠퍼스문화관) MOVE!팀 전원 참
