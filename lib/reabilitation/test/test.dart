@@ -40,6 +40,7 @@ class _TestState extends State<Test> {
   double test_angle1 = 0;
   double test_angle2 = 0;
   double test_angle3 = 0;
+  double test_angle4 = 0;
 
   // WORKOUT AND WEEK DATA
   late List<dynamic> exercise;
@@ -171,6 +172,11 @@ class _TestState extends State<Test> {
       pointC = [inferenceResults[13][0], inferenceResults[13][1]];
       test_angle3 = getAngle(pointA, pointB, pointC);
 
+      // pointA = [inferenceResults[6][0], inferenceResults[6][1]];
+      // pointB = [inferenceResults[12][0], inferenceResults[12][1]];
+      // pointC = [inferenceResults[14][0], inferenceResults[14][1]];
+      // test_angle4 = getAngle(pointA, pointB, pointC);
+
       int limbsIndex = 0;
       if (!rest) {
         if (handler.doneSets < sets) {
@@ -280,17 +286,17 @@ class _TestState extends State<Test> {
                   : Container(),
             ),
             //Background
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [const Color(0xff37384E), const Color(0xff53304C)],
-                ),
-              ),
-            ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width,
+            //   height: MediaQuery.of(context).size.height,
+            //   decoration: BoxDecoration(
+            //     gradient: LinearGradient(
+            //       begin: Alignment.topCenter,
+            //       end: Alignment.bottomCenter,
+            //       colors: [const Color(0xff37384E), const Color(0xff53304C)],
+            //     ),
+            //   ),
+            // ),
             //App bar
             Positioned(
               child: Column(
@@ -315,11 +321,11 @@ class _TestState extends State<Test> {
                 height: MediaQuery.of(context).size.height,
                 child: Column(
                   children: [
-                    Expanded(
-                      child: rive.Rive(
-                        artboard: _riveArtboard!,
-                      ),
-                    ),
+                    // Expanded(
+                    //   child: rive.Rive(
+                    //     artboard: _riveArtboard!,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -438,24 +444,26 @@ class _TestState extends State<Test> {
             //   ),
             // )
             //Camera
-            Positioned(
-              left: 0,
-              bottom: 0,
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.25,
-                height: MediaQuery.of(context).size.height * 0.25,
-                child: Transform.scale(
-                  scale: 1 / (cameraController!.value.aspectRatio * MediaQuery.of(context).size.aspectRatio),
-                  child: Center(
-                    child: CameraPreview(cameraController!),
-                  ),
-                  // child: AspectRatio(
-                  //   aspectRatio: cameraController!.value.aspectRatio,
-                  //   child: CameraPreview(cameraController!),
-                  // ),
-                ),
-              ),
-            ),
+            // Positioned(
+            //   left: 0,
+            //   bottom: 0,
+            //   child: Container(
+            //     // width: MediaQuery.of(context).size.width * 0.25,
+            //     // height: MediaQuery.of(context).size.height * 0.25,
+            //     width: MediaQuery.of(context).size.width,
+            //     height: MediaQuery.of(context).size.height,
+            //     child: Transform.scale(
+            //       scale: 1 / (cameraController!.value.aspectRatio * MediaQuery.of(context).size.aspectRatio),
+            //       child: Center(
+            //         child: CameraPreview(cameraController!),
+            //       ),
+            //       // child: AspectRatio(
+            //       //   aspectRatio: cameraController!.value.aspectRatio,
+            //       //   child: CameraPreview(cameraController!),
+            //       // ),
+            //     ),
+            //   ),
+            // ),
           ],
         )
     );
