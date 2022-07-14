@@ -172,12 +172,12 @@ class DumbellCurlHandler extends ExerciseHandler {
 
   void init() {
     limbs = [
-      [
-        [7, 5, 11],
-        false,
-        0,
-        180
-      ],
+      // [
+      //   [7, 5, 11],
+      //   false,
+      //   0,
+      //   180
+      // ],
       [
         [5, 11, 13],
         false,
