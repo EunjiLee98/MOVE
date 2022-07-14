@@ -267,8 +267,8 @@ class _TestState extends State<Test> {
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: CustomPaint(
-                  // foregroundPainter:
-                  // RenderLandmarks(inferences, limbs),
+                  foregroundPainter:
+                  RenderLandmarks(inferences, limbs),
                   child: !cameraController!.value.isInitialized
                       ? Container()
                       : Transform.scale(
@@ -545,8 +545,8 @@ class RenderLandmarks extends CustomPainter {
     for (var limb in selectedLandmarks) {
       renderEdge(canvas, limb[0], limb[1]);
     }
-    canvas.drawPoints(PointMode.points, points_green, point_green);
-    canvas.drawPoints(PointMode.points, points_red, point_red);
+    // canvas.drawPoints(PointMode.points, points_green, point_green);
+    // canvas.drawPoints(PointMode.points, points_red, point_red);
   }
 
   @override
@@ -569,8 +569,8 @@ class RenderLandmarks extends CustomPainter {
         double vertex1Y = inferenceList[edge[0]][1].toDouble() - 30;
         double vertex2X = inferenceList[edge[1]][0].toDouble() - 70;
         double vertex2Y = inferenceList[edge[1]][1].toDouble() - 30;
-        canvas.drawLine(Offset(vertex1X, vertex1Y), Offset(vertex2X, vertex2Y),
-            isCorrect ? edge_green : edge_red);
+        // canvas.drawLine(Offset(vertex1X, vertex1Y), Offset(vertex2X, vertex2Y),
+        //     isCorrect ? edge_green : edge_red);
       }
     }
   }
