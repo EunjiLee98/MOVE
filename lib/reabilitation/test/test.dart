@@ -303,6 +303,7 @@ class _TestState extends State<Test> {
                   AppBar(
                     backgroundColor: Colors.transparent,
                     elevation: 0,
+                    leading: IconButton(onPressed: () =>{Navigator.pop(context)}, icon: Icon(Icons.arrow_back, color: Color(0xff290055),)),
                     actions: [
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 15, 15, 0),
@@ -331,13 +332,14 @@ class _TestState extends State<Test> {
             ),
             //Count data
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const EdgeInsets.only(top: 50.0, left: 30.0),
               child: Row(
                 children: [
                   DefaultTextStyle(
                     textAlign: TextAlign.left,
                     style: TextStyle(fontSize: 25, color: Colors.black),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
@@ -378,15 +380,15 @@ class _TestState extends State<Test> {
                         //     ),
                         //   ],
                         // ),
-                        Row(
-                          children: [
-                            navyRusso('Progress ' + _progress!.value.toStringAsFixed(0), 20, false),
-                            // Text("Progress: " + _progress!.value.toStringAsFixed(0), style: TextStyle( color: Colors.white)),
-                            SizedBox(
-                              width: 5,
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     navyRusso('Progress ' + _progress!.value.toStringAsFixed(0), 20, false),
+                        //     // Text("Progress: " + _progress!.value.toStringAsFixed(0), style: TextStyle( color: Colors.white)),
+                        //     SizedBox(
+                        //       width: 5,
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   )
