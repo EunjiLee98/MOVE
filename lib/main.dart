@@ -85,6 +85,3 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     );
   }
 }
-
-// 22/07/08 Friday.
-// I-corps 최종발표 (동국대학교 서울캠퍼스문화관) MOVE!팀 전원 참

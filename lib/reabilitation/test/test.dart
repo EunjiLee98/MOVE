@@ -23,8 +23,7 @@ class Test extends StatefulWidget {
   @override
   _TestState createState() => _TestState();
 }
-//인터뷰
-//월요일: 인터뷰 수행 1명 및 아이디어 회의
+
 class _TestState extends State<Test> {
   CameraImage? cameraImage;
   CameraController? cameraController;
