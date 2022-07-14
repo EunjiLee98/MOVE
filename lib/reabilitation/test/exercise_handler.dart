@@ -273,9 +273,9 @@ class DumbellCurlHandler extends ExerciseHandler {
         }
       } else {
         if ((angle < 130 && angle > 85)
-            && (angle3 < 100 && angle3 > 85)
-            && (angle2 < 130 && angle2 > 90)
-            && (angle4 > 85 && angle4 < 100)) {
+            && (angle3 < 130 && angle3 > 85)
+            && (angle2 < 110 && angle2 > 85)
+            && (angle4 > 85 && angle4 < 110)) {
           stage = "down";
         }
         if (angle > 170 && stage == "down" && angle3 > 170 && angle2 > 170) {
