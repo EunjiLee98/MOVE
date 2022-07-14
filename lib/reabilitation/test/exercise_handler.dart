@@ -164,6 +164,7 @@ class DumbellCurlHandler extends ExerciseHandler {
   var angle = 0;
   var angle2 = 0;
   double angle3 = 0;
+  double angle4 = 0;
 
   List<int> pointA = [];
   List<int> pointB = [];
@@ -244,6 +245,15 @@ class DumbellCurlHandler extends ExerciseHandler {
       pointC = [inferenceResults[c][0], inferenceResults[c][1]];
       angle3 = getAngle(pointA, pointB, pointC);
 
+      a = 6;
+      b = 12;
+      c = 14;
+
+      pointA = [inferenceResults[a][0], inferenceResults[a][1]];
+      pointB = [inferenceResults[b][0], inferenceResults[b][1]];
+      pointC = [inferenceResults[c][0], inferenceResults[c][1]];
+      angle4 = getAngle(pointA, pointB, pointC);
+
       foot = getDistance(
           inferenceResults[9][0],
           inferenceResults[7][1],
@@ -257,15 +267,18 @@ class DumbellCurlHandler extends ExerciseHandler {
     // && inferenceResults[13][0] > inferenceResults[15][0] + foot
 
       if (restart) {
-        if (angle > 150) {
+        if (angle > 150 && angle2 > 170) {
           stage = "up";
           restart = false;
         }
       } else {
-        if (angle < 130 && angle3 < 130) {
+        if ((angle < 130 && angle > 85)
+            && (angle3 < 100 && angle3 > 85)
+            && (angle2 < 130 && angle2 > 90)
+            && (angle4 > 85 && angle4 < 100)) {
           stage = "down";
         }
-        if (angle > 150 && stage == "down" && angle3 > 150) {
+        if (angle > 170 && stage == "down" && angle3 > 170 && angle2 > 170) {
           stage = "up";
           doneReps += 1;
         }

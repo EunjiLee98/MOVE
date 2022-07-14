@@ -11,7 +11,7 @@ Widget whiteRusso(String str, double num, bool bold) {
       'Russo One',
     textStyle: TextStyle(
         fontSize: num,
-        color: Colors.white,
+        color: Colors.black,
         fontWeight: bold ? FontWeight.bold : null
     ),)
   );

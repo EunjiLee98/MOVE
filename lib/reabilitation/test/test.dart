@@ -267,8 +267,8 @@ class _TestState extends State<Test> {
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: CustomPaint(
-                  foregroundPainter:
-                  RenderLandmarks(inferences, limbs),
+                  // foregroundPainter:
+                  // RenderLandmarks(inferences, limbs),
                   child: !cameraController!.value.isInitialized
                       ? Container()
                       : Transform.scale(
@@ -343,7 +343,7 @@ class _TestState extends State<Test> {
                         Row(
                           children: [
                             whiteRusso('Reps: ' + doneReps.toString(), 20, false),
-                            // Text("Reps: " + doneReps.toString()),
+                            // Text("Reps: " + doneReps.toString(), style: TextStyle(color: Colors.black),),
                             SizedBox(
                               width: 5,
                             ),
