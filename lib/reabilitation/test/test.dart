@@ -306,7 +306,7 @@ class _TestState extends State<Test> {
                     actions: [
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 15, 15, 0),
-                        child: whiteRusso('Squat', 20, false),
+                        child: navyRusso('Squat', 20, false),
                       ),
                     ],
                   ),
@@ -341,29 +341,29 @@ class _TestState extends State<Test> {
                       children: [
                         Row(
                           children: [
-                            whiteRusso('Reps: ' + doneReps.toString(), 20, false),
+                            navyRusso('Reps: ' + doneReps.toString(), 20, false),
                             // Text("Reps: " + doneReps.toString(), style: TextStyle(color: Colors.black),),
                             SizedBox(
                               width: 5,
                             ),
                             // Text(" / " + reps.toString())
-                            whiteRusso(' / ' + reps.toString(), 20, false),
+                            navyRusso(' / ' + reps.toString(), 20, false),
                           ],
                         ),
                         Row(
                           children: [
-                            whiteRusso('Sets: ' + doneSets.toString(), 20, false),
+                            navyRusso('Sets: ' + doneSets.toString(), 20, false),
                             // Text("Sets: " + doneSets.toString()),
                             SizedBox(
                               width: 5,
                             ),
-                            whiteRusso(' / ' + sets.toString(), 20, false),
+                            navyRusso(' / ' + sets.toString(), 20, false),
                             // Text(" / " + sets.toString())
                           ],
                         ),
                         Row(
                           children: [
-                            whiteRusso('Angles: ' + test_angle1.toStringAsFixed(0), 20, false),
+                            navyRusso('Angles: ' + test_angle1.toStringAsFixed(0), 20, false),
                             // Text("Angles: " + test_angle1.toStringAsFixed(0)),
                             // SizedBox(
                             //   width: 5,
@@ -380,7 +380,7 @@ class _TestState extends State<Test> {
                         // ),
                         Row(
                           children: [
-                            whiteRusso('Progress ' + _progress!.value.toStringAsFixed(0), 20, false),
+                            navyRusso('Progress ' + _progress!.value.toStringAsFixed(0), 20, false),
                             // Text("Progress: " + _progress!.value.toStringAsFixed(0), style: TextStyle( color: Colors.white)),
                             SizedBox(
                               width: 5,
