@@ -38,7 +38,7 @@ In this pandemic situation where people can't go out freely due to the COVID-19,
 * Officially release the app
 
 ### MOVE! video link
-> https://youtu.be/_YAMx4f7up8
+> https://youtu.be/OBbLY6Hegnk
 
 ### MOVE! android download link
 > https://play.google.com/store/apps/details?id=com.team.move
