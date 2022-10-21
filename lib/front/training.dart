@@ -9,6 +9,7 @@ import 'package:move/exercise/jumpingJack.dart';
 import 'package:move/exercise/squatRive.dart';
 import 'package:move/front/bluetooth.dart';
 import 'package:camera/camera.dart';
+import 'package:move/reabilitation/pushed_page.dart';
 import 'package:move/theme/font.dart';
 
 class Training extends StatefulWidget {
@@ -152,7 +153,14 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => WebSocket()));
+                                  // Navigator.push(context, MaterialPageRoute(builder: (context) => WebSocket()));
+                                  Navigator.push(context, MaterialPageRoute(
+                                        builder: (context) => PushedPage(
+                                          cameras: widget.cameras!,
+                                          title: 'posenet',
+                                          name: 'Tree',
+                                        ),
+                                      ));
                                 },
                                 child: Image.asset('dumbbellButton.png', width: MediaQuery.of(context).size.width*0.9,),
                               ),

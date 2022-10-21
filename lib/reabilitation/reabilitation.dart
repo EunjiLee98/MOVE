@@ -54,13 +54,13 @@ class _ReabSelectState extends State<ReabSelect> {
                   TextButton(
                     onPressed: () {
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => PushedPage(
-                              cameras: widget.cameras!,
-                              title: 'posenet',
-                              name: 'Warrior',
-                            ),
-                          ));
+                          // Navigator.push(context, MaterialPageRoute(
+                          //   builder: (context) => PushedPage(
+                          //     cameras: widget.cameras!,
+                          //     title: 'posenet',
+                          //     name: 'Warrior',
+                          //   ),
+                          // ));
                         });
                     },
                     child: Image.asset('warriorButton.png', width: MediaQuery.of(context).size.width * 0.9,),
@@ -68,13 +68,13 @@ class _ReabSelectState extends State<ReabSelect> {
                   TextButton(
                     onPressed: () {
                       SchedulerBinding.instance!.addPostFrameCallback((_) {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => PushedPage(
-                            cameras: widget.cameras!,
-                            title: 'posenet',
-                            name: 'Tree',
-                          ),
-                        ));
+                        // Navigator.push(context, MaterialPageRoute(
+                        //   builder: (context) => PushedPage(
+                        //     cameras: widget.cameras!,
+                        //     title: 'posenet',
+                        //     name: 'Tree',
+                        //   ),
+                        // ));
                       });
                     },
                     child: Image.asset('treeButton.png', width: MediaQuery.of(context).size.width * 0.9,),
@@ -82,13 +82,13 @@ class _ReabSelectState extends State<ReabSelect> {
                   TextButton(
                     onPressed: () {
                       SchedulerBinding.instance!.addPostFrameCallback((_) {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => PushedPage(
-                            cameras: widget.cameras!,
-                            title: 'posenet',
-                            name: 'Bow',
-                          ),
-                        ));
+                        // Navigator.push(context, MaterialPageRoute(
+                        //   builder: (context) => PushedPage(
+                        //     cameras: widget.cameras!,
+                        //     title: 'posenet',
+                        //     name: 'Bow',
+                        //   ),
+                        // ));
                       });
                     },
                     child: Image.asset('bowButton.png', width: MediaQuery.of(context).size.width * 0.9,),
