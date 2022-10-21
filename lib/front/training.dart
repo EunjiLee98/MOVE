@@ -154,13 +154,15 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                               TextButton(
                                 onPressed: () {
                                   // Navigator.push(context, MaterialPageRoute(builder: (context) => WebSocket()));
-                                  Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) => PushedPage(
-                                          cameras: widget.cameras!,
-                                          title: 'posenet',
-                                          name: 'Tree',
-                                        ),
-                                      ));
+                                  SchedulerBinding.instance!.addPostFrameCallback((_) {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) => PushedPage(
+                                        cameras: widget.cameras!,
+                                        title: 'posenet',
+                                        name: 'Tree',
+                                      ),
+                                    ));
+                                  });
                                 },
                                 child: Image.asset('dumbbellButton.png', width: MediaQuery.of(context).size.width*0.9,),
                               ),

@@ -23,8 +23,7 @@ class Test extends StatefulWidget {
   @override
   _TestState createState() => _TestState();
 }
-//인터뷰
-//월요일: 인터뷰 수행 1명 및 아이디어 회의
+
 class _TestState extends State<Test> {
   CameraImage? cameraImage;
   CameraController? cameraController;
@@ -304,10 +303,11 @@ class _TestState extends State<Test> {
                   AppBar(
                     backgroundColor: Colors.transparent,
                     elevation: 0,
+                    leading: IconButton(onPressed: () =>{Navigator.pop(context)}, icon: Icon(Icons.arrow_back, color: Colors.white,)),
                     actions: [
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 15, 15, 0),
-                        child: navyRusso('Squat', 20, false),
+                        child: whiteRusso('Squat', 20, false),
                       ),
                     ],
                   ),
@@ -332,39 +332,40 @@ class _TestState extends State<Test> {
             ),
             //Count data
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const EdgeInsets.only(top: 50.0, left: 30.0),
               child: Row(
                 children: [
                   DefaultTextStyle(
                     textAlign: TextAlign.left,
                     style: TextStyle(fontSize: 25, color: Colors.black),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            navyRusso('Reps: ' + doneReps.toString(), 20, false),
+                            whiteRusso('Reps: ' + doneReps.toString(), 20, false),
                             // Text("Reps: " + doneReps.toString(), style: TextStyle(color: Colors.black),),
                             SizedBox(
                               width: 5,
                             ),
                             // Text(" / " + reps.toString())
-                            navyRusso(' / ' + reps.toString(), 20, false),
+                            whiteRusso(' / ' + reps.toString(), 20, false),
                           ],
                         ),
                         Row(
                           children: [
-                            navyRusso('Sets: ' + doneSets.toString(), 20, false),
+                            whiteRusso('Sets: ' + doneSets.toString(), 20, false),
                             // Text("Sets: " + doneSets.toString()),
                             SizedBox(
                               width: 5,
                             ),
-                            navyRusso(' / ' + sets.toString(), 20, false),
+                            whiteRusso(' / ' + sets.toString(), 20, false),
                             // Text(" / " + sets.toString())
                           ],
                         ),
                         Row(
                           children: [
-                            navyRusso('Angles: ' + test_angle1.toStringAsFixed(0), 20, false),
+                            whiteRusso('Angles: ' + test_angle1.toStringAsFixed(0), 20, false),
                             // Text("Angles: " + test_angle1.toStringAsFixed(0)),
                             // SizedBox(
                             //   width: 5,
@@ -379,15 +380,15 @@ class _TestState extends State<Test> {
                         //     ),
                         //   ],
                         // ),
-                        Row(
-                          children: [
-                            navyRusso('Progress ' + _progress!.value.toStringAsFixed(0), 20, false),
-                            // Text("Progress: " + _progress!.value.toStringAsFixed(0), style: TextStyle( color: Colors.white)),
-                            SizedBox(
-                              width: 5,
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     navyRusso('Progress ' + _progress!.value.toStringAsFixed(0), 20, false),
+                        //     // Text("Progress: " + _progress!.value.toStringAsFixed(0), style: TextStyle( color: Colors.white)),
+                        //     SizedBox(
+                        //       width: 5,
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   )

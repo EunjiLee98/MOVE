@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:move/reabilitation/test/utility.dart';
+import 'package:move/theme/font.dart';
 import 'dart:isolate';
 
 import '../../main.dart';
@@ -218,8 +219,27 @@ class _Test2State extends State<Test2> {
             )
                 : Container(),
           ),
+          //App bar
+          Positioned(
+            child: Column(
+              children: [
+                AppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  leading: IconButton(onPressed: () =>{Navigator.pop(context)}, icon: Icon(Icons.arrow_back, color: Colors.white,)),
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 15, 15, 0),
+                      child: whiteRusso('Dumbbell Curl', 20, false),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          //Exercise Info
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 50.0, left: 30.0),
             child: Row(
               children: [
                 DefaultTextStyle(
@@ -229,25 +249,31 @@ class _Test2State extends State<Test2> {
                     children: [
                       Row(
                         children: [
-                          Text("Reps: " + doneReps2.toString()),
+                          // Text("Reps: " + doneReps2.toString()),
+                          whiteRusso('Reps: ' + doneReps2.toString(), 20, false),
                           SizedBox(
                             width: 5,
                           ),
-                          Text(" / " + reps.toString())
+                          // Text(" / " + reps.toString())
+                          whiteRusso(' / ' + reps.toString(), 20, false),
                         ],
                       ),
                       Row(
                         children: [
-                          Text("Sets: " + doneSets2.toString()),
+                          // Text("Sets: " + doneSets2.toString()),
+                          whiteRusso('Sets: ' + doneSets2.toString(), 20, false),
                           SizedBox(
                             width: 5,
                           ),
-                          Text(" / " + sets.toString())
+                          // Text(" / " + sets.toString())
+                          whiteRusso(' / ' + sets.toString(), 20, false),
+
                         ],
                       ),
                       Row(
                         children: [
-                          Text("Angles: " + test_angle1.toStringAsFixed(0)),
+                          // Text("Angles: " + test_angle1.toStringAsFixed(0)),
+                          whiteRusso('Angles: ' + test_angle1.toStringAsFixed(0), 20, false),
                           SizedBox(
                             width: 5,
                           ),
