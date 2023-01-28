@@ -131,22 +131,6 @@ class Classifier {
     } catch (e) {
       print("Error while creating interpreter: $e");
     }
-
-    // var outputTensors = interpreter.getOutputTensors();
-    // var inputTensors = interpreter.getInputTensors();
-    // List<List<int>> _outputShapes = [];
-
-    // outputTensors.forEach((tensor) {
-    //   print("Output Tensor: " + tensor.toString());
-    //   _outputShapes.add(tensor.shape);
-    // });
-    // inputTensors.forEach((tensor) {
-    //   print("Input Tensor: " + tensor.toString());
-    // });
-
-    // print("------------------[A}========================\n" +
-    //     _outputShapes.toString());
-
     outputLocations = TensorBufferFloat([1, 1, 17, 3]);
   }
 

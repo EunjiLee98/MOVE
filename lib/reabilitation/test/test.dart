@@ -321,11 +321,11 @@ class _TestState extends State<Test> {
                 height: MediaQuery.of(context).size.height,
                 child: Column(
                   children: [
-                    // Expanded(
-                    //   child: rive.Rive(
-                    //     artboard: _riveArtboard!,
-                    //   ),
-                    // ),
+                    Expanded(
+                      child: rive.Rive(
+                        artboard: _riveArtboard!,
+                      ),
+                    ),
                   ],
                 ),
               ),
