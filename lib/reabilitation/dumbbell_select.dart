@@ -42,7 +42,7 @@ class _DumbbellSelectState extends State<DumbbellSelect> {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.3,
+              height: MediaQuery.of(context).size.height*0.37,
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('dumbbell_back.png'),

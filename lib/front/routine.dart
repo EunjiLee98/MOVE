@@ -38,7 +38,7 @@ class _RoutineState extends State<Routine> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.35,
+                  height: MediaQuery.of(context).size.height*0.4,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage('diet_back.png'),

@@ -42,7 +42,7 @@ class _SquatSelectState extends State<SquatSelect> {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.3,
+              height: MediaQuery.of(context).size.height*0.37,
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('squat_back.png'),
