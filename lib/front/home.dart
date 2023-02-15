@@ -274,24 +274,24 @@ class _HomeState extends State<Homepage> {
                         padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
                         child: Row(
                           children: [
-                            // CircleAvatar(
-                            //   radius: 27,
-                            //   backgroundImage: NetworkImage(FirebaseAuth.instance.currentUser!.photoURL.toString()),
-                            //   backgroundColor: Colors.transparent,
-                            // ),
+                            CircleAvatar(
+                              radius: 27,
+                              backgroundImage: NetworkImage(FirebaseAuth.instance.currentUser!.photoURL.toString()),
+                              backgroundColor: Colors.transparent,
+                            ),
                             SizedBox(width: 15),
                             Expanded(
                               child: Column(
                                 children: [
-                                  // Row(
-                                  //   mainAxisAlignment: MainAxisAlignment.start,
-                                  //   children: [
-                                  //     navyNoto(FirebaseAuth.instance.currentUser!.displayName.toString(), 23, true),
-                                  //     SizedBox(width: 10),
-                                  //     whiteNoto('님', 23, true),
-                                  //   ],
-                                  // ),
-                                  // SizedBox(height: 5),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      navyNoto(FirebaseAuth.instance.currentUser!.displayName.toString(), 23, true),
+                                      SizedBox(width: 10),
+                                      whiteNoto('님', 23, true),
+                                    ],
+                                  ),
+                                  SizedBox(height: 5),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
@@ -497,7 +497,7 @@ class _HomeState extends State<Homepage> {
                                             child: Column(
                                               children: [
                                                 Center(
-                                                  child: Icon(Icons.keyboard_arrow_up, color: Color(0xff5A0CAE), size: 40,),
+                                                  child: Icon(Icons.keyboard_arrow_up, color: Color(0xff5A0CAE), size: 25,),
                                                 ),
                                                 Padding(
                                                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
