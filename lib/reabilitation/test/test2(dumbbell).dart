@@ -226,7 +226,12 @@ class _Test2State extends State<Test2> {
                 AppBar(
                   backgroundColor: Colors.transparent,
                   elevation: 0,
-                  leading: IconButton(onPressed: () =>{Navigator.pop(context)}, icon: Icon(Icons.arrow_back, color: Colors.white,)),
+                  leading: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back, color: Colors.white,)),
                   actions: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 15, 15, 0),

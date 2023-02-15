@@ -43,6 +43,19 @@ Widget whiteNoto(String str, double num, bool bold) {
   );
 }
 
+Widget blackNoto(String str, double num, bool bold) {
+  return Text(
+      str,
+      style: GoogleFonts.getFont(
+        'Noto Sans',
+        textStyle: TextStyle(
+            fontSize: num,
+            color: Colors.black,
+            fontWeight: bold ? FontWeight.bold : null
+        ),)
+  );
+}
+
 Widget navyNoto(String str, double num, bool bold) {
   return Text(
       str,

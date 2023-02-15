@@ -186,6 +186,20 @@ flutter:
     - warriorButton.png
     - score.png
     - time.png
+    - logo(new).png
+    - camera.png
+    - phone.png
+    - dumbbell_movenet.png
+    - dumbbell_movenet2.png
+    - dumbbell_back.png
+    - squat_movenet.png
+    - squat_movenet2.png
+    - squat_back.png
+    - diet.png
+    - diet_back.png
+    - weight.png
+    - morning.png
+    - routine.png
 
 
   # To add assets to your application, add an assets section, like this:

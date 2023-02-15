@@ -21,7 +21,10 @@ class PushedPage extends StatefulWidget {
   final List<CameraDescription> cameras;
   final String title;
   final String name;
-  const PushedPage({required this.cameras, required this.title, required this.name});
+  final String? ExerciseName;
+  final String? level;
+
+  const PushedPage({required this.cameras, required this.title, required this.name, this.ExerciseName, this.level});
   @override
   _PushedPageState createState() => _PushedPageState();
 }
@@ -99,7 +102,7 @@ class _PushedPageState extends State<PushedPage> {
             ),
           ),
           if(widget.name == 'Warrior') ...[
-            Test()
+            Test(cameras: widget.cameras, name: widget.ExerciseName, level: widget.level)
             // Warrior(
             //   data: _data == null ? [] : _data,
             //   previewH: max(_imageHeight, _imageWidth),
