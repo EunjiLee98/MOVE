@@ -158,6 +158,7 @@ class FinishGame extends StatelessWidget {
                     onTap: () {
                       SchedulerBinding.instance!.addPostFrameCallback((_) {
                         // Navigator.pop(context);
+                        // addScore();
                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) =>
                             Temp(bluetoothServices: bluetoothServices, cameras: cameras, index: 2)), (route) => false);
                       });

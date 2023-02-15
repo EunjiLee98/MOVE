@@ -562,8 +562,8 @@ class _BoxingClearState extends State<BoxingClear> {
                         width: MediaQuery.of(context).size.width / 2.2,
                       ),
                       onPressed: () {
+                        addScore();
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          addScore();
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
@@ -583,8 +583,8 @@ class _BoxingClearState extends State<BoxingClear> {
                         width: MediaQuery.of(context).size.width / 2.2,
                       ),
                       onPressed: () {
+                        addScore();
                         SchedulerBinding.instance!.addPostFrameCallback((_) {
-                          addScore();
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(

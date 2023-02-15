@@ -53,6 +53,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin{
       }
     });
 
+    if(mounted) Navigator.push(context, MaterialPageRoute(builder: (context) => Temp(cameras: widget.cameras, index: 0)));
+
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
@@ -121,7 +123,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin{
                     onPressed: () {
                       signInWithGoogle();
                       // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(cameras: widget.cameras)));
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Temp(cameras: widget.cameras, index: 0)));
                     },
                   ),
                 ),
