@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:move/front/routine.dart';
 import 'package:move/reabilitation/reabilitation.dart';
 import 'package:move/theme/font.dart';
 import 'package:rive/rive.dart';
@@ -273,23 +274,23 @@ class _HomeState extends State<Homepage> {
                         padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
                         child: Row(
                           children: [
-                            CircleAvatar(
-                              radius: 27,
-                              backgroundImage: NetworkImage(FirebaseAuth.instance.currentUser!.photoURL.toString()),
-                              backgroundColor: Colors.transparent,
-                            ),
+                            // CircleAvatar(
+                            //   radius: 27,
+                            //   backgroundImage: NetworkImage(FirebaseAuth.instance.currentUser!.photoURL.toString()),
+                            //   backgroundColor: Colors.transparent,
+                            // ),
                             SizedBox(width: 15),
                             Expanded(
                               child: Column(
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      navyNoto(FirebaseAuth.instance.currentUser!.displayName.toString(), 23, true),
-                                      SizedBox(width: 10),
-                                      whiteNoto('님', 23, true),
-                                    ],
-                                  ),
+                                  // Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.start,
+                                  //   children: [
+                                  //     navyNoto(FirebaseAuth.instance.currentUser!.displayName.toString(), 23, true),
+                                  //     SizedBox(width: 10),
+                                  //     whiteNoto('님', 23, true),
+                                  //   ],
+                                  // ),
                                   // SizedBox(height: 5),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -433,7 +434,7 @@ class _HomeState extends State<Homepage> {
                             children: [
                               Container(
                                 width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height*0.26,
+                                height: MediaQuery.of(context).size.height*0.22,
                                 margin: EdgeInsets.zero,
                                 padding: EdgeInsets.zero,
                                 child: PageView(
@@ -565,6 +566,33 @@ class _HomeState extends State<Homepage> {
                               ),
                             ],
                           ),
+                      ),
+                      SizedBox(height: 15,),
+                      Center(child: whiteNoto('운동루틴 추천', 12, true)),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height*0.28,
+                        margin: EdgeInsets.zero,
+                        padding: EdgeInsets.zero,
+                        child: PageView(
+                            controller: controller,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Routine(name: 'diet')));
+                                },
+                                child: Container(
+                                  child: Image.asset('diet.png', fit: BoxFit.fitHeight,),
+                                ),
+                              ),
+                              Container(
+                                child: Image.asset('weight.png', fit: BoxFit.fitHeight,),
+                              ),
+                              Container(
+                                child: Image.asset('morning.png', fit: BoxFit.fitHeight,),
+                              ),
+                            ]
+                        ),
                       ),
                     ],
                   ),

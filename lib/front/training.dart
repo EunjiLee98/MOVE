@@ -9,7 +9,9 @@ import 'package:move/exercise/jumpingJack.dart';
 import 'package:move/exercise/squatRive.dart';
 import 'package:move/front/bluetooth.dart';
 import 'package:camera/camera.dart';
+import 'package:move/reabilitation/dumbbell_select.dart';
 import 'package:move/reabilitation/pushed_page.dart';
+import 'package:move/reabilitation/squat_select.dart';
 import 'package:move/theme/font.dart';
 
 class Training extends StatefulWidget {
@@ -147,22 +149,33 @@ class _TrainingState extends State<Training> with SingleTickerProviderStateMixin
                             children: [
                               TextButton(
                                 onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(cameras: widget.cameras!, title: 'MOVE! - Squat Rive',)));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => SquatSelect(cameras: widget.cameras!)));
+                                  // SchedulerBinding.instance!.addPostFrameCallback((_) {
+                                  //   Navigator.push(context, MaterialPageRoute(
+                                  //     builder: (context) => PushedPage(
+                                  //       cameras: widget.cameras!,
+                                  //       title: 'posenet',
+                                  //       name: 'Warrior',
+                                  //     ),
+                                  //   ));
+                                  // });
+                                  // Navigator.push(context, MaterialPageRoute(builder: (context) => Squat(cameras: widget.cameras!, title: 'MOVE! - Squat Rive',)));
                                 },
                                 child: Image.asset('squatButton.png', width: MediaQuery.of(context).size.width*0.9,),
                               ),
                               TextButton(
                                 onPressed: () {
                                   // Navigator.push(context, MaterialPageRoute(builder: (context) => WebSocket()));
-                                  SchedulerBinding.instance!.addPostFrameCallback((_) {
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) => PushedPage(
-                                        cameras: widget.cameras!,
-                                        title: 'posenet',
-                                        name: 'Tree',
-                                      ),
-                                    ));
-                                  });
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => DumbbellSelect(cameras: widget.cameras!)));
+                                  // SchedulerBinding.instance!.addPostFrameCallback((_) {
+                                  //   Navigator.push(context, MaterialPageRoute(
+                                  //     builder: (context) => PushedPage(
+                                  //       cameras: widget.cameras!,
+                                  //       title: 'posenet',
+                                  //       name: 'Tree',
+                                  //     ),
+                                  //   ));
+                                  // });
                                 },
                                 child: Image.asset('dumbbellButton.png', width: MediaQuery.of(context).size.width*0.9,),
                               ),

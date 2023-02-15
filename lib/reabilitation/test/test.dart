@@ -11,6 +11,7 @@ import 'dart:isolate';
 
 import '../../main.dart';
 import '../camera.dart';
+import '../finish.dart';
 import 'classifier.dart';
 import 'exerciseList.dart';
 import 'exercise_handler.dart';
@@ -18,7 +19,11 @@ import 'isolate.dart';
 import 'package:rive/rive.dart' as rive;
 
 class Test extends StatefulWidget {
-  Test({Key? key}) : super(key: key);
+  final List<CameraDescription>? cameras;
+  final String? name;
+  final String? level;
+
+  Test({Key? key, this.cameras, this.name, this.level}) : super(key: key);
 
   @override
   _TestState createState() => _TestState();
@@ -142,6 +147,10 @@ class _TestState extends State<Test> {
         });
       }
     });
+    // if(doneSets == 3) {
+    if(doneReps == 1) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Finish(cameras: widget.cameras, name: widget.name, level: widget.level,)));
+    }
   }
 
   void createIsolate(CameraImage imageStream) async {
@@ -303,7 +312,12 @@ class _TestState extends State<Test> {
                   AppBar(
                     backgroundColor: Colors.transparent,
                     elevation: 0,
-                    leading: IconButton(onPressed: () =>{Navigator.pop(context)}, icon: Icon(Icons.arrow_back, color: Colors.white,)),
+                    leading: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back, color: Colors.white,)),
                     actions: [
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 15, 15, 0),
@@ -546,8 +560,8 @@ class RenderLandmarks extends CustomPainter {
     for (var limb in selectedLandmarks) {
       renderEdge(canvas, limb[0], limb[1]);
     }
-    // canvas.drawPoints(PointMode.points, points_green, point_green);
-    // canvas.drawPoints(PointMode.points, points_red, point_red);
+    canvas.drawPoints(PointMode.points, points_green, point_green);
+    canvas.drawPoints(PointMode.points, points_red, point_red);
   }
 
   @override
@@ -570,8 +584,8 @@ class RenderLandmarks extends CustomPainter {
         double vertex1Y = inferenceList[edge[0]][1].toDouble() - 30;
         double vertex2X = inferenceList[edge[1]][0].toDouble() - 70;
         double vertex2Y = inferenceList[edge[1]][1].toDouble() - 30;
-        // canvas.drawLine(Offset(vertex1X, vertex1Y), Offset(vertex2X, vertex2Y),
-        //     isCorrect ? edge_green : edge_red);
+        canvas.drawLine(Offset(vertex1X, vertex1Y), Offset(vertex2X, vertex2Y),
+            isCorrect ? edge_green : edge_red);
       }
     }
   }

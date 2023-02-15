@@ -1,11 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_blue/flutter_blue.dart';
+
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_blue/flutter_blue.dart';
 import 'package:just_audio/just_audio.dart';
 import 'dart:math';
 
