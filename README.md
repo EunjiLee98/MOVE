@@ -50,6 +50,6 @@ In this pandemic situation where people can't go out freely due to the COVID-19,
 > Please feel free to contact us through our email. 😊.  
 > 21600122@handong.edu -> Yongjae.    
 > greathyun0427@gmail.com -> Jonghyun.    
-> leunji094@gmail.com -> Eunji.
+> leunji094@gmail.com -> Eunji.   
 > 21900140@handong.edu -> Yeonhee.    
 > 21800747@handong.edu -> Jueun.
